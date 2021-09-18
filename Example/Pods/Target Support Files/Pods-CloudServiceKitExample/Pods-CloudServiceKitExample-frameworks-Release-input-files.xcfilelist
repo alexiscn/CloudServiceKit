@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-CloudServiceKitExample/Pods-CloudServiceKitExample-frameworks.sh
+${BUILT_PRODUCTS_DIR}/CloudServiceKit/CloudServiceKit.framework
+${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework

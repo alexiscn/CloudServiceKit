@@ -1,0 +1,23 @@
+PODS:
+  - CloudServiceKit (1.0.1):
+    - OAuthSwift
+  - OAuthSwift (2.2.0)
+
+DEPENDENCIES:
+  - CloudServiceKit (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - OAuthSwift
+
+EXTERNAL SOURCES:
+  CloudServiceKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CloudServiceKit: 1f118f1508a1ea9d94b63b8183f0ac42bba16708
+  OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
+
+PODFILE CHECKSUM: d12aa73235a54df82bcbaa903135fbd180d17af2
+
+COCOAPODS: 1.11.2

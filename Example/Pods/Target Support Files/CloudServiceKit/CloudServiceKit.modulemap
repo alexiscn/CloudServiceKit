@@ -1,0 +1,6 @@
+framework module CloudServiceKit {
+  umbrella header "CloudServiceKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
