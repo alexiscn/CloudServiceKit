@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         case .box:
             connector = BoxConnector(appId: "", appSecret: "", callbackUrl: "")
         case .dropbox:
-            connector = DropboxConnector(appId: "", appSecret: "", callbackUrl: "")
+            connector = DropboxConnector(appId: "", appSecret: "", callbackUrl: "oauth-swift://oauth-callback")
         case .googleDrive:
             connector = GoogleDriveConnector(appId: "", appSecret: "", callbackUrl: "")
         case .oneDrive:
@@ -90,6 +90,8 @@ extension ViewController {
     private func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.delegate = self
+        collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
     }
     
