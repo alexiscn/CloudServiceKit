@@ -30,6 +30,22 @@ class ViewController: UIViewController {
     }
 
     private func connect(_ drive: CloudDriveType) {
+        
+        let connector = connector(for: drive)
+        connector.connect(viewController: self) { result in
+            switch result {
+            case .success(let token):
+                let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
+                let provider = self.provider(for: drive, credential: credential)
+                let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
+                self.navigationController?.pushViewController(vc, animated: true)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func connector(for drive: CloudDriveType) -> CloudServiceConnector {
         let connector: CloudServiceConnector
         switch drive {
         case .baiduPan:
@@ -45,8 +61,26 @@ class ViewController: UIViewController {
         case .pCloud:
             connector = PCloudConnector(appId: "", appSecret: "", callbackUrl: "")
         }
-        print(connector)
-        
+        return connector
+    }
+    
+    private func provider(for driveType: CloudDriveType, credential: URLCredential) -> CloudServiceProvider {
+        let provider: CloudServiceProvider
+        switch driveType {
+        case .baiduPan:
+            provider = BaiduPanServiceProvider(credential: credential)
+        case .box:
+            provider = BoxServiceProvider(credential: credential)
+        case .dropbox:
+            provider = DropboxServiceProvider(credential: credential)
+        case .googleDrive:
+            provider = GoogleDriveServiceProvider(credential: credential)
+        case .oneDrive:
+            provider = OneDriveServiceProvider(credential: credential)
+        case .pCloud:
+            provider = PCloudServiceProvider(credential: credential)
+        }
+        return provider
     }
 }
 
