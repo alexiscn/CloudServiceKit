@@ -44,7 +44,7 @@ Using `CloudServiceKit` should follow following steps:
 
 ### 1. Create a connector
 
-Create a connector of the cloud service, pass the 
+Create a connector of the cloud service, pass the necessary parameters:
 
 ```swift
 let connector = DropboxConnector(appId: "your_app_id", appSecret: "your_app_secret", callbackUrl: "your_app_redirect_url")
@@ -52,8 +52,20 @@ let connector = DropboxConnector(appId: "your_app_id", appSecret: "your_app_secr
 
 ### 2. Handle the openURL
 
-You should add callback url scheme to your project.
+Since CloudServiceKit depends on [OAuthSwift](https://github.com/OAuthSwift/OAuthSwift). You app should handle openURL. Assuming your `redirectUrl` is like `filebox_oauth://oauth-callback`. 
 
+* On iOS implement UIApplicationDelegate method
+
+```swift
+func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey  : Any] = [:]) -> Bool {
+  if url.host == "oauth-callback" {
+    OAuthSwift.handle(url: url)
+  }
+  return true
+}
+```
+
+* On iOS 13, UIKit will notify UISceneDelegate instead of UIApplicationDelegate. Implement UISceneDelegate method
 
 ```swift
 import OAuthSwift
