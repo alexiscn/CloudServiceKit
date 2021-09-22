@@ -5,9 +5,9 @@
 	<key>Baidu</key>
 	<dict>
 		<key>appKey</key>
-		<string></string>
+		<string>1</string>
 		<key>appSecret</key>
-		<string></string>
+		<string>2</string>
 		<key>callbackUrl</key>
 		<string></string>
 	</dict>
