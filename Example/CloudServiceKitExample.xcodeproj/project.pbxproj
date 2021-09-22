@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3F06A64A3E8D85637D072A8D /* Pods_CloudServiceKitExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0D183B47B5AC5BB4D268D93 /* Pods_CloudServiceKitExample.framework */; };
-		A3D11BCE26FAFC2E0019EBD4 /* AppKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3D11BCD26FAFC2E0019EBD4 /* AppKeys.plist */; };
 		A3DE792B26F5D3CD0058E54F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE792A26F5D3CD0058E54F /* AppDelegate.swift */; };
 		A3DE792D26F5D3CD0058E54F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE792C26F5D3CD0058E54F /* SceneDelegate.swift */; };
 		A3DE792F26F5D3CD0058E54F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE792E26F5D3CD0058E54F /* ViewController.swift */; };
@@ -21,7 +20,6 @@
 
 /* Begin PBXFileReference section */
 		7794F87E2B1A8240ECAE98E3 /* Pods-CloudServiceKitExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudServiceKitExample.debug.xcconfig"; path = "Target Support Files/Pods-CloudServiceKitExample/Pods-CloudServiceKitExample.debug.xcconfig"; sourceTree = "<group>"; };
-		A3D11BCD26FAFC2E0019EBD4 /* AppKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AppKeys.plist; sourceTree = "<group>"; };
 		A3DE792726F5D3CD0058E54F /* CloudServiceKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudServiceKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3DE792A26F5D3CD0058E54F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3DE792C26F5D3CD0058E54F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,7 +93,6 @@
 				A3DE793326F5D3D10058E54F /* Assets.xcassets */,
 				A3DE793526F5D3D10058E54F /* LaunchScreen.storyboard */,
 				A3DE793826F5D3D10058E54F /* Info.plist */,
-				A3D11BCD26FAFC2E0019EBD4 /* AppKeys.plist */,
 			);
 			path = CloudServiceKitExample;
 			sourceTree = "<group>";
@@ -159,7 +156,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3D11BCE26FAFC2E0019EBD4 /* AppKeys.plist in Resources */,
 				A3DE793726F5D3D10058E54F /* LaunchScreen.storyboard in Resources */,
 				A3DE793426F5D3D10058E54F /* Assets.xcassets in Resources */,
 				A3DE793226F5D3CD0058E54F /* Main.storyboard in Resources */,
