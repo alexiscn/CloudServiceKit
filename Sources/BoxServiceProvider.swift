@@ -1,6 +1,6 @@
 //
 //  BoxServiceProvider.swift
-//  
+//
 //
 //  Created by alexiscn on 2021/8/9.
 //
@@ -263,7 +263,12 @@ public class BoxServiceProvider: CloudServiceProvider {
             ]
         ].json
         let file = HTTPFile.data(filename, data, nil)
-        post(url: url, data: formdata, files: ["file": file], completion: completion)
+        
+        post(url: url, data: formdata, files: ["file": file], progressHandler: { progress in
+            let reportProgress = Progress(totalUnitCount: progress.bytesExpectedToProcess)
+            reportProgress.completedUnitCount = progress.bytesProcessed
+            progressHandler(reportProgress)
+        }, completion: completion)
     }
     
     /// Upload file to target directory with local file url.

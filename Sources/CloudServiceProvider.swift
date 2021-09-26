@@ -193,7 +193,7 @@ extension CloudServiceProvider {
                      requestBody: Data? = nil,
                      progressHandler: ((HTTPProgress) -> Void)? = nil,
                      completion: @escaping CloudCompletionHandler) {
-        request(.post, url: url, params: params, data: data, json: json, headers: headers, files: files, requestBody: requestBody, completion: completion)
+        request(.post, url: url, params: params, data: data, json: json, headers: headers, files: files, requestBody: requestBody, progressHandler: progressHandler, completion: completion)
     }
     
     public func delete(url: URLComponentsConvertible,
