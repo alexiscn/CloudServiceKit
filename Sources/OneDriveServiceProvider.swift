@@ -429,9 +429,6 @@ extension OneDriveServiceProvider {
                     let startOffset: Int64 = components[0]
                     let endOffset: Int64 = components.last ?? totalLength
                     
-                    progress.completedUnitCount = startOffset
-                    progressHandler(progress)
-                    
                     try fileHandle.seek(toOffset: UInt64(startOffset))
                     let length = min(Int(endOffset - startOffset) + 1, maximumChunkSize)
                     let data = fileHandle.readData(ofLength: length)
@@ -440,7 +437,10 @@ extension OneDriveServiceProvider {
                     var headers: [String: String] = [:]
                     headers["Content-Length"] = String(data.count)
                     headers["Content-Range"] = String(format: "bytes %@/%ld", range, totalLength)
-                    put(url: uploadUrl, headers: headers, requestBody: data) { response in
+                    put(url: uploadUrl, headers: headers, requestBody: data, progressHandler: { changes in
+                        progress.completedUnitCount = startOffset + changes.bytesProcessed
+                        progressHandler(progress)
+                    }) { response in
                         switch response.result {
                         case .success(let result):
                             if let json = result.json as? [String: Any] {
