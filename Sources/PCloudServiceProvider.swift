@@ -368,12 +368,11 @@ public class PCloudServiceProvider: CloudServiceProvider {
         postdata["folderid"] = directory.id
         
         let file = HTTPFile.data(filename, data, nil)
+        let length = Int64(data.count)
+        let reportProgress = Progress(totalUnitCount: length)
         post(url: url, data: postdata, files: ["file": file], progressHandler: { progress in
-            DispatchQueue.main.async {
-                let p = Progress(totalUnitCount: progress.bytesExpectedToProcess + progress.bytesProcessed)
-                p.completedUnitCount = progress.bytesProcessed
-                progressHandler(p)
-            }
+            reportProgress.completedUnitCount = Int64(Float(length) * progress.percent)
+            progressHandler(reportProgress)
         }, completion: completion)
     }
     
@@ -385,7 +384,7 @@ public class PCloudServiceProvider: CloudServiceProvider {
     ///   - progressHandler: The upload progress reporter.
     ///   - completion: Completion block.
     public func uploadFile(_ fileURL: URL, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
-        
+        guard let length = fileSize(of: fileURL) else { return }
         let url = apiURL.appendingPathComponent("uploadfile")
         
         var data: [String: Any] = [:]
@@ -393,13 +392,10 @@ public class PCloudServiceProvider: CloudServiceProvider {
         data["folderid"] = directory.id
         
         let file = HTTPFile.url(fileURL, nil)
-        
+        let reportProgress = Progress(totalUnitCount: length)
         post(url: url, files: ["file": file], progressHandler: { progress in
-            DispatchQueue.main.async {
-                let p = Progress(totalUnitCount: progress.bytesExpectedToProcess + progress.bytesProcessed)
-                p.completedUnitCount = progress.bytesProcessed
-                progressHandler(p)
-            }
+            reportProgress.completedUnitCount = Int64(Float(length) * progress.percent)
+            progressHandler(reportProgress)
         }, completion: completion)
     }
 }

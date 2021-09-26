@@ -1,6 +1,6 @@
 //
 //  BoxServiceProvider.swift
-//
+//  
 //
 //  Created by alexiscn on 2021/8/9.
 //
@@ -264,9 +264,10 @@ public class BoxServiceProvider: CloudServiceProvider {
         ].json
         let file = HTTPFile.data(filename, data, nil)
         
+        let length = Int64(data.count)
+        let reportProgress = Progress(totalUnitCount: length)
         post(url: url, data: formdata, files: ["file": file], progressHandler: { progress in
-            let reportProgress = Progress(totalUnitCount: progress.bytesExpectedToProcess)
-            reportProgress.completedUnitCount = progress.bytesProcessed
+            reportProgress.completedUnitCount = Int64(Float(length) * progress.percent)
             progressHandler(reportProgress)
         }, completion: completion)
     }
@@ -335,9 +336,9 @@ extension BoxServiceProvider {
             headers["Digest"] = "sha=\(sha1)"
             headers["Content-Type"] = "application/octet-stream"
             
+            let progressReport = Progress(totalUnitCount: totalSize)
             put(url: url, headers: headers, requestBody: data) { progress in
-                let progressReport = Progress(totalUnitCount: totalSize)
-                progressReport.completedUnitCount = offset + progress.bytesProcessed
+                progressReport.completedUnitCount = offset + Int64(Float(length) * progress.percent)
                 progressHandler(progressReport)
             } completion: { response in
                 switch response.result {

@@ -120,11 +120,9 @@ public class DropboxServiceProvider: CloudServiceProvider {
         let url = contentURL.appendingPathComponent("files/download")
         let headers = ["Dropbox-API-Arg": dropboxAPIArg(from: ["path": item.path])]
         post(url: url, headers: headers, progressHandler: { progress in
-            DispatchQueue.main.async {
-                let p = Progress(totalUnitCount: progress.bytesExpectedToProcess + progress.bytesProcessed)
-                p.completedUnitCount = progress.bytesProcessed
-                progressHandler?(p)
-            }
+            let p = Progress(totalUnitCount: progress.bytesExpectedToProcess + progress.bytesProcessed)
+            p.completedUnitCount = progress.bytesProcessed
+            progressHandler?(p)
         }) { response in
             switch response.result {
             case .success(let result):
@@ -319,12 +317,11 @@ public class DropboxServiceProvider: CloudServiceProvider {
             "Content-Type": "application/octet-stream"
         ]
     
+        let length = Int64(data.count)
+        let reportProgress = Progress(totalUnitCount: length)
         post(url: url, headers: headers, requestBody: data, progressHandler: { progress in
-            DispatchQueue.main.async {
-                let p = Progress(totalUnitCount: Int64(data.count))
-                p.completedUnitCount = progress.bytesProcessed
-                progressHandler(p)
-            }
+            reportProgress.completedUnitCount = Int64(Float(length) * progress.percent)
+            progressHandler(reportProgress)
         }, completion: completion)
     }
     
@@ -400,9 +397,10 @@ extension DropboxServiceProvider {
                 "Dropbox-API-Arg": dropboxAPIArg(from: args),
                 "Content-Type": "application/octet-stream"
             ]
+            
+            let progressReport = Progress(totalUnitCount: totalSize)
             post(url: url, headers: headers, requestBody: data) { progress in
-                let progressReport = Progress(totalUnitCount: totalSize)
-                progressReport.completedUnitCount = offset + progress.bytesProcessed
+                progressReport.completedUnitCount = offset + Int64(Float(length) * progress.percent)
                 progressHandler(progressReport)
             } completion: { response in
                 switch response.result {

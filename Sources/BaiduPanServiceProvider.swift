@@ -560,10 +560,9 @@ extension BaiduPanServiceProvider {
             params["access_token"] = credential?.password ?? ""
             
             let file = HTTPFile.data("file", data, nil)
-            
+            let progressReport = Progress(totalUnitCount: session.size)
             post(url: url, params: params, files: ["file": file]) { progress in
-                let progressReport = Progress(totalUnitCount: session.size)
-                progressReport.completedUnitCount = offset + progress.bytesProcessed
+                progressReport.completedUnitCount = offset + Int64(progress.percent * Float(length))
                 progressHandler(progressReport)
             } completion: { response in
                 switch response.result {

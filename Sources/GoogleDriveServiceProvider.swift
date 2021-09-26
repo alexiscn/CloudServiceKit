@@ -279,12 +279,11 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         body.append("--" + boundary + "--\n")
         
         let headers = ["Content-Type": "multipart/related; boundary=\(boundary)"]
+        let length = Int64(data.count)
+        let reportProgress = Progress(totalUnitCount: length)
         post(url: url, params: params, headers: headers, requestBody: body, progressHandler: { progress in
-            DispatchQueue.main.async {
-                let p = Progress(totalUnitCount: Int64(data.count))
-                p.completedUnitCount = progress.bytesProcessed
-                progressHandler(p)
-            }
+            reportProgress.completedUnitCount = Int64(Float(length) * progress.percent)
+            progressHandler(reportProgress)
         }, completion: completion)
     }
     
@@ -347,9 +346,9 @@ extension GoogleDriveServiceProvider {
                 "Content-Range": range
             ]
             
+            let progressReport = Progress(totalUnitCount: session.size)
             put(url: session.uploadUrl, headers: headers, requestBody: data) { progress in
-                let progressReport = Progress(totalUnitCount: session.size)
-                progressReport.completedUnitCount = offset + progress.bytesProcessed
+                progressReport.completedUnitCount = offset + Int64(Float(length) * progress.percent)
                 progressHandler(progressReport)
             } completion: { response in
                 switch response.result {
