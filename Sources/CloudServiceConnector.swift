@@ -7,6 +7,7 @@
 
 import Foundation
 import OAuthSwift
+import UIKit
 
 public protocol CloudServiceOAuth {
     
@@ -97,10 +98,18 @@ public class CloudServiceConnector: CloudServiceOAuth {
 public class BaiduPanConnector: CloudServiceConnector {
     
     /// The OAuth2 url, which is `https://openapi.baidu.com/oauth/2.0/authorize`.
-    public override var authorizeUrl: String { return "https://openapi.baidu.com/oauth/2.0/authorize" }
+    public override var authorizeUrl: String {
+        if UIScreen.main.traitCollection.userInterfaceIdiom == .pad {
+            return "https://openapi.baidu.com/oauth/2.0/authorize?display=pad&force_login=1"
+        } else {
+            return "https://openapi.baidu.com/oauth/2.0/authorize?display=mobile&force_login=1"
+        }
+    }
     
     /// The access token url, which is `https://openapi.baidu.com/oauth/2.0/token`.
-    public override var accessTokenUrl: String { return "https://openapi.baidu.com/oauth/2.0/token" }
+    public override var accessTokenUrl: String {
+        return "https://openapi.baidu.com/oauth/2.0/token"
+    }
     
     /// The scope to access baidu pan service. The default and only value is `basic,netdisk`.
     public override var scope: String {

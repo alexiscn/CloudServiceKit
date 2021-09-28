@@ -16,6 +16,7 @@
 		A3DE793726F5D3D10058E54F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3DE793526F5D3D10058E54F /* LaunchScreen.storyboard */; };
 		A3DE793F26F5D47F0058E54F /* CloudDriveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE793E26F5D47F0058E54F /* CloudDriveType.swift */; };
 		A3DE794126F5DD580058E54F /* DriveBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE794026F5DD580058E54F /* DriveBrowserViewController.swift */; };
+		A3F880F62702BCB20054D5D6 /* CloudConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F880F52702BCB20054D5D6 /* CloudConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		A3DE793826F5D3D10058E54F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3DE793E26F5D47F0058E54F /* CloudDriveType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveType.swift; sourceTree = "<group>"; };
 		A3DE794026F5DD580058E54F /* DriveBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriveBrowserViewController.swift; sourceTree = "<group>"; };
+		A3F880F52702BCB20054D5D6 /* CloudConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudConfiguration.swift; sourceTree = "<group>"; };
 		B7E64412EFC2817CB9FC2CC0 /* Pods-CloudServiceKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudServiceKitExample.release.xcconfig"; path = "Target Support Files/Pods-CloudServiceKitExample/Pods-CloudServiceKitExample.release.xcconfig"; sourceTree = "<group>"; };
 		F0D183B47B5AC5BB4D268D93 /* Pods_CloudServiceKitExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudServiceKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -89,6 +91,7 @@
 				A3DE792E26F5D3CD0058E54F /* ViewController.swift */,
 				A3DE794026F5DD580058E54F /* DriveBrowserViewController.swift */,
 				A3DE793E26F5D47F0058E54F /* CloudDriveType.swift */,
+				A3F880F52702BCB20054D5D6 /* CloudConfiguration.swift */,
 				A3DE793026F5D3CD0058E54F /* Main.storyboard */,
 				A3DE793326F5D3D10058E54F /* Assets.xcassets */,
 				A3DE793526F5D3D10058E54F /* LaunchScreen.storyboard */,
@@ -213,6 +216,7 @@
 			files = (
 				A3DE792F26F5D3CD0058E54F /* ViewController.swift in Sources */,
 				A3DE792B26F5D3CD0058E54F /* AppDelegate.swift in Sources */,
+				A3F880F62702BCB20054D5D6 /* CloudConfiguration.swift in Sources */,
 				A3DE793F26F5D47F0058E54F /* CloudDriveType.swift in Sources */,
 				A3DE792D26F5D3CD0058E54F /* SceneDelegate.swift in Sources */,
 				A3DE794126F5DD580058E54F /* DriveBrowserViewController.swift in Sources */,

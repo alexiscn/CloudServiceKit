@@ -35,10 +35,18 @@ class ViewController: UIViewController {
         connector.connect(viewController: self) { result in
             switch result {
             case .success(let token):
+                // you can save token here
+                // if you want get current authed user, you can call
+                // provider.getCurrentAccount(completion:)
                 let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
                 let provider = self.provider(for: drive, credential: credential)
                 let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
-                self.navigationController?.pushViewController(vc, animated: true)
+                
+                // To remove SafariViewController
+                var viewControllers = self.navigationController?.viewControllers ?? []
+                _ = viewControllers.removeLast()
+                viewControllers.append(vc)
+                self.navigationController?.setViewControllers(viewControllers, animated: true)
             case .failure(let error):
                 print(error)
             }
@@ -46,20 +54,33 @@ class ViewController: UIViewController {
     }
     
     private func connector(for drive: CloudDriveType) -> CloudServiceConnector {
+        let message = "Please configure app info in CloudConfiguration.swift"
         let connector: CloudServiceConnector
         switch drive {
         case .baiduPan:
-            connector = BaiduPanConnector(appId: "", appSecret: "", callbackUrl: "")
+            assert(CloudConfiguration.baidu != nil, message)
+            let baidu = CloudConfiguration.baidu!
+            connector = BaiduPanConnector(appId: baidu.appId, appSecret: baidu.appSecret, callbackUrl: baidu.redirectUrl)
         case .box:
-            connector = BoxConnector(appId: "", appSecret: "", callbackUrl: "")
+            assert(CloudConfiguration.box != nil, message)
+            let box = CloudConfiguration.box!
+            connector = BoxConnector(appId: box.appId, appSecret: box.appSecret, callbackUrl: box.appSecret)
         case .dropbox:
-            connector = DropboxConnector(appId: "", appSecret: "", callbackUrl: "oauth-swift://oauth-callback")
+            assert(CloudConfiguration.dropbox != nil, message)
+            let dropbox = CloudConfiguration.dropbox!
+            connector = DropboxConnector(appId: dropbox.appId, appSecret: dropbox.appSecret, callbackUrl: dropbox.appSecret)
         case .googleDrive:
-            connector = GoogleDriveConnector(appId: "", appSecret: "", callbackUrl: "")
+            assert(CloudConfiguration.googleDrive != nil, message)
+            let googledrive = CloudConfiguration.googleDrive!
+            connector = GoogleDriveConnector(appId: googledrive.appId, appSecret: googledrive.appSecret, callbackUrl: googledrive.redirectUrl)
         case .oneDrive:
-            connector = OneDriveConnector(appId: "", appSecret: "", callbackUrl: "")
+            assert(CloudConfiguration.oneDrive != nil, message)
+            let onedrive = CloudConfiguration.oneDrive!
+            connector = OneDriveConnector(appId: onedrive.appId, appSecret: onedrive.appSecret, callbackUrl: onedrive.redirectUrl)
         case .pCloud:
-            connector = PCloudConnector(appId: "", appSecret: "", callbackUrl: "")
+            assert(CloudConfiguration.pCloud != nil, message)
+            let pcloud = CloudConfiguration.pCloud!
+            connector = PCloudConnector(appId: pcloud.appId, appSecret: pcloud.appSecret, callbackUrl: pcloud.redirectUrl)
         }
         return connector
     }
