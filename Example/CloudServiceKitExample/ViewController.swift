@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, CloudDriveType>!
     
+    private var connector: CloudServiceConnector?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -41,16 +43,12 @@ class ViewController: UIViewController {
                 let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
                 let provider = self.provider(for: drive, credential: credential)
                 let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
-                
-                // To remove SafariViewController
-                var viewControllers = self.navigationController?.viewControllers ?? []
-                _ = viewControllers.removeLast()
-                viewControllers.append(vc)
-                self.navigationController?.setViewControllers(viewControllers, animated: true)
+                self.navigationController?.pushViewController(vc, animated: true)
             case .failure(let error):
                 print(error)
             }
         }
+        self.connector = connector
     }
     
     private func connector(for drive: CloudDriveType) -> CloudServiceConnector {

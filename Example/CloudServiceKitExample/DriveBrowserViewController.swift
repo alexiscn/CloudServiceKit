@@ -60,7 +60,7 @@ extension DriveBrowserViewController {
     private func setupDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, CloudItem> { (cell, indexPath, item) in
             var content = cell.defaultContentConfiguration()
-            content.image = item.isDirectory ? UIImage(named: "folder_24x24_"): UIImage(named: "file_24x24_")
+            content.image = item.isDirectory ? UIImage(named: "folder_32x32_"): UIImage(named: "file_32x32_")
             content.text = item.name
             cell.contentConfiguration = content
         }
