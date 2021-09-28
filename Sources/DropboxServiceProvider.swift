@@ -364,7 +364,7 @@ public class DropboxServiceProvider: CloudServiceProvider {
 // MARK: - Helper
 extension DropboxServiceProvider {
     
-    func dropboxAPIArg(from dictionary: [String: Any]) -> String {
+    public func dropboxAPIArg(from dictionary: [String: Any]) -> String {
         return dictionary.json.asciiEscaped().replacingOccurrences(of: "\\/", with: "/")
     }
     

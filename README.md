@@ -36,6 +36,40 @@ dependencies: [
 ]
 ```
 
+## Quick Start
+
+You can explore `CloudServiceKit` by running example. But first you should configure app information that cloud drive services provides, you can fulfill information in `CloudConfiguration.swift`.
+
+```swift
+extension CloudConfiguration {
+    
+    static var baidu: CloudConfiguration? {
+        // fulfill your baidu app info
+        return nil
+    }
+    
+    static var box: CloudConfiguration? {
+        return nil
+    }
+    
+    static var dropbox: CloudConfiguration? {
+        return nil
+    }
+    
+    static var googleDrive: CloudConfiguration? {
+        return nil
+    }
+    
+    static var oneDrive: CloudConfiguration? {
+        return nil
+    }
+    
+    static var pCloud: CloudConfiguration? {
+        return nil
+    }
+}
+```
+
 ## Get Started
 
 Using `CloudServiceKit` should follow following steps:
@@ -49,6 +83,8 @@ Create a connector of the cloud service, pass the necessary parameters:
 ```swift
 let connector = DropboxConnector(appId: "your_app_id", appSecret: "your_app_secret", callbackUrl: "your_app_redirect_url")
 ```
+
+> You should keep a strong reference to the connector.
 
 ### 2. Handle the openURL
 
@@ -210,16 +246,24 @@ You can also create your own connector.
 
 ## Advance Usage
 
-You can create extensions to add more functions to existing providers.
-
-Following example shows show to add lock file to Dropbox.
+You can create extensions to add more functions to existing providers. Following example shows show to export file at Dropbox.
 
 ```swift
 extension DropboxServiceProvider {
     
-    func lock(file: CloudItem, completion: @escaping CloudCompletionHandler) {
-        let url = apiURL.appendingPathComponents("")
-
+    func export(file: CloudItem, completion: @escaping CloudCompletionHandler) {
+        let url = apiURL.appendingPathComponents("files/export")
+        let dict = ["path": file.path]
+        var headers: [String: String] = [:]
+        headers["Dropbox-API-Arg"] = dropboxAPIArg(from: dict)
+        post(url: url, headers: headers) { response in
+            switch response.result {
+            case .success(let result):
+                print(result)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 ```
