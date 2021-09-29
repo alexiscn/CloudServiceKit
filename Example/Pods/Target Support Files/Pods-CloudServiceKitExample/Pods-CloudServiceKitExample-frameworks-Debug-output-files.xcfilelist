@@ -1,2 +1,3 @@
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CloudServiceKit.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework
 ${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OAuthSwift.framework

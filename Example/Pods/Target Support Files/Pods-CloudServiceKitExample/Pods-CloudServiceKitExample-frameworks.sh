@@ -177,10 +177,12 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CloudServiceKit/CloudServiceKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CloudServiceKit/CloudServiceKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OAuthSwift/OAuthSwift.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

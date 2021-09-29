@@ -1,13 +1,16 @@
 PODS:
   - CloudServiceKit (1.0.2):
     - OAuthSwift
+  - KeychainAccess (4.2.2)
   - OAuthSwift (2.2.0)
 
 DEPENDENCIES:
   - CloudServiceKit (from `../`)
+  - KeychainAccess
 
 SPEC REPOS:
   trunk:
+    - KeychainAccess
     - OAuthSwift
 
 EXTERNAL SOURCES:
@@ -16,8 +19,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CloudServiceKit: dcaa01d55a60c682bd087132685288f7397b3cba
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
 
-PODFILE CHECKSUM: d12aa73235a54df82bcbaa903135fbd180d17af2
+PODFILE CHECKSUM: 30a7282a03c1f32091b73a72f70366e1a474b86e
 
 COCOAPODS: 1.11.2
