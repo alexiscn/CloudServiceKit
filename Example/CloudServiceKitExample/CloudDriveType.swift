@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-enum CloudDriveType: Int, Codable, CaseIterable, Hashable {
+enum CloudDriveType: String, Codable, CaseIterable, Hashable {
     case baiduPan
     case box
     case dropbox
