@@ -46,14 +46,8 @@ public class DropboxServiceProvider: CloudServiceProvider {
         post(url: url, json: json) { response in
             switch response.result {
             case .success(let result):
-                if let jsonObject = result.json as? [String: Any], let list = jsonObject["entries"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for entry in list {
-                        if let object = entry as? [String: Any],
-                           let item = DropboxServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
+                if let jsonObject = result.json as? [String: Any], let list = jsonObject["entries"] as? [[String: Any]] {
+                    let items = list.compactMap { DropboxServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))

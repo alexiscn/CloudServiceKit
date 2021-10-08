@@ -93,15 +93,9 @@ public class BaiduPanServiceProvider: CloudServiceProvider {
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let list = json["list"] as? [Any] {
-                   var items: [CloudItem] = []
-                   for entry in list {
-                       if let object = entry as? [String: Any],
-                          let item = BaiduPanServiceProvider.cloudItemFromJSON(object) {
-                           items.append(item)
-                       }
-                   }
-                   completion(.success(items))
+                if let json = result.json as? [String: Any], let list = json["list"] as? [[String: Any]] {
+                    let items = list.compactMap { BaiduPanServiceProvider.cloudItemFromJSON($0) }
+                    completion(.success(items))
                } else {
                    completion(.failure(CloudServiceError.responseDecodeError(result)))
                }
@@ -354,15 +348,9 @@ public class BaiduPanServiceProvider: CloudServiceProvider {
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let list = json["list"] as? [Any] {
-                   var items: [CloudItem] = []
-                   for entry in list {
-                       if let object = entry as? [String: Any],
-                          let item = BaiduPanServiceProvider.cloudItemFromJSON(object) {
-                           items.append(item)
-                       }
-                   }
-                   completion(.success(items))
+                if let json = result.json as? [String: Any], let list = json["list"] as? [[String: Any]] {
+                    let items = list.compactMap { BaiduPanServiceProvider.cloudItemFromJSON($0) }
+                    completion(.success(items))
                } else {
                    completion(.failure(CloudServiceError.responseDecodeError(result)))
                }

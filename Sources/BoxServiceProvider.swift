@@ -67,15 +67,8 @@ public class BoxServiceProvider: CloudServiceProvider {
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any],
-                          let entries = json["entries"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for entry in entries {
-                        if let object = entry as? [String: Any],
-                           let item = BoxServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
+                if let json = result.json as? [String: Any], let entries = json["entries"] as? [[String: Any]] {
+                    let items = entries.compactMap { BoxServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -215,15 +208,8 @@ public class BoxServiceProvider: CloudServiceProvider {
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any],
-                          let entries = json["entries"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for entry in entries {
-                        if let object = entry as? [String: Any],
-                           let item = BoxServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
+                if let json = result.json as? [String: Any], let entries = json["entries"] as? [[String: Any]] {
+                    let items = entries.compactMap { BoxServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))

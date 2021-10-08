@@ -69,18 +69,12 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         
         var params: [String: Any] = [:]
         params["q"] = String(format: "'%@' in parents", directory.id)
-        params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink)"
+        params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink)"
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let files = json["files"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for file in files {
-                        if let object = file as? [String: Any],
-                           let item = GoogleDriveServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
+                if let json = result.json as? [String: Any], let files = json["files"] as? [[String: Any]] {
+                    let items = files.compactMap { GoogleDriveServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -231,14 +225,8 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let files = json["files"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for file in files {
-                        if let object = file as? [String: Any],
-                           let item = GoogleDriveServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
+                if let json = result.json as? [String: Any], let files = json["files"] as? [[String: Any]] {
+                    let items = files.compactMap { GoogleDriveServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))

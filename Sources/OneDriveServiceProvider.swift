@@ -120,18 +120,13 @@ public class OneDriveServiceProvider: CloudServiceProvider {
             } else {
                 url = apiURL.appendingPathComponent("me/drive/items/\(directory.id)/children")
             }
-            
-            get(url: url) { response in
+            let params = ["$expand": "thumbnails"]
+            get(url: url, params: params) { response in
                 switch response.result {
                 case .success(let result):
-                    if let json = result.json as? [String: Any],
-                       let files = json["value"] as? [Any] {
-                        for file in files {
-                            if let object = file as? [String: Any],
-                               let item = OneDriveServiceProvider.cloudItemFromJSON(object) {
-                                items.append(item)
-                            }
-                        }
+                    if let json = result.json as? [String: Any], let files = json["value"] as? [[String: Any]] {
+                        items.append(contentsOf: files.compactMap { OneDriveServiceProvider.cloudItemFromJSON($0) })
+                        
                         if let nextLink = json["odata.nextLink"] as? String, !nextLink.isEmpty {
                             load(nextLink: nextLink)
                         } else {
@@ -290,14 +285,8 @@ public class OneDriveServiceProvider: CloudServiceProvider {
             switch response.result {
             case .success(let result):
                 if let json = result.json as? [String: Any],
-                   let files = json["value"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for file in files {
-                        if let object = file as? [String: Any],
-                           let item = OneDriveServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
+                   let files = json["value"] as? [[String: Any]] {
+                    let items = files.compactMap { OneDriveServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))

@@ -9,6 +9,10 @@ public struct CloudResponse<HTTPResult, Failure: Error> {
     /// The result of response.
     public let result: Result<HTTPResult, Failure>
     
+    public init(response: HTTPResult?, result: Result<HTTPResult, Failure>) {
+        self.response = response
+        self.result = result
+    }
 }
 
 /// Common completion handler for cloud file operations, such as copy/move/rename

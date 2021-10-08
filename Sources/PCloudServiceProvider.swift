@@ -34,37 +34,6 @@ public class PCloudServiceProvider: CloudServiceProvider {
         self.credential = credential
     }
     
-    /// Get files of the target directory. You can use `rootItem` to load files in root folder.
-    /// Document can be found here: https://docs.pcloud.com/methods/folder/listfolder.html
-    /// - Parameters:
-    ///   - directoryItem: The target directory.
-    ///   - completion: Completion block.
-    public func contentsOfDirectory(_ directoryItem: CloudItem, completion: @escaping (Result<[CloudItem], Error>) -> Void) {
-        let url = apiURL.appendingPathComponent("listfolder")
-        let data = ["folderid": directoryItem.id]
-        post(url: url, data: data) { response in
-            switch response.result {
-            case .success(let result):
-                if let json = result.json as? [String: Any],
-                   let metadata = json["metadata"] as? [String: Any],
-                   let list = metadata["contents"] as? [Any] {
-                    var items: [CloudItem] = []
-                    for entry in list {
-                        if let object = entry as? [String: Any],
-                           let item = PCloudServiceProvider.cloudItemFromJSON(object) {
-                            items.append(item)
-                        }
-                    }
-                    completion(.success(items))
-                } else {
-                    completion(.failure(CloudServiceError.responseDecodeError(result)))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
     /// Get information of file. Folder not supported
     /// Document can be found here: https://docs.pcloud.com/methods/file/stat.html
     /// - Parameters:
@@ -88,6 +57,31 @@ public class PCloudServiceProvider: CloudServiceProvider {
                 case .failure(let error):
                     completion(.failure(error))
                 }
+            }
+        }
+    }
+    
+    /// Get files of the target directory. You can use `rootItem` to load files in root folder.
+    /// Document can be found here: https://docs.pcloud.com/methods/folder/listfolder.html
+    /// - Parameters:
+    ///   - directoryItem: The target directory.
+    ///   - completion: Completion block.
+    public func contentsOfDirectory(_ directoryItem: CloudItem, completion: @escaping (Result<[CloudItem], Error>) -> Void) {
+        let url = apiURL.appendingPathComponent("listfolder")
+        let data = ["folderid": directoryItem.id]
+        post(url: url, data: data) { response in
+            switch response.result {
+            case .success(let result):
+                if let json = result.json as? [String: Any],
+                   let metadata = json["metadata"] as? [String: Any],
+                   let list = metadata["contents"] as? [[String: Any]] {
+                    let items = list.compactMap { PCloudServiceProvider.cloudItemFromJSON($0) }
+                    completion(.success(items))
+                } else {
+                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }
@@ -186,6 +180,8 @@ public class PCloudServiceProvider: CloudServiceProvider {
                         if let url = URL(string: urlString) {
                             completion(.success(url))
                         }
+                    } else {
+                        completion(.failure(CloudServiceError.responseDecodeError(result)))
                     }
                 case .failure(let error):
                     completion(.failure(error))

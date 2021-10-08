@@ -69,6 +69,11 @@ public struct CloudUser {
     
     /// The origin json response data of the user information.
     public var json: [String: Any]
+    
+    public init(username: String, json: [String: Any]) {
+        self.username = username
+        self.json = json
+    }
 }
 
 public struct CloudSpaceInformation {
@@ -81,4 +86,10 @@ public struct CloudSpaceInformation {
     
     /// The origin json response where you can get what you want
     public var json: [String: Any]
+    
+    public init(totalSpace: Int64, availableSpace: Int64, json: [String: Any]) {
+        self.totalSpace = totalSpace
+        self.availableSpace = availableSpace
+        self.json = json
+    }
 }

@@ -7,7 +7,6 @@
 
 import Foundation
 import OAuthSwift
-import UIKit
 
 public protocol CloudServiceOAuth {
     
@@ -28,6 +27,11 @@ public class CloudServiceConnector: CloudServiceOAuth {
     /// subclass must provide accessTokenUrl
     public var accessTokenUrl: String { return "" }
     
+    /// subclass can provide more custom parameters
+    public var authorizeParameters: OAuthSwift.Parameters { return [:] }
+    
+    public var tokenParameters: OAuthSwift.Parameters { return [:] }
+    
     public var scope: String = ""
     
     public var responseType: String
@@ -43,7 +47,7 @@ public class CloudServiceConnector: CloudServiceOAuth {
     
     public let state: String
     
-    private var oauth: OAuth2Swift?
+    var oauth: OAuth2Swift?
     
     
     /// Create cloud service connector
@@ -69,7 +73,7 @@ public class CloudServiceConnector: CloudServiceOAuth {
         oauth.allowMissingStateCheck = true
         oauth.authorizeURLHandler = SafariURLHandler(viewController: viewController, oauthSwift: oauth)
         self.oauth = oauth
-        _ = oauth.authorize(withCallbackURL: URL(string: callbackUrl), scope: scope, state: state, completionHandler: { result in
+        _ = oauth.authorize(withCallbackURL: URL(string: callbackUrl), scope: scope, state: state, parameters: authorizeParameters, completionHandler: { result in
             switch result {
             case .success(let token):
                 completion(.success(token))
@@ -82,7 +86,7 @@ public class CloudServiceConnector: CloudServiceOAuth {
     public func renewToken(with refreshToken: String, completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
         let oauth = OAuth2Swift(consumerKey: appId, consumerSecret: appSecret, authorizeUrl: authorizeUrl, accessTokenUrl: accessTokenUrl, responseType: responseType, contentType: nil)
         oauth.allowMissingStateCheck = true
-        oauth.renewAccessToken(withRefreshToken: refreshToken) { result in
+        oauth.renewAccessToken(withRefreshToken: refreshToken, parameters: tokenParameters) { result in
             switch result {
             case .success(let token):
                 completion(.success(token))
@@ -200,5 +204,29 @@ public class PCloudConnector: CloudServiceConnector {
     public override func renewToken(with refreshToken: String, completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
         // pCloud OAuth does not respond with a refresh token, so renewToken is unsupported.
         completion(.failure(CloudServiceError.unsupported))
+    }
+}
+
+public class Cloud189Connector: CloudServiceConnector {
+    
+    public override var authorizeUrl: String {
+        return "https://api.cloud.189.cn/app/oauth/authorize"
+    }
+    
+    public override var accessTokenUrl: String {
+        return "https://api.cloud.189.cn/app/oauth/token"
+    }
+    
+    public override var authorizeParameters: OAuthSwift.Parameters {
+        
+        let timestamp = Int64(Date().timeIntervalSince1970)
+        let key = String(format: "appId=%@&timestamp=%ld", appId, timestamp)
+        let sign = HMAC.sign(hashMethod: .sha1, key: key.data(using: .utf8)!, message: appSecret.data(using: .utf8)!)
+        
+        var params: [String: Any] = [:]
+        params["sign"] = sign
+        params["returnURL"] = callbackUrl
+        params["timestamp"] = timestamp
+        return params
     }
 }
