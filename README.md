@@ -2,6 +2,7 @@
 
 Easy to integrate cloud service using Oauth2. Supported platforms:
 
+- [x] AliyunDrive
 - [x] BaiduPan
 - [x] Box
 - [x] Dropbox
