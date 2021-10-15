@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CloudServiceKit: 47087e7892c5c78f1b7c87f52959a924e0c76707
+  CloudServiceKit: 17f6482fc60fa234027a5179b2611b7e7eaea8db
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
 
