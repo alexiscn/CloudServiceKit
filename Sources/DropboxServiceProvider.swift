@@ -12,6 +12,8 @@ import Foundation
  */
 public class DropboxServiceProvider: CloudServiceProvider {
 
+    public var delegate: CloudServiceProviderDelegate?
+    
     /// The name of service provider.
     public var name: String { return "Dropbox" }
     

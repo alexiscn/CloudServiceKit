@@ -34,7 +34,9 @@ public protocol CloudServiceResponseProcessing {
     ///   - response: The response object to be processed.
     ///   - completion: The completion block.
     func shouldProcessResponse(_ response: HTTPResult, completion: @escaping CloudCompletionHandler) -> Bool
+ 
     
+    func isUnauthorizedResponse(_ response: HTTPResult) -> Bool
 }
 
 /// Some cloud service (eg: BaiduPan, Dropbox) supports batch operations
@@ -54,9 +56,16 @@ public protocol CloudServiceBatching {
     func moveItems(_ items: [CloudItem], to directory: CloudItem, completion: @escaping CloudCompletionHandler)
 }
 
+public protocol CloudServiceProviderDelegate: AnyObject {
+    func renewAccessToken(withRefreshToken refreshToken: String,
+                          completion: @escaping (Result<URLCredential, Error>) -> Void)
+}
+
 /// The protocol of cloud service provider.
 public protocol CloudServiceProvider: AnyObject, CloudServiceResponseProcessing {
 
+    var delegate: CloudServiceProviderDelegate? { get set }
+    
     /// The name the cloud service.
     var name: String { get }
     
@@ -158,15 +167,24 @@ extension CloudServiceProvider {
         return nil
     }
     
+    public var delegate: CloudServiceProviderDelegate? {
+        return nil
+    }
+    
     public func shouldProcessResponse(_ response: HTTPResult, completion: @escaping CloudCompletionHandler) -> Bool {
         return false
+    }
+    
+    public func isUnauthorizedResponse(_ response: HTTPResult) -> Bool {
+        // most cloud service use http code 401 as unauthorized response
+        return response.statusCode == 401
     }
 }
 
 // MARK: - Helper
 extension CloudServiceProvider {
     
-    func fileSize(of fileURL: URL) -> Int64? {
+    public func fileSize(of fileURL: URL) -> Int64? {
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
             return nil
         }
@@ -227,7 +245,7 @@ extension CloudServiceProvider {
         request(.patch, url: url, params: params, data: data, json: json, headers: headers, completion: completion)
     }
     
-    func request(_ method: HTTPMethod,
+    public func request(_ method: HTTPMethod,
                  url: URLComponentsConvertible,
                  params: [String: Any] = [:],
                  data: [String: Any] = [:],
@@ -272,28 +290,47 @@ extension CloudServiceProvider {
                         requestBody: Data? = nil,
                         progressHandler: ((HTTPProgress) -> Void)? = nil,
                         completion: @escaping CloudCompletionHandler) {
-        if let error = response.error {
-            if response.statusCode == 401, let refreshAccessTokenHandler = refreshAccessTokenHandler {
-                refreshAccessTokenHandler { [weak self] result in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let credential):
-                        self.credential = credential
-                        self.request(method, url: url,
-                                     params: params, data: data,
-                                     json: json, headers: headers,
-                                     progressHandler: progressHandler, completion: completion)
-                    case .failure(let error):
-                        completion(CloudResponse(response: response, result: .failure(error)))
-                    }
+        if isUnauthorizedResponse(response), let refreshAccessTokenHandler = refreshAccessTokenHandler {
+            refreshAccessTokenHandler { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let credential):
+                    self.credential = credential
+                    self.request(method, url: url,
+                                 params: params, data: data,
+                                 json: json, headers: headers,
+                                 progressHandler: progressHandler, completion: completion)
+                case .failure(let error):
+                    completion(CloudResponse(response: response, result: .failure(error)))
                 }
-            } else {
-                completion(CloudResponse(response: response, result: .failure(error)))
             }
         } else {
             if !shouldProcessResponse(response, completion: completion) {
                 completion(CloudResponse(response: response, result: .success(response)))
             }
         }
+    }
+}
+
+struct ISO3601DateFormatter {
+    static let shared = ISO3601DateFormatter()
+
+    private let secondsDateFormatter = DateFormatter()
+    private let milisecondsDateFormatter = DateFormatter()
+
+    private init() {
+        secondsDateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
+        milisecondsDateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSZ"
+    }
+    
+    func date(from dateString: String) -> Date? {
+        return (secondsDateFormatter.date(from: dateString)
+                    ?? milisecondsDateFormatter.date(from: dateString))
+    }
+    
+    func date(fromBytes bytes: ArraySlice<UInt8>) -> Date? {
+        guard let dateString = String(bytes: Array(bytes), encoding: .ascii) else { return nil }
+        return (secondsDateFormatter.date(from: dateString)
+            ?? milisecondsDateFormatter.date(from: dateString))
     }
 }

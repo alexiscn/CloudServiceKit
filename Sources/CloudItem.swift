@@ -19,7 +19,7 @@ public class CloudItem: Hashable {
     public let name: String
     
     /// The file path.
-    public let path: String
+    public var path: String
     
     /// A boolean value indicates if the cloud item is directory.
     public let isDirectory: Bool
@@ -59,6 +59,17 @@ public class CloudItem: Hashable {
         hasher.combine(name)
         hasher.combine(path)
         hasher.combine(isDirectory)
+    }
+    
+    
+    /// Fix some cloud service does not return path issue.
+    /// - Parameter directory: The directory to load items.
+    public func fixPath(with directory: CloudItem) {
+        if directory.path == "/" {
+            path = "/" + path
+        } else {
+            path = [directory.path, path].joined(separator: "/")
+        }
     }
 }
 

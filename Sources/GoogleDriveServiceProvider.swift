@@ -14,6 +14,8 @@ import Foundation
  */
 public class GoogleDriveServiceProvider: CloudServiceProvider {
 
+    public var delegate: CloudServiceProviderDelegate?
+    
     /// The name of service provider.
     public var name: String { return "GoogleDrive" }
     
@@ -75,6 +77,7 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
             case .success(let result):
                 if let json = result.json as? [String: Any], let files = json["files"] as? [[String: Any]] {
                     let items = files.compactMap { GoogleDriveServiceProvider.cloudItemFromJSON($0) }
+                    items.forEach { $0.fixPath(with: directory) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -373,7 +376,7 @@ extension GoogleDriveServiceProvider: CloudServiceResponseProcessing {
         }
         let mimeType = json["mimeType"] as? String
         let isDirectory = mimeType == MIMETypes.folder
-        let item = CloudItem(id: id, name: name, path: id, isDirectory: isDirectory, json: json)
+        let item = CloudItem(id: id, name: name, path: name, isDirectory: isDirectory, json: json)
         /// while the size field describe as long in document, but the actually response type is String
         if let size = json["size"] as? Int64 {
             item.size = size

@@ -14,6 +14,8 @@ import CryptoKit
  */
 public class BoxServiceProvider: CloudServiceProvider {
     
+    public var delegate: CloudServiceProviderDelegate?
+    
     /// The name of service provider.
     public var name: String { return "Box" }
     
@@ -69,6 +71,7 @@ public class BoxServiceProvider: CloudServiceProvider {
             case .success(let result):
                 if let json = result.json as? [String: Any], let entries = json["entries"] as? [[String: Any]] {
                     let items = entries.compactMap { BoxServiceProvider.cloudItemFromJSON($0) }
+                    items.forEach { $0.fixPath(with: directory) }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))

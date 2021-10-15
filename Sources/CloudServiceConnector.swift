@@ -98,6 +98,23 @@ public class CloudServiceConnector: CloudServiceOAuth {
     }
 }
 
+// MARK: - CloudServiceProviderDelegate
+extension CloudServiceConnector: CloudServiceProviderDelegate {
+    
+    public func renewAccessToken(withRefreshToken refreshToken: String, completion: @escaping (Result<URLCredential, Error>) -> Void) {
+        renewToken(with: refreshToken) { result in
+            switch result {
+            case .success(let token):
+                let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
+                completion(.success(credential))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+}
+
 // MARK: - BaiduPanConnector
 public class BaiduPanConnector: CloudServiceConnector {
     
@@ -229,4 +246,46 @@ public class Cloud189Connector: CloudServiceConnector {
         params["timestamp"] = timestamp
         return params
     }
+}
+
+
+/// AliyunDriveConnector
+/// A little bit different than CloudServiceConnector. It needs `refreshToken` to connect to the service.
+public class AliyunDriveConnector {
+    
+    public var refreshToken: String
+    
+    public init(refreshToken: String) {
+        self.refreshToken = refreshToken
+    }
+    
+    /// Connect to `AliyunDrive` service. After connected, the refresh token is updated, you can save it for later use.
+    /// - Parameter completion: Completion block.
+    public func connect(completion: @escaping (Result<AliyunDriveServiceProvider, Error>) -> Void) {
+        let url = "https://api.aliyundrive.com/token/refresh"
+        let json = ["refresh_token": refreshToken]
+        Just.post(url, json: json, asyncCompletionHandler: { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self, let object = result.json as? [String: Any] else {
+                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+                    return
+                }
+                if let _ = object["code"] as? String, let message = object["message"] as? String {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: message])))
+                } else if let accessToken = object["access_token"] as? String,
+                          let newRefreshToken = object["refresh_token"] as? String,
+                          let nickname = object["nick_name"] as? String,
+                          let driveId = object["default_drive_id"] as? String {
+                    self.refreshToken = newRefreshToken
+                    let credential = URLCredential(user: nickname, password: accessToken, persistence: .permanent)
+                    let provider = AliyunDriveServiceProvider(credential: credential)
+                    provider.driveId = driveId
+                    completion(.success(provider))
+                } else {
+                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+                }
+            }
+        })
+    }
+    
 }

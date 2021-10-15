@@ -14,6 +14,8 @@ import Foundation
  */
 public class OneDriveServiceProvider: CloudServiceProvider {
     
+    public var delegate: CloudServiceProviderDelegate?
+    
     /// Route to access file container on OneDrive. For default logined user use `.me` otherwise you can acesss
     /// container based on drive id, group id, site id or user id for another user's default container
     public enum Route {
@@ -365,7 +367,7 @@ extension OneDriveServiceProvider: CloudServiceResponseProcessing {
            let parentPath = (parentReference["path"] as? String)?.removingPercentEncoding {
             path = [parentPath, name].joined(separator: "/")
         } else {
-            path = id
+            path = name
         }
         let isDirectory = json["folder"] != nil
         let item = CloudItem(id: id, name: name, path: path, isDirectory: isDirectory, json: json)
@@ -438,15 +440,15 @@ extension OneDriveServiceProvider {
                                 } else if json["file"] != nil {
                                     progress.completedUnitCount = totalLength
                                     progressHandler(progress)
-                                    fileHandle.closeFile()
+                                    try? fileHandle.close()
                                     completion(.init(response: result, result: .success(result)))
                                 }
                             } else {
-                                fileHandle.closeFile()
+                                try? fileHandle.close()
                                 completion(.init(response: result, result: .failure(CloudServiceError.responseDecodeError(result))))
                             }
                         case .failure(let error):
-                            fileHandle.closeFile()
+                            try? fileHandle.close()
                             completion(.init(response: response.response, result: .failure(error)))
                         }
                     }

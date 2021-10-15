@@ -13,6 +13,8 @@ import OAuthSwift
  */
 public class PCloudServiceProvider: CloudServiceProvider {
     
+    public var delegate: CloudServiceProviderDelegate?
+    
     /// The name of service provider.
     public var name: String { return "pCloud" }
     
@@ -76,6 +78,11 @@ public class PCloudServiceProvider: CloudServiceProvider {
                    let metadata = json["metadata"] as? [String: Any],
                    let list = metadata["contents"] as? [[String: Any]] {
                     let items = list.compactMap { PCloudServiceProvider.cloudItemFromJSON($0) }
+                    items.forEach { item in
+                        if item.name == item.path {
+                            item.path = [directoryItem.path, item.path].joined(separator: "/")
+                        }
+                    }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))

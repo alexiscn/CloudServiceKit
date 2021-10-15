@@ -14,6 +14,8 @@ import CryptoKit
  */
 public class BaiduPanServiceProvider: CloudServiceProvider {
     
+    public var delegate: CloudServiceProviderDelegate?
+    
     /// The name of service provider.
     public var name: String { return "BaiduPan" }
     
@@ -371,7 +373,10 @@ public class BaiduPanServiceProvider: CloudServiceProvider {
         let tempURL = URL(fileURLWithPath: NSTemporaryDirectory().appending("/\(filename)"))
         do {
             try data.write(to: tempURL)
-            uploadFile(tempURL, to: directory, progressHandler: progressHandler, completion: completion)
+            uploadFile(tempURL, to: directory, progressHandler: progressHandler) { response in
+                try? FileManager.default.removeItem(at: tempURL)
+                completion(response)
+            }
         } catch {
             completion(CloudResponse(response: nil, result: .failure(error)))
         }
