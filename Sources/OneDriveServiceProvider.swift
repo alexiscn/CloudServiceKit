@@ -456,8 +456,8 @@ extension OneDriveServiceProvider {
                     completion(.init(response: nil, result: .failure(error)))
                 }
             }
-            
-            perform(expectedRange: "0-\(maximumChunkSize - 1)", totalLength: totalLength)
+            let firstRangeUpper = min(Int64(maximumChunkSize) - 1, totalLength - 1)
+            perform(expectedRange: "0-\(firstRangeUpper)", totalLength: totalLength)
         } catch {
             completion(.init(response: nil, result: .failure(error)))
         }
