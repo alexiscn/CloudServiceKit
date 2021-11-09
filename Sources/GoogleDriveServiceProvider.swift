@@ -385,7 +385,7 @@ extension GoogleDriveServiceProvider: CloudServiceResponseProcessing {
         }
         item.fileHash = json["md5Checksum"] as? String
         
-        let dateFormatter = ISO8601DateFormatter()
+        let dateFormatter = ISO3601DateFormatter()
         if let createdTime = json["createdTime"] as? String {
             item.creationDate = dateFormatter.date(from: createdTime)
         }

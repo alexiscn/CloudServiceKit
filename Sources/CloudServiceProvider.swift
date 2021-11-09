@@ -318,7 +318,7 @@ struct ISO3601DateFormatter {
     private let secondsDateFormatter = DateFormatter()
     private let milisecondsDateFormatter = DateFormatter()
 
-    private init() {
+    init() {
         secondsDateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZ"
         milisecondsDateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSSZ"
     }
