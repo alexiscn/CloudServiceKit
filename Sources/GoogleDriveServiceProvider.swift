@@ -19,8 +19,17 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     /// The name of service provider.
     public var name: String { return "GoogleDrive" }
     
-    public var rootItem: CloudItem { return CloudItem(id: "root", name: name, path: "/") }
+    /// If not empty, file operation do to target shared drive
+    public var sharedDrive: SharedDrive? = nil
     
+    public var rootItem: CloudItem {
+        if let sharedDrive = sharedDrive {
+            return CloudItem(id: sharedDrive.id, name: sharedDrive.name, path: "/")
+        } else {
+            return CloudItem(id: "root", name: name, path: "/")
+        }
+    }
+        
     public var credential: URLCredential?
     
     /// The api url of Google Drive Service. Which is [https://www.googleapis.com/drive/v3]() .
@@ -70,8 +79,14 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         let url = apiURL.appendingPathComponent("files")
         
         var params: [String: Any] = [:]
-        params["q"] = String(format: "'%@' in parents", directory.id)
+        params["q"] = String(format: "trashed = false and '%@' in parents", directory.id)
         params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink)"
+        if let sharedDrive = sharedDrive {
+            params["includeItemsFromAllDrives"] = true
+            params["driveId"] = sharedDrive.id
+            params["supportsAllDrives"] = true
+            params["corpora"] = "drive"
+        }
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
@@ -118,7 +133,15 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         data["mimeType"] = MIMETypes.folder
         data["name"] = folderName
         data["parents"] = [directory.id]
-        post(url: url, data: data, completion: completion)
+        
+        var params: [String: Any] = [:]
+        if let sharedDrive = sharedDrive {
+            params["includeItemsFromAllDrives"] = true
+            params["driveId"] = sharedDrive.id
+            params["supportsAllDrives"] = true
+            params["corpora"] = "drive"
+        }
+        post(url: url, params: params, json: data, completion: completion)
     }
     
     /// Get downloadable request of cloud file.
@@ -176,6 +199,48 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         }
     }
     
+    /// Lists the user's shared drives.
+    /// - Parameter completion: Completion block.
+    public func listSharedDrives(completion: @escaping (Result<[GoogleDriveServiceProvider.SharedDrive], Error>) -> Void) {
+        let url = apiURL.appendingPathComponent("drives")
+        
+        var drives: [GoogleDriveServiceProvider.SharedDrive] = []
+        func fetch(pageToken: String? = nil) {
+            var params: [String: Any] = [:]
+            params["pageSize"] = 50
+            if let pageToken = pageToken {
+                params["pageToken"] = pageToken
+            }
+            
+            get(url: url, params: params) { response in
+                switch response.result {
+                case .success(let result):
+                    if let json = result.json as? [String: Any], let list = json["drives"] as? [Any] {
+                        for item in list {
+                            if let object = item as? [String: Any],
+                                let id = object["id"] as? String,
+                                let name = object["name"] as? String {
+                                let drive = SharedDrive(id: id, name: name)
+                                drives.append(drive)
+                            }
+                        }
+                        if let nextPageToken = json["nextPageToken"] as? String, !nextPageToken.isEmpty {
+                            fetch(pageToken: nextPageToken)
+                        } else {
+                            completion(.success(drives))
+                        }
+                    } else {
+                        completion(.failure(CloudServiceError.responseDecodeError(result)))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+        
+        fetch()
+    }
+    
     /// Move item to target directory.
     /// Document can be found here: https://developers.google.com/drive/api/v3/reference/files/update
     /// - Parameters:
@@ -199,7 +264,11 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     ///   - completion: Completion callback.
     public func removeItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("files/\(item.id)")
-        delete(url: url, completion: completion)
+        var params: [String: Any] = [:]
+        if sharedDrive != nil {
+            params["supportsAllDrives"] = true
+        }
+        delete(url: url, params: params, completion: completion)
     }
     
     /// Rename cloud file to a new name.
@@ -210,9 +279,14 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     ///   - completion: Completion block.
     public func renameItem(_ item: CloudItem, newName: String, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("files/\(item.id)")
-        var data: [String: Any] = [:]
-        data["name"] = newName
-        patch(url: url, data: data, completion: completion)
+        var json: [String: Any] = [:]
+        json["name"] = newName
+        
+        var params: [String: Any] = [:]
+        if sharedDrive != nil {
+            params["supportsAllDrives"] = true
+        }
+        patch(url: url, params: params, json: json, completion: completion)
     }
 
     /// Search files which name contains keyword.
@@ -250,7 +324,11 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     ///   - completion: Completion block.
     public func uploadData(_ data: Data, filename: String, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
         let url = uploadURL.appendingPathComponent("files")
-        let params = ["uploadType": "multipart"]
+        var params: [String: Any] = [:]
+        params["uploadType"] = "multipart"
+        if sharedDrive != nil {
+            params["supportsAllDrives"] = true
+        }
         let json: [String: Any] = ["name": filename, "parents": [directory.id]]
         
         // Google Drive multipart upload is not supported by Just
@@ -303,7 +381,12 @@ extension GoogleDriveServiceProvider {
         }
         
         let url = uploadURL.appendingPathComponent("files")
-        let params = ["uploadType": "resumable"]
+        var params: [String: Any] = [:]
+        params["uploadType"] = "resumable"
+        if sharedDrive != nil {
+            params["supportsAllDrives"] = true
+        }
+        
         let json: [String: Any] = ["name": fileURL.lastPathComponent, "parents": [directory.id]]
         post(url: url, params: params, json: json) { [weak self] response in
             guard let self = self else { return }
@@ -451,6 +534,20 @@ extension GoogleDriveServiceProvider {
         
         let uploadUrl: String
         
+    }
+    
+}
+
+extension GoogleDriveServiceProvider {
+    
+    public struct SharedDrive {
+        public let id: String
+        public let name: String
+        
+        public init(id: String, name: String) {
+            self.id = id
+            self.name = name
+        }
     }
     
 }

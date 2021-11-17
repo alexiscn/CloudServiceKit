@@ -219,9 +219,11 @@ extension CloudServiceProvider {
     }
     
     public func delete(url: URLComponentsConvertible,
+                       params: [String: Any] = [:],
+                       data: [String: Any] = [:],
                        headers: [String: String] = [:],
                        completion: @escaping CloudCompletionHandler) {
-        request(.delete, url: url, params: [:], data: [:], headers: headers, completion: completion)
+        request(.delete, url: url, params: params, data: data, headers: headers, completion: completion)
     }
     
     public func put(url: URLComponentsConvertible,
