@@ -235,11 +235,17 @@ public class AliyunDriveServiceProvider: CloudServiceProvider {
         checkPrehash(fileURL: fileURL, size: size, directory: directory, progressHandler: progressHandler, completion: completion)
     }
     
-    public func getDownloadUrl(of item: CloudItem, completion: @escaping (Result<URL, Error>) -> Void) {
+    public func getDownloadUrl(of item: CloudItem, parameters: [String: Any] = [:], completion: @escaping (Result<URL, Error>) -> Void) {
         let url = "https://api.aliyundrive.com/v2/file/get_download_url"
         var data: [String: Any] = [:]
         data["drive_id"] = driveId
         data["file_id"] = item.id
+        
+        if !parameters.isEmpty {
+            for (key, value) in parameters {
+                data[key] = value
+            }
+        }
         post(url: url, json: data) { response in
             switch response.result {
             case .success(let result):
@@ -329,6 +335,7 @@ extension AliyunDriveServiceProvider {
     
     public func shouldProcessResponse(_ response: HTTPResult, completion: @escaping CloudCompletionHandler) -> Bool {
         guard let json = response.json as? [String: Any] else { return false }
+        if response.statusCode == 409 { return false }
         if let _ = json["code"] as? String, let msg = json["message"] as? String {
             completion(CloudResponse(response: response, result: .failure(CloudServiceError.serviceError(-1, msg))))
             return true
