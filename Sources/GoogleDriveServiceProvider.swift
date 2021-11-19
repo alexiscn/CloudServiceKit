@@ -77,30 +77,44 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     ///   - completion: Completion callback.
     public func contentsOfDirectory(_ directory: CloudItem, completion: @escaping (Result<[CloudItem], Error>) -> Void) {
         let url = apiURL.appendingPathComponent("files")
-        
-        var params: [String: Any] = [:]
-        params["q"] = String(format: "trashed = false and '%@' in parents", directory.id)
-        params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink)"
-        if let sharedDrive = sharedDrive {
-            params["includeItemsFromAllDrives"] = true
-            params["driveId"] = sharedDrive.id
-            params["supportsAllDrives"] = true
-            params["corpora"] = "drive"
-        }
-        get(url: url, params: params) { response in
-            switch response.result {
-            case .success(let result):
-                if let json = result.json as? [String: Any], let files = json["files"] as? [[String: Any]] {
-                    let items = files.compactMap { GoogleDriveServiceProvider.cloudItemFromJSON($0) }
-                    items.forEach { $0.fixPath(with: directory) }
-                    completion(.success(items))
-                } else {
-                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+        var contents: [CloudItem] = []
+        func fetch(pageToken: String? = nil) {
+            var params: [String: Any] = [:]
+            params["q"] = String(format: "trashed = false and '%@' in parents", directory.id)
+            params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails)"
+            if let pageToken = pageToken {
+                params["pageToken"] = pageToken
+            }
+            
+            if let sharedDrive = sharedDrive {
+                params["includeItemsFromAllDrives"] = true
+                params["driveId"] = sharedDrive.id
+                params["supportsAllDrives"] = true
+                params["corpora"] = "drive"
+            }
+            get(url: url, params: params) { response in
+                switch response.result {
+                case .success(let result):
+                    if let json = result.json as? [String: Any], let files = json["files"] as? [[String: Any]] {
+                        let items = files.compactMap { GoogleDriveServiceProvider.cloudItemFromJSON($0) }
+                        items.forEach { $0.fixPath(with: directory) }
+                        contents.append(contentsOf: items)
+                        if let nextPageToken = json["nextPageToken"] as? String, !nextPageToken.isEmpty {
+                            fetch(pageToken: nextPageToken)
+                        } else {
+                            completion(.success(contents))
+                        }
+                        completion(.success(items))
+                    } else {
+                        completion(.failure(CloudServiceError.responseDecodeError(result)))
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
                 }
-            case .failure(let error):
-                completion(.failure(error))
             }
         }
+        
+        fetch(pageToken: nil)
     }
     
     /// Creates a copy of a file.
