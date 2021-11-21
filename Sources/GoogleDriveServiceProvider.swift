@@ -104,7 +104,6 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
                         } else {
                             completion(.success(contents))
                         }
-                        completion(.success(items))
                     } else {
                         completion(.failure(CloudServiceError.responseDecodeError(result)))
                     }
