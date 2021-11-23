@@ -81,7 +81,7 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         func fetch(pageToken: String? = nil) {
             var params: [String: Any] = [:]
             params["q"] = String(format: "trashed = false and '%@' in parents", directory.id)
-            params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails)"
+            params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails),nextPageToken"
             if let pageToken = pageToken {
                 params["pageToken"] = pageToken
             }
