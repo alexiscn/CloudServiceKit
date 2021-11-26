@@ -84,6 +84,12 @@ public class CloudServiceConnector: CloudServiceOAuth {
     }
     
     public func renewToken(with refreshToken: String, completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
+        print("=>", appId)
+        print("=>", appSecret)
+        print("=>", authorizeUrl)
+        print("=>", accessTokenUrl)
+        print("=>", responseType)
+        print("=>", tokenParameters)
         let oauth = OAuth2Swift(consumerKey: appId, consumerSecret: appSecret, authorizeUrl: authorizeUrl, accessTokenUrl: accessTokenUrl, responseType: responseType, contentType: nil)
         oauth.allowMissingStateCheck = true
         oauth.renewAccessToken(withRefreshToken: refreshToken, parameters: tokenParameters) { result in

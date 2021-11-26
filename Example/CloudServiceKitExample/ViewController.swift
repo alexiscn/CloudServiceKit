@@ -153,7 +153,7 @@ class ViewController: UIViewController {
                     let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
                     self.navigationController?.pushViewController(vc, animated: true)
                 case .failure(let error):
-                    print(error)
+                    print("=>", error.localizedDescription)
                 }
             }
         } else {
@@ -166,7 +166,7 @@ class ViewController: UIViewController {
             let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
+        self.connector = connector
     }
 }
 
