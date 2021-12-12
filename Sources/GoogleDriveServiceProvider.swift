@@ -496,7 +496,10 @@ extension GoogleDriveServiceProvider: CloudServiceResponseProcessing {
         guard let json = response.json as? [String: Any] else { return false }
         if let error = json["error"] as? [String: Any], !error.isEmpty {
             let code = (json["code"] as? Int) ?? 400
-            let msg = json["message"] as? String
+            var msg = json["message"] as? String
+            if msg == nil, let innerError = (error["errors"] as? [Any])?.first as? [String: Any] {
+                msg = innerError["message"] as? String
+            }
             completion(.init(response: response, result: .failure(CloudServiceError.serviceError(code, msg))))
             return true
         }

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The cloud service error.
-public enum CloudServiceError: Error {
+public enum CloudServiceError: LocalizedError {
     /// The method not supported.
     case unsupported
     /// JSON Decode response error.
@@ -17,4 +17,13 @@ public enum CloudServiceError: Error {
     case serviceError(Int, String?)
     /// The upload file url not exist.
     case uploadFileNotExist
+    
+    public var errorDescription: String? {
+        switch self {
+        case .unsupported: return "Unsupported"
+        case .responseDecodeError(_): return "Response Decode Error"
+        case .serviceError(_, let message): return message ?? "Unknown"
+        case .uploadFileNotExist: return "Upload file not found"
+        }
+    }
 }
