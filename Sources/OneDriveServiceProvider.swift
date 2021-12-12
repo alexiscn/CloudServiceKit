@@ -57,7 +57,7 @@ public class OneDriveServiceProvider: CloudServiceProvider {
     public var name: String { return "OneDrive" }
     
     /// The root folder of OneDrove service. You can use this property to list root items.
-    public var rootItem: CloudItem { return CloudItem(id: "0", name: name, path: "") }
+    public var rootItem: CloudItem { return CloudItem(id: "root", name: name, path: "root:") }
     
     public var credential: URLCredential?
     
@@ -117,7 +117,7 @@ public class OneDriveServiceProvider: CloudServiceProvider {
             let url: URL
             if let link = nextLink, !link.isEmpty, let linkURL = URL(string: link) {
                 url = linkURL
-            } else if directory.path.isEmpty {
+            } else if directory.id == "root" {
                 url = apiURL.appendingPathComponent("me/drive/root/children")
             } else {
                 url = apiURL.appendingPathComponent("me/drive/items/\(directory.id)/children")
@@ -338,7 +338,12 @@ public class OneDriveServiceProvider: CloudServiceProvider {
         } else {
             folderPath = directory.path
         }
-        let url = apiURL.appendingPathComponent("\(folderPath)/\(fileURL.lastPathComponent):/createUploadSession")
+        let url: URL
+        if directory.id == "root" {
+            url = apiURL.appendingPathComponent("me/drive/root:/\(fileURL.lastPathComponent):/createUploadSession")
+        } else {
+            url = apiURL.appendingPathComponent("\(folderPath)/\(fileURL.lastPathComponent):/createUploadSession")
+        }
         post(url: url) { [weak self] response in
             guard let self = self else { return }
             switch response.result {
