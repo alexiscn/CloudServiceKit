@@ -298,13 +298,18 @@ public class BaiduPanServiceProvider: CloudServiceProvider {
                    let ltime = json["ltime"] as? Int,
                    let adToken = json["adToken"] as? String {
                     print(ltime)
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + TimeInterval(ltime)) {
-                        if let request = self.streamingVideoRequest(item, adToken: adToken) {
-                            completion(.success(request))
-                        } else {
-                            completion(.failure(CloudServiceError.unsupported))
-                        }
-//                    }
+                    if let request = self.streamingVideoRequest(item, adToken: adToken) {
+                        completion(.success(request))
+                    } else {
+                        completion(.failure(CloudServiceError.unsupported))
+                    }
+                } else {
+                    let headers = CaseInsensitiveDictionary(dictionary: ["User-Agent": "pan.baidu.com"])
+                    if result.text?.hasPrefix("#EXTM3U") ?? false, let request = Just.adaptor.synthesizeRequest(.get, url: url, params: params, data: [:], json: nil, headers: headers, files: [:], auth: nil, timeout: nil, urlQuery: nil, requestBody: nil) {
+                        completion(.success(request))
+                    } else {
+                        completion(.failure(CloudServiceError.responseDecodeError(result)))
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
