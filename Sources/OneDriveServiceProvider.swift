@@ -381,6 +381,12 @@ extension OneDriveServiceProvider: CloudServiceResponseProcessing {
            let hashes = file["hashes"] as? [String: Any] {
             item.fileHash = hashes["sha1Hash"] as? String
         }
+        if let createdDate = json["createdDateTime"] as? String {
+            item.creationDate = ISO3601DateFormatter.shared.date(from: createdDate)
+        }
+        if let modifiedDate = json["lastModifiedDateTime"] as? String {
+            item.modificationDate = ISO3601DateFormatter.shared.date(from: modifiedDate)
+        }
         return item
     }
     
