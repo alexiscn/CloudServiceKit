@@ -115,21 +115,23 @@ public class OneDriveServiceProvider: CloudServiceProvider {
         
         func load(nextLink: String?) {
             let url: URL
+            var params: [String: String] = [:]
             if let link = nextLink, !link.isEmpty, let linkURL = URL(string: link) {
                 url = linkURL
             } else if directory.id == "root" {
                 url = apiURL.appendingPathComponent("me/drive/root/children")
+                params = ["$expand": "thumbnails"]
             } else {
                 url = apiURL.appendingPathComponent("me/drive/items/\(directory.id)/children")
+                params = ["$expand": "thumbnails"]
             }
-            let params = ["$expand": "thumbnails"]
             get(url: url, params: params) { response in
                 switch response.result {
                 case .success(let result):
                     if let json = result.json as? [String: Any], let files = json["value"] as? [[String: Any]] {
                         items.append(contentsOf: files.compactMap { OneDriveServiceProvider.cloudItemFromJSON($0) })
                         
-                        if let nextLink = json["odata.nextLink"] as? String, !nextLink.isEmpty {
+                        if let nextLink = json["@odata.nextLink"] as? String, !nextLink.isEmpty {
                             load(nextLink: nextLink)
                         } else {
                             completion(.success(items))
@@ -188,6 +190,8 @@ public class OneDriveServiceProvider: CloudServiceProvider {
                 switch response.result {
                 case .success(let result):
                     if let location = result.headers["Content-Location"], let url = URL(string: location) {
+                        completion(.success(url))
+                    } else if let location = result.headers["Location"], let url = URL(string: location) {
                         completion(.success(url))
                     } else {
                         completion(.failure(CloudServiceError.responseDecodeError(result)))
