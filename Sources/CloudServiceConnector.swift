@@ -67,11 +67,14 @@ public class CloudServiceConnector: CloudServiceOAuth {
         self.state = state
     }
     
+    
     public func connect(viewController: UIViewController,
                         completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
         let oauth = OAuth2Swift(consumerKey: appId, consumerSecret: appSecret, authorizeUrl: authorizeUrl, accessTokenUrl: accessTokenUrl, responseType: responseType, contentType: nil)
         oauth.allowMissingStateCheck = true
+        #if os(iOS)
         oauth.authorizeURLHandler = SafariURLHandler(viewController: viewController, oauthSwift: oauth)
+        #endif
         self.oauth = oauth
         _ = oauth.authorize(withCallbackURL: URL(string: callbackUrl), scope: scope, state: state, parameters: authorizeParameters, completionHandler: { result in
             switch result {
