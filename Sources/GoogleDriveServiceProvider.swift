@@ -85,7 +85,8 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
             if let pageToken = pageToken {
                 params["pageToken"] = pageToken
             }
-            
+            params["includeItemsFromAllDrives"] = true
+            params["supportsAllDrives"] = true
             if let sharedDrive = sharedDrive {
                 params["includeItemsFromAllDrives"] = true
                 params["driveId"] = sharedDrive.id
