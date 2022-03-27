@@ -81,7 +81,7 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         func fetch(pageToken: String? = nil) {
             var params: [String: Any] = [:]
             params["q"] = String(format: "trashed = false and '%@' in parents", directory.id)
-            params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails),nextPageToken"
+            params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails,parents),nextPageToken"
             if let pageToken = pageToken {
                 params["pageToken"] = pageToken
             }
@@ -265,7 +265,12 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         let url = apiURL.appendingPathComponent("files/\(item.id)")
         var params: [String: Any] = [:]
         params["addParents"] = directory.id
-        //params["removeParents"] = item
+        if sharedDrive != nil {
+            params["supportsAllDrives"] = true
+            if let parents = item.json["parents"] as? [String] {
+                params["removeParents"] = parents.joined(separator: ",")
+            }
+        }
         patch(url: url, params: params, completion: completion)
     }
     
