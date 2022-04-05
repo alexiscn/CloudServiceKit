@@ -318,6 +318,12 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         var params: [String: Any] = [:]
         params["q"] = "name contains '\(keyword)'"
         params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,parents)"
+        if let sharedDrive = sharedDrive {
+            params["includeItemsFromAllDrives"] = true
+            params["driveId"] = sharedDrive.id
+            params["supportsAllDrives"] = true
+            params["corpora"] = "drive"
+        }
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
