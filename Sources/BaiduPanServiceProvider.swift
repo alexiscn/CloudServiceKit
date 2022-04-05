@@ -351,6 +351,7 @@ public class BaiduPanServiceProvider: CloudServiceProvider {
         var params: [String: Any] = [:]
         params["method"] = "search"
         params["key"] = keyword
+        params["recursion"] = 1
         params["access_token"] = credential?.password ?? ""
         get(url: url, params: params) { response in
             switch response.result {
