@@ -15,6 +15,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
     case googleDrive
     case oneDrive
     case pCloud
+    case quark
     
     var title: String {
         switch self {
@@ -24,6 +25,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
         case .googleDrive: return "Google Drive"
         case .oneDrive: return "OneDrive"
         case .pCloud: return "pCloud"
+        case .quark: return "Quark"
         }
     }
     
@@ -35,6 +37,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
         case .googleDrive: return UIImage(named: "googledrive")
         case .oneDrive: return UIImage(named: "onedrive")
         case .pCloud: return UIImage(named: "pcloud")
+        case .quark: return UIImage(named: "quark")
         }
     }
 }
