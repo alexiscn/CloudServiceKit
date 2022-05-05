@@ -7,124 +7,134 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08DFBCDB7634B05F99D479949AD56FA1 /* Collection+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE17ECFFDD089905F31E602DEC2C9FF /* Collection+OAuthSwift.swift */; };
-		16DBE3405508AB163CCA728E92F89E21 /* QuarkServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89ECCD4BC96046927B21CCEC399FD0D /* QuarkServiceProvider.swift */; };
-		1DAD591470F1DF979FAEA69DE6479B70 /* CloudItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08DBF32FF1F3A0A7ED50F7BE168A71A1 /* CloudItem.swift */; };
-		2083AB3823C680866C1190AE6C99A4AA /* NotificationCenter+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2CBF3D1C08F7017409B292552C40C4 /* NotificationCenter+OAuthSwift.swift */; };
-		24E713E5575AED2C6CA1DE8D92A2C5ED /* CloudServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80F7F7FC0E945C778B424E1B35EC84D /* CloudServiceError.swift */; };
-		271FF6770EE88B32389AED3FE457C916 /* OneDriveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924E8343E266DB740C581FBCA8F18203 /* OneDriveServiceProvider.swift */; };
-		28EDDAE2733344DA91A7B60784EFC1B5 /* Int+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC41B8CE5F6686548A6EBDA64981DD4 /* Int+OAuthSwift.swift */; };
-		291E239B0731627465B89F2346EB85F2 /* Data+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D2F813452DBE8B182B12E3061DC2BC /* Data+OAuthSwift.swift */; };
+		07837AFB91B9D5E6ED67E7B6B30897A0 /* SafariURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E04975D56884687547E381B85DABFE /* SafariURLHandler.swift */; };
+		0915505423F982BF7E7674B37AA216D7 /* OAuthSwiftClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEC370529C40BD34500A964313F3933 /* OAuthSwiftClient.swift */; };
+		0CFD0BE0507FED251E6EDEE23E5B295F /* ASWebAuthenticationURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3332BA9AF11ED786DF23C29ACB636AB6 /* ASWebAuthenticationURLHandler.swift */; };
+		117CA845ACEA5833688A2996A59E0D4B /* GoogleDriveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D22F1F035687EB29F4A6D0F759FFEF7 /* GoogleDriveServiceProvider.swift */; };
+		1512543C7744118F5C0792D5CD9884C5 /* OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB8145EEF65B603F37359271E7083CC /* OAuthSwift.swift */; };
+		1A334E9537090293BAB3EBFA64824F40 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7F52E9440D6BFF0B1159CE55091460 /* SafariServices.framework */; };
+		1C8C7596578D82B26C5502FF76913A39 /* OAuthSwiftOpenURLExternally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807609281798011D52DE6785D7832CC /* OAuthSwiftOpenURLExternally.swift */; };
+		20D4C415F730B1CAC9DA821609F15EB8 /* CloudItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E33C9CDFA6FFF69DB659DEA129127E /* CloudItem.swift */; };
+		25A1D287033414875813D1E17DA8EFD5 /* QuarkServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1666E573726032CA9D0185F9D8B8E094 /* QuarkServiceProvider.swift */; };
+		2676C1E10469C7DFA92ACF5222905C20 /* OAuthWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A51D652E4B9165B48DDBA9F68BBD9F /* OAuthWebViewController.swift */; };
+		29D7FAFF4812876758AC64DD1944DAC0 /* OAuthSwiftURLHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC47AAD2A7F694249DC0597C00CDABF /* OAuthSwiftURLHandlerType.swift */; };
+		2B13169E88FFE3197CF19E7AE98A16EA /* String+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B9CDB8D658DB6DC2D42E132D40E33D /* String+OAuthSwift.swift */; };
+		2B73899F487686369F42DC2F88229619 /* BaiduPanServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF72CE8DFFE0940ADD0C5BF3444DDBA /* BaiduPanServiceProvider.swift */; };
 		2C9022F02292EA5FB21AB5FFC27D05F8 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22851E77535844E5C690DC2129ED57BF /* Keychain.swift */; };
-		36669A8AE1D72372E3136E205E782102 /* OAuthSwiftURLHandlerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE1B7E3BFDB39C56D5660E5316BEBB /* OAuthSwiftURLHandlerProxy.swift */; };
-		4337702064E3847DB5AE630AE3C48CFC /* OAuthSwiftResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DA55127248C20DDD1CF3AB4A942EFE /* OAuthSwiftResponse.swift */; };
-		44BD29C95A72784E83048164C7ED8649 /* OAuthWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26A51D652E4B9165B48DDBA9F68BBD9F /* OAuthWebViewController.swift */; };
-		4ADA8EB0F8C2D12BD4E90DEDC9A77655 /* UIApplication+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2051FDC1E0535BEC38014F21856682B /* UIApplication+OAuthSwift.swift */; };
-		4AFC3112A24969B8A04F4A3245BB345B /* AliyunDriveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BEE894C42D69A31EB24F0AEEC3F30E /* AliyunDriveServiceProvider.swift */; };
-		4BFC67C008EC170FE4FF91E20D6C6843 /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983FBDC8337BF3227E3DD66DBD340D67 /* SHA1.swift */; };
-		4F7394CEE4567964111B3949C227DEBA /* OAuthSwiftURLHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC47AAD2A7F694249DC0597C00CDABF /* OAuthSwiftURLHandlerType.swift */; };
-		4F93627D74F0F8FB0D682B397B3D669E /* ExtensionContextURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA728C16D2D99828C7060CDA9964F0 /* ExtensionContextURLHandler.swift */; };
-		576574CA715479D916C8B40300B91FC7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8458A4F9C89525717D70E4B498B0B296 /* Utils.swift */; };
-		5E74A0C7AAA73206C937583F31D79173 /* NSError+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C5F3268531EA31FED7E1AFAEC83F6D /* NSError+OAuthSwift.swift */; };
-		5FC55599A934C3293D2850CBF7EFF40E /* CloudServiceKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F9BF40D73341A1D29D64E09F78A4D670 /* CloudServiceKit-dummy.m */; };
-		6199B58C853A65FCC11AA166C10C832F /* String+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B9CDB8D658DB6DC2D42E132D40E33D /* String+OAuthSwift.swift */; };
-		6977D1FB04AEDFA888C7EB0211C2B177 /* URLConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC56D638B29C9FF22DFFC7F6C89B53FF /* URLConvertible.swift */; };
-		6A8EA0A32D73D1E739116186C5E73753 /* OAuthLogProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3676DCF7214E017228EB0F42D1596F25 /* OAuthLogProtocol.swift */; };
-		7046DF6F181D69F5BA647E4F7F44558D /* BoxServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509F97D54BD126A78451B27290E395BA /* BoxServiceProvider.swift */; };
-		759450A677AEB94C77469655C4C8894A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */; };
-		76EC75153279E9D1199B1DD4801A3EFD /* OAuthSwiftOpenURLExternally.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807609281798011D52DE6785D7832CC /* OAuthSwiftOpenURLExternally.swift */; };
-		7BABA48E2A4D23B740A3EDCBF87B6BFF /* OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECB8145EEF65B603F37359271E7083CC /* OAuthSwift.swift */; };
-		7F4C13B09448A8FA0966CCB23E466781 /* OAuthSwiftCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD255BB542409DB484A24B01D585E65 /* OAuthSwiftCredential.swift */; };
-		845AE790AB02F348F8E06B0FDB189A5F /* OAuth1Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727AAE32FDA8D5B08B5945BDD4800CE9 /* OAuth1Swift.swift */; };
-		94B34350D0BB2BA54AEA9177A2EDBB9E /* OAuth2Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD44B1AC705E5C1E859686C9B312C1B /* OAuth2Swift.swift */; };
-		9B5EE52B18B4A1ABE5F9A6FD8940ADA3 /* ASWebAuthenticationURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3332BA9AF11ED786DF23C29ACB636AB6 /* ASWebAuthenticationURLHandler.swift */; };
-		A5A2154B857D15E5A4F50A869822C4E3 /* OAuthSwiftError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92BB2CC44E5C6FA147521C9F453B794 /* OAuthSwiftError.swift */; };
-		A5AB7B106AE25855FD20EFC5433D4462 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D7F52E9440D6BFF0B1159CE55091460 /* SafariServices.framework */; };
+		32690E3F11AB2CBE2D32F0DF09805434 /* OAuthLogProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3676DCF7214E017228EB0F42D1596F25 /* OAuthLogProtocol.swift */; };
+		362C40FA913C59ABD0075EA9AE337371 /* NotificationCenter+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2CBF3D1C08F7017409B292552C40C4 /* NotificationCenter+OAuthSwift.swift */; };
+		36579FB2FC0CACE8F9FD6760C1F224C7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */; };
+		3713647FB23579CA6B59D8A56DA9A8D8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137E8A44EFD00B441FD8F4BF60EA25D3 /* Extensions.swift */; };
+		3C614E33A0937DD7F6A8D6864B858480 /* CloudServiceKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E4C875915A441197CDF9E04AAE473F48 /* CloudServiceKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		42062313136CA774B79018FC5B5A7E69 /* OAuthSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C622F16754AF8FFFC1D58982A71EB0 /* OAuthSwift-dummy.m */; };
+		4253F851E8D6DEE386D9FC9D8814EDD8 /* CloudServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DADF8970A08CCF2C61130F0CEA7992 /* CloudServiceProvider.swift */; };
+		562330320DD9D65DEBA9E50FF2CEC4D9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */; };
+		5C5F3A26A462E16527379F6AEDDFF3E5 /* URLConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC56D638B29C9FF22DFFC7F6C89B53FF /* URLConvertible.swift */; };
+		6056CF33BECAA2CA1E78F0BCF28E6865 /* AliyunDriveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAEC327F9C0DC5E7BBA897B07FCC8731 /* AliyunDriveServiceProvider.swift */; };
+		611FCC5F5A3934B8BFDC6DAECBAA6EC9 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8458A4F9C89525717D70E4B498B0B296 /* Utils.swift */; };
+		63643AEC650FD3D1238026A8A66CBB97 /* OAuthSwiftHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625148CC8C1DB8BDAC4DB5246ED31C87 /* OAuthSwiftHTTPRequest.swift */; };
+		6D242AA2DAA425890ABB2668557E56AB /* SHA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983FBDC8337BF3227E3DD66DBD340D67 /* SHA1.swift */; };
+		6D7099DEB09BEC9B1163C7033AA10DF8 /* CloudServiceKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E0C289BC07002B2EE23A6BCE34D33E0 /* CloudServiceKit-dummy.m */; };
+		75065046C0790881A468F8C05BEF1B45 /* Dictionary+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABC9B9C314D02F56D19ABDD661EAD52 /* Dictionary+OAuthSwift.swift */; };
+		783235624849E8B2A0F14EB4CACC26CC /* URL+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19468F85C7A504B94A055CD5E2EB7461 /* URL+OAuthSwift.swift */; };
+		794A7C7EA2A93FB18B8676D5EAE950E0 /* Data+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D2F813452DBE8B182B12E3061DC2BC /* Data+OAuthSwift.swift */; };
+		7B83171063713D781C4AD9702FF3DF40 /* CloudServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26FE5DCEB5EE74D1643BE96F8F7D7EB6 /* CloudServiceError.swift */; };
+		7FBEBDB625E7F6583E542601DD02E732 /* OneDriveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858C357FBDF7ACF5C5D4EBD949001652 /* OneDriveServiceProvider.swift */; };
+		8C9702A522757F705F52DAF6E7CCBE9D /* OAuthSwiftResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DA55127248C20DDD1CF3AB4A942EFE /* OAuthSwiftResponse.swift */; };
+		948FF0158204AFDC29C86F9F7FCD5D4D /* CloudServiceConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF2130957776125229EF6A80FE37186 /* CloudServiceConnector.swift */; };
+		955379E082B4A949D68A56EA9D610B0E /* OAuth2Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD44B1AC705E5C1E859686C9B312C1B /* OAuth2Swift.swift */; };
+		A5CB14003AAB8181F1E84950606E516D /* OAuthSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BE0DCDC804F3C1EF63784BA5A739711 /* OAuthSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9AB133672397A61E8154040713F7D5D /* SFAuthenticationURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A55BAC2B1A61C4A4445B4456DD9A2EE /* SFAuthenticationURLHandler.swift */; };
 		AE13D3FA75FDFB448DD60361E8EDD711 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */; };
-		AF5153B8FEBFF8512270DC25F0ABC167 /* BaiduPanServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F965585DAF3479D4C123E8D6A1336D01 /* BaiduPanServiceProvider.swift */; };
-		B1F7FDA4BC0C41C042F262D551643FB1 /* CloudServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412FDB1851F899AF5EB715731B87229 /* CloudServiceProvider.swift */; };
-		B27FC8A784081B5F4134DCD479BB61D1 /* SafariURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10E04975D56884687547E381B85DABFE /* SafariURLHandler.swift */; };
 		B312B8B8C436A52500E8915982792B8F /* Pods-CloudServiceKitExample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EB12090D2A43EBF028E8973E5E14F797 /* Pods-CloudServiceKitExample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B34517DA8B1EBE4811779E5CF7218E94 /* CloudServiceKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B8D9FAF5889E8FACA185FC191D9AC7 /* CloudServiceKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B8A6601D3E70FB0F94A7ECA598DB3DA3 /* OAuthSwiftClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEC370529C40BD34500A964313F3933 /* OAuthSwiftClient.swift */; };
-		B99833D1E9B2903670B471EEAD47169B /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC97A8A1E4BB462FCAE31875E2D17FEB /* Just.swift */; };
-		BD2CEBF610EE5FE3D1A801C80F4F0E33 /* Dictionary+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABC9B9C314D02F56D19ABDD661EAD52 /* Dictionary+OAuthSwift.swift */; };
-		BD30CA320912A60F705B3F2AE9994115 /* OAuthSwift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C622F16754AF8FFFC1D58982A71EB0 /* OAuthSwift-dummy.m */; };
+		B6DA156287EB074004D065AC8F69EBB4 /* DropboxServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1320D6338E166D078168B906F5BFE19 /* DropboxServiceProvider.swift */; };
+		B75D22942B1167518475B1D353B286F0 /* BoxServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42619A8AB3DD92E12089FA04F6079F /* BoxServiceProvider.swift */; };
+		B7F17D6126377B112381471B76FD9799 /* Collection+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECE17ECFFDD089905F31E602DEC2C9FF /* Collection+OAuthSwift.swift */; };
+		BB540B9FE411D9867A8ECFFD1C3F03A9 /* UIApplication+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2051FDC1E0535BEC38014F21856682B /* UIApplication+OAuthSwift.swift */; };
+		BF774700B18060343D0215060E00E013 /* ExtensionContextURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DDA728C16D2D99828C7060CDA9964F0 /* ExtensionContextURLHandler.swift */; };
 		BF90BFF34BBAD8B2C7A6CE9641145561 /* KeychainAccess-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F264ED231F2B43BD9A812DD8D3392F11 /* KeychainAccess-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C74792AEFC6377174CAD9C89C981D289 /* PCloudServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6B4B51E0F0433046F119DC5BE87356A /* PCloudServiceProvider.swift */; };
-		CA7A3252CD6EFF4A75DF54D7C74342D5 /* URL+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19468F85C7A504B94A055CD5E2EB7461 /* URL+OAuthSwift.swift */; };
-		CACB7C6F482ADC7D22C8CDEAA6829337 /* OAuthSwiftHTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625148CC8C1DB8BDAC4DB5246ED31C87 /* OAuthSwiftHTTPRequest.swift */; };
-		D3851264448158534C358D2609830648 /* CloudServiceConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8A007078F2E3A35774F7561E1DF715F /* CloudServiceConnector.swift */; };
+		C0F9FB2048CA85530A260F83371FFA97 /* OAuthSwiftMultipartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC122D0BD48C0A27335202C9738BEE0 /* OAuthSwiftMultipartData.swift */; };
+		C257330236B597B9DD12E02DE1B3EAA6 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37373EC043871F09E46E78EA1D573A4 /* HMAC.swift */; };
+		C2DCEF76EE655EB39BBD9D950DDFA0BA /* OneOneFiveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1442C5EDD45DBB1F09B8E376EC4911 /* OneOneFiveServiceProvider.swift */; };
+		D322FC9771CBB24B7F8D6C7FC8DD6611 /* OAuthSwiftCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD255BB542409DB484A24B01D585E65 /* OAuthSwiftCredential.swift */; };
+		D5254F51DA10B2F582D43C86947B368C /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = 089FB8D54683EA021BB2FCED72A203EA /* Just.swift */; };
 		D7872876F6FA3B337C293617932694C2 /* Pods-CloudServiceKitExample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CC34FEB9F17059CC80B31BA63D039506 /* Pods-CloudServiceKitExample-dummy.m */; };
-		E38916DD56F27139309E22AF0E3F633B /* DropboxServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DD44DD33E8F3870141128C0725D8DA8 /* DropboxServiceProvider.swift */; };
-		E964B423F776C0AA59573BE8054F2186 /* HMAC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37373EC043871F09E46E78EA1D573A4 /* HMAC.swift */; };
-		EE648D62B46E13A08374C09259D6A2FD /* OAuthSwift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BE0DCDC804F3C1EF63784BA5A739711 /* OAuthSwift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9A0FA3455AFF3B5C7F21BBAF6CE06C0 /* NSError+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C5F3268531EA31FED7E1AFAEC83F6D /* NSError+OAuthSwift.swift */; };
+		E1F80B0846BBFF58534DA88C7C485333 /* PCloudServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470E31BE43F704D8472CC286B46ECCA6 /* PCloudServiceProvider.swift */; };
+		E67E4429743B279E1783C01CEBEFD3A4 /* OAuthSwiftError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92BB2CC44E5C6FA147521C9F453B794 /* OAuthSwiftError.swift */; };
+		ECDC5CBE790CD586158F66529AFA3C8E /* OAuthSwiftURLHandlerProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AE1B7E3BFDB39C56D5660E5316BEBB /* OAuthSwiftURLHandlerProxy.swift */; };
 		EEA3892D8746DA47A2889A0717514533 /* KeychainAccess-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 14824E75E6F2B9CC7F946C9CD2F89903 /* KeychainAccess-dummy.m */; };
 		EF547DF8A501429BFCA150112C69885E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */; };
-		EFCBEBCE09608F165D9009AB529F98E5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A22736EC7168EA861D66DCE769005E /* Extensions.swift */; };
-		F569A98B5B37AFFACCDC089763A87DEA /* GoogleDriveServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63138CE3C3684C8956149992B4D7BFD /* GoogleDriveServiceProvider.swift */; };
-		F7A04F552388FAB02B719ED2EF8D4BCA /* SFAuthenticationURLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A55BAC2B1A61C4A4445B4456DD9A2EE /* SFAuthenticationURLHandler.swift */; };
-		F7F68BE5191AFA720149168BBE45F343 /* OAuthSwiftMultipartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC122D0BD48C0A27335202C9738BEE0 /* OAuthSwiftMultipartData.swift */; };
-		F813F3EA54E57D74F091F9FDD067AB38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */; };
+		F9334BA33A03E4DFDEBFFC5E91247135 /* Int+OAuthSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DC41B8CE5F6686548A6EBDA64981DD4 /* Int+OAuthSwift.swift */; };
+		FCA8BA24D528E98A64A07FE1FD97C2C6 /* OAuth1Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727AAE32FDA8D5B08B5945BDD4800CE9 /* OAuth1Swift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		429145753A0A0A8A2E97E594487026B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 615C831BCE925ED486B225B87E44926D;
-			remoteInfo = KeychainAccess;
-		};
-		535A73DB27D7884EDCBADB8E535B994D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C91E7D1D6000FAB10BA1FA4D7DC1553;
-			remoteInfo = OAuthSwift;
-		};
-		9C4D8E9CD8DC550F149CB01A3B3EB323 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3C91E7D1D6000FAB10BA1FA4D7DC1553;
-			remoteInfo = OAuthSwift;
-		};
-		AAA295788DB1F98DB90FFFF92B7DA8D6 /* PBXContainerItemProxy */ = {
+		4F183E4380BA802408A75A620116173B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 0F12343BE929DD18B8C408D8A72BE0DF;
 			remoteInfo = CloudServiceKit;
 		};
+		6A3BC031FE0311888FEEA86B21FECF75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C91E7D1D6000FAB10BA1FA4D7DC1553;
+			remoteInfo = OAuthSwift;
+		};
+		D1AAADB3048B5D4385D0A64769D78272 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C91E7D1D6000FAB10BA1FA4D7DC1553;
+			remoteInfo = OAuthSwift;
+		};
+		F9ECFD6019EE3F4732ED9607E4BF9591 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 615C831BCE925ED486B225B87E44926D;
+			remoteInfo = KeychainAccess;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		08DBF32FF1F3A0A7ED50F7BE168A71A1 /* CloudItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudItem.swift; path = Sources/CloudItem.swift; sourceTree = "<group>"; };
+		089FB8D54683EA021BB2FCED72A203EA /* Just.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Just.swift; path = Sources/Just.swift; sourceTree = "<group>"; };
 		0ABC9B9C314D02F56D19ABDD661EAD52 /* Dictionary+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Dictionary+OAuthSwift.swift"; path = "Sources/Dictionary+OAuthSwift.swift"; sourceTree = "<group>"; };
 		0DC41B8CE5F6686548A6EBDA64981DD4 /* Int+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Int+OAuthSwift.swift"; path = "Sources/Int+OAuthSwift.swift"; sourceTree = "<group>"; };
+		0E0C289BC07002B2EE23A6BCE34D33E0 /* CloudServiceKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CloudServiceKit-dummy.m"; sourceTree = "<group>"; };
 		10E04975D56884687547E381B85DABFE /* SafariURLHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SafariURLHandler.swift; path = Sources/Handler/SafariURLHandler.swift; sourceTree = "<group>"; };
+		111592ECDC0956AB4EFB6FFF88627957 /* CloudServiceKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CloudServiceKit.modulemap; sourceTree = "<group>"; };
+		137E8A44EFD00B441FD8F4BF60EA25D3 /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/Extensions.swift; sourceTree = "<group>"; };
 		14824E75E6F2B9CC7F946C9CD2F89903 /* KeychainAccess-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KeychainAccess-dummy.m"; sourceTree = "<group>"; };
+		1666E573726032CA9D0185F9D8B8E094 /* QuarkServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuarkServiceProvider.swift; path = Sources/QuarkServiceProvider.swift; sourceTree = "<group>"; };
 		183A76051427D83ED3B3C2018BB2CFE9 /* KeychainAccess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainAccess.debug.xcconfig; sourceTree = "<group>"; };
 		1870FCF09B86B6D717934ABADDB0F2E3 /* Pods-CloudServiceKitExample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CloudServiceKitExample-acknowledgements.plist"; sourceTree = "<group>"; };
 		19468F85C7A504B94A055CD5E2EB7461 /* URL+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URL+OAuthSwift.swift"; path = "Sources/URL+OAuthSwift.swift"; sourceTree = "<group>"; };
 		1A55BAC2B1A61C4A4445B4456DD9A2EE /* SFAuthenticationURLHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SFAuthenticationURLHandler.swift; path = Sources/Handler/SFAuthenticationURLHandler.swift; sourceTree = "<group>"; };
 		1D7F52E9440D6BFF0B1159CE55091460 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/SafariServices.framework; sourceTree = DEVELOPER_DIR; };
+		1FF72CE8DFFE0940ADD0C5BF3444DDBA /* BaiduPanServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaiduPanServiceProvider.swift; path = Sources/BaiduPanServiceProvider.swift; sourceTree = "<group>"; };
 		22851E77535844E5C690DC2129ED57BF /* Keychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Keychain.swift; path = Lib/KeychainAccess/Keychain.swift; sourceTree = "<group>"; };
 		26A51D652E4B9165B48DDBA9F68BBD9F /* OAuthWebViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthWebViewController.swift; path = Sources/Handler/OAuthWebViewController.swift; sourceTree = "<group>"; };
+		26FE5DCEB5EE74D1643BE96F8F7D7EB6 /* CloudServiceError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudServiceError.swift; path = Sources/CloudServiceError.swift; sourceTree = "<group>"; };
 		2B2CBF3D1C08F7017409B292552C40C4 /* NotificationCenter+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NotificationCenter+OAuthSwift.swift"; path = "Sources/NotificationCenter+OAuthSwift.swift"; sourceTree = "<group>"; };
 		3332BA9AF11ED786DF23C29ACB636AB6 /* ASWebAuthenticationURLHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ASWebAuthenticationURLHandler.swift; path = Sources/Handler/ASWebAuthenticationURLHandler.swift; sourceTree = "<group>"; };
 		3676DCF7214E017228EB0F42D1596F25 /* OAuthLogProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthLogProtocol.swift; path = Sources/OAuthLogProtocol.swift; sourceTree = "<group>"; };
+		37389E37B683625D704007D367AC3FFA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		3F1442C5EDD45DBB1F09B8E376EC4911 /* OneOneFiveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OneOneFiveServiceProvider.swift; path = Sources/OneOneFiveServiceProvider.swift; sourceTree = "<group>"; };
 		411E9B2BA2A61ADDB983D48252C73CBF /* OAuthSwift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = OAuthSwift; path = OAuthSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		430FA8CADDBB5CD55D3A5BCEBEDF4A98 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		46D2F813452DBE8B182B12E3061DC2BC /* Data+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Data+OAuthSwift.swift"; path = "Sources/Data+OAuthSwift.swift"; sourceTree = "<group>"; };
+		470E31BE43F704D8472CC286B46ECCA6 /* PCloudServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PCloudServiceProvider.swift; path = Sources/PCloudServiceProvider.swift; sourceTree = "<group>"; };
 		48740841C15213FB4C814AD7CA03F915 /* KeychainAccess.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KeychainAccess.modulemap; sourceTree = "<group>"; };
 		48DBC1182C8415D263FF3E4D6A690614 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4BD44B1AC705E5C1E859686C9B312C1B /* OAuth2Swift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuth2Swift.swift; path = Sources/OAuth2Swift.swift; sourceTree = "<group>"; };
+		4D42619A8AB3DD92E12089FA04F6079F /* BoxServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BoxServiceProvider.swift; path = Sources/BoxServiceProvider.swift; sourceTree = "<group>"; };
 		4EEC370529C40BD34500A964313F3933 /* OAuthSwiftClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftClient.swift; path = Sources/OAuthSwiftClient.swift; sourceTree = "<group>"; };
-		509F97D54BD126A78451B27290E395BA /* BoxServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BoxServiceProvider.swift; path = Sources/BoxServiceProvider.swift; sourceTree = "<group>"; };
-		50B8D9FAF5889E8FACA185FC191D9AC7 /* CloudServiceKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CloudServiceKit-umbrella.h"; sourceTree = "<group>"; };
+		4F6B372EA01010EC980F6D744DC832B1 /* CloudServiceKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CloudServiceKit.debug.xcconfig; sourceTree = "<group>"; };
 		50C622F16754AF8FFFC1D58982A71EB0 /* OAuthSwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "OAuthSwift-dummy.m"; sourceTree = "<group>"; };
-		5E2877C3D11A6054F0C2EB3C2C3145D8 /* CloudServiceKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CloudServiceKit.release.xcconfig; sourceTree = "<group>"; };
 		61AE1B7E3BFDB39C56D5660E5316BEBB /* OAuthSwiftURLHandlerProxy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftURLHandlerProxy.swift; path = Sources/Handler/OAuthSwiftURLHandlerProxy.swift; sourceTree = "<group>"; };
 		61B9CDB8D658DB6DC2D42E132D40E33D /* String+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+OAuthSwift.swift"; path = "Sources/String+OAuthSwift.swift"; sourceTree = "<group>"; };
 		625148CC8C1DB8BDAC4DB5246ED31C87 /* OAuthSwiftHTTPRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftHTTPRequest.swift; path = Sources/OAuthSwiftHTTPRequest.swift; sourceTree = "<group>"; };
@@ -135,56 +145,48 @@
 		7807609281798011D52DE6785D7832CC /* OAuthSwiftOpenURLExternally.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftOpenURLExternally.swift; path = Sources/Handler/OAuthSwiftOpenURLExternally.swift; sourceTree = "<group>"; };
 		7BEC30688C70F66840E2FD0FB9C69067 /* CloudServiceKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CloudServiceKit; path = CloudServiceKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FF31FC6E7B3C5756F788F4306704B72 /* KeychainAccess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainAccess.release.xcconfig; sourceTree = "<group>"; };
-		80A22736EC7168EA861D66DCE769005E /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/Extensions.swift; sourceTree = "<group>"; };
 		83E60AC8B0126F934FDCB3311CE2A432 /* Pods-CloudServiceKitExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CloudServiceKitExample.debug.xcconfig"; sourceTree = "<group>"; };
 		844D0DAC408A1DB8F9C4EDFAAE73142E /* Pods-CloudServiceKitExample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-CloudServiceKitExample-frameworks.sh"; sourceTree = "<group>"; };
 		8458A4F9C89525717D70E4B498B0B296 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Sources/Utils.swift; sourceTree = "<group>"; };
-		881F8C5693BE91B210768554AD04DFA8 /* CloudServiceKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CloudServiceKit.debug.xcconfig; sourceTree = "<group>"; };
-		8DD44DD33E8F3870141128C0725D8DA8 /* DropboxServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DropboxServiceProvider.swift; path = Sources/DropboxServiceProvider.swift; sourceTree = "<group>"; };
+		858C357FBDF7ACF5C5D4EBD949001652 /* OneDriveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OneDriveServiceProvider.swift; path = Sources/OneDriveServiceProvider.swift; sourceTree = "<group>"; };
+		8D22F1F035687EB29F4A6D0F759FFEF7 /* GoogleDriveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GoogleDriveServiceProvider.swift; path = Sources/GoogleDriveServiceProvider.swift; sourceTree = "<group>"; };
 		8DDA728C16D2D99828C7060CDA9964F0 /* ExtensionContextURLHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtensionContextURLHandler.swift; path = Sources/Handler/ExtensionContextURLHandler.swift; sourceTree = "<group>"; };
 		8EDBFEBBD82665749AA53FD7828BE17F /* OAuthSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OAuthSwift.debug.xcconfig; sourceTree = "<group>"; };
 		91BFFAAA0F11DB82F7B06A21F80D9D97 /* OAuthSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "OAuthSwift-Info.plist"; sourceTree = "<group>"; };
-		924E8343E266DB740C581FBCA8F18203 /* OneDriveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OneDriveServiceProvider.swift; path = Sources/OneDriveServiceProvider.swift; sourceTree = "<group>"; };
-		971C5C7D423E42F1A410E02ED2B7809A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		97754C9E7D3F01DDBFEF0809FE2F5580 /* CloudServiceKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = CloudServiceKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		983FBDC8337BF3227E3DD66DBD340D67 /* SHA1.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SHA1.swift; path = Sources/SHA1.swift; sourceTree = "<group>"; };
+		9C4CF7C1DC3A793DC898857E11621A42 /* CloudServiceKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CloudServiceKit-Info.plist"; sourceTree = "<group>"; };
 		9CC47AAD2A7F694249DC0597C00CDABF /* OAuthSwiftURLHandlerType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftURLHandlerType.swift; path = Sources/OAuthSwiftURLHandlerType.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DD255BB542409DB484A24B01D585E65 /* OAuthSwiftCredential.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftCredential.swift; path = Sources/OAuthSwiftCredential.swift; sourceTree = "<group>"; };
 		A0C7250CEAAC264FB055CE02E98F8684 /* Pods-CloudServiceKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CloudServiceKitExample.release.xcconfig"; sourceTree = "<group>"; };
-		A917CE18007DF395E7B58865D949EA94 /* CloudServiceKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = CloudServiceKit.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A90779F1B49166EEB6536ACB058F0CEC /* CloudServiceKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CloudServiceKit.release.xcconfig; sourceTree = "<group>"; };
 		A9D74064511792EE6BDA8625EAE07E43 /* OAuthSwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = OAuthSwift.modulemap; sourceTree = "<group>"; };
+		B1320D6338E166D078168B906F5BFE19 /* DropboxServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DropboxServiceProvider.swift; path = Sources/DropboxServiceProvider.swift; sourceTree = "<group>"; };
 		B2B5F4BF2A502DCBF49EA8164800452A /* Pods-CloudServiceKitExample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-CloudServiceKitExample-acknowledgements.markdown"; sourceTree = "<group>"; };
-		B63138CE3C3684C8956149992B4D7BFD /* GoogleDriveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GoogleDriveServiceProvider.swift; path = Sources/GoogleDriveServiceProvider.swift; sourceTree = "<group>"; };
+		B4E33C9CDFA6FFF69DB659DEA129127E /* CloudItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudItem.swift; path = Sources/CloudItem.swift; sourceTree = "<group>"; };
 		B684A2AD175483F37BA2D9D249D37BF1 /* Pods-CloudServiceKitExample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-CloudServiceKitExample.modulemap"; sourceTree = "<group>"; };
-		B89ECCD4BC96046927B21CCEC399FD0D /* QuarkServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuarkServiceProvider.swift; path = Sources/QuarkServiceProvider.swift; sourceTree = "<group>"; };
 		BE26946CCD54F008713EA7AF1E5C6187 /* Pods-CloudServiceKitExample-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-CloudServiceKitExample-Info.plist"; sourceTree = "<group>"; };
 		C162DC86EAE82E81DB379917B6F70179 /* KeychainAccess-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KeychainAccess-Info.plist"; sourceTree = "<group>"; };
-		C3BEE894C42D69A31EB24F0AEEC3F30E /* AliyunDriveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AliyunDriveServiceProvider.swift; path = Sources/AliyunDriveServiceProvider.swift; sourceTree = "<group>"; };
-		C412FDB1851F899AF5EB715731B87229 /* CloudServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudServiceProvider.swift; path = Sources/CloudServiceProvider.swift; sourceTree = "<group>"; };
 		C5A7A19AE5B0DD24DD133883334B1E28 /* KeychainAccess-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-prefix.pch"; sourceTree = "<group>"; };
+		CAF2130957776125229EF6A80FE37186 /* CloudServiceConnector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudServiceConnector.swift; path = Sources/CloudServiceConnector.swift; sourceTree = "<group>"; };
 		CC34FEB9F17059CC80B31BA63D039506 /* Pods-CloudServiceKitExample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CloudServiceKitExample-dummy.m"; sourceTree = "<group>"; };
 		CF6BA01A33268277EEE3B52B12130B5E /* Pods-CloudServiceKitExample */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-CloudServiceKitExample"; path = Pods_CloudServiceKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CF9AFD652235ACFBB0455806F9E19F33 /* CloudServiceKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CloudServiceKit-Info.plist"; sourceTree = "<group>"; };
 		D2051FDC1E0535BEC38014F21856682B /* UIApplication+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIApplication+OAuthSwift.swift"; path = "Sources/UIApplication+OAuthSwift.swift"; sourceTree = "<group>"; };
-		D284BA730E4489A2C63FB3D7231DD5D8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		D6B4B51E0F0433046F119DC5BE87356A /* PCloudServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PCloudServiceProvider.swift; path = Sources/PCloudServiceProvider.swift; sourceTree = "<group>"; };
 		D7A2793A4312A240113B5803F29B8953 /* OAuthSwift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OAuthSwift-prefix.pch"; sourceTree = "<group>"; };
+		DDCECFFB9F46917B00B91E61D955A404 /* CloudServiceKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CloudServiceKit-prefix.pch"; sourceTree = "<group>"; };
+		E3DADF8970A08CCF2C61130F0CEA7992 /* CloudServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudServiceProvider.swift; path = Sources/CloudServiceProvider.swift; sourceTree = "<group>"; };
+		E4C875915A441197CDF9E04AAE473F48 /* CloudServiceKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CloudServiceKit-umbrella.h"; sourceTree = "<group>"; };
 		E5C5F3268531EA31FED7E1AFAEC83F6D /* NSError+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSError+OAuthSwift.swift"; path = "Sources/NSError+OAuthSwift.swift"; sourceTree = "<group>"; };
 		E7DA55127248C20DDD1CF3AB4A942EFE /* OAuthSwiftResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftResponse.swift; path = Sources/OAuthSwiftResponse.swift; sourceTree = "<group>"; };
-		E80F7F7FC0E945C778B424E1B35EC84D /* CloudServiceError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudServiceError.swift; path = Sources/CloudServiceError.swift; sourceTree = "<group>"; };
 		E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KeychainAccess; path = KeychainAccess.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB12090D2A43EBF028E8973E5E14F797 /* Pods-CloudServiceKitExample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CloudServiceKitExample-umbrella.h"; sourceTree = "<group>"; };
-		EC97A8A1E4BB462FCAE31875E2D17FEB /* Just.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Just.swift; path = Sources/Just.swift; sourceTree = "<group>"; };
 		ECB8145EEF65B603F37359271E7083CC /* OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwift.swift; path = Sources/OAuthSwift.swift; sourceTree = "<group>"; };
 		ECE17ECFFDD089905F31E602DEC2C9FF /* Collection+OAuthSwift.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Collection+OAuthSwift.swift"; path = "Sources/Collection+OAuthSwift.swift"; sourceTree = "<group>"; };
-		EE0CDDB5A774C0D16415C40DC88F33EF /* CloudServiceKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CloudServiceKit-prefix.pch"; sourceTree = "<group>"; };
-		F05DBA51CD47CC03FD64930254974D77 /* CloudServiceKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = CloudServiceKit.modulemap; sourceTree = "<group>"; };
 		F264ED231F2B43BD9A812DD8D3392F11 /* KeychainAccess-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeychainAccess-umbrella.h"; sourceTree = "<group>"; };
 		F37373EC043871F09E46E78EA1D573A4 /* HMAC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HMAC.swift; path = Sources/HMAC.swift; sourceTree = "<group>"; };
-		F8A007078F2E3A35774F7561E1DF715F /* CloudServiceConnector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CloudServiceConnector.swift; path = Sources/CloudServiceConnector.swift; sourceTree = "<group>"; };
 		F92BB2CC44E5C6FA147521C9F453B794 /* OAuthSwiftError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OAuthSwiftError.swift; path = Sources/OAuthSwiftError.swift; sourceTree = "<group>"; };
-		F965585DAF3479D4C123E8D6A1336D01 /* BaiduPanServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaiduPanServiceProvider.swift; path = Sources/BaiduPanServiceProvider.swift; sourceTree = "<group>"; };
-		F9BF40D73341A1D29D64E09F78A4D670 /* CloudServiceKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CloudServiceKit-dummy.m"; sourceTree = "<group>"; };
+		FAEC327F9C0DC5E7BBA897B07FCC8731 /* AliyunDriveServiceProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AliyunDriveServiceProvider.swift; path = Sources/AliyunDriveServiceProvider.swift; sourceTree = "<group>"; };
 		FC56D638B29C9FF22DFFC7F6C89B53FF /* URLConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLConvertible.swift; path = Sources/URLConvertible.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -197,6 +199,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		73527C06FDB6567B0E7CE6DC9674160A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				562330320DD9D65DEBA9E50FF2CEC4D9 /* Foundation.framework in Frameworks */,
+				1A334E9537090293BAB3EBFA64824F40 /* SafariServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83DC49FFA44CFB560A90620078749727 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36579FB2FC0CACE8F9FD6760C1F224C7 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F1AD8A489DC36D4391B2563DC6AE750 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -205,41 +224,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9E88093064252B45E7D0E22C3C796511 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				759450A677AEB94C77469655C4C8894A /* Foundation.framework in Frameworks */,
-				A5AB7B106AE25855FD20EFC5433D4462 /* SafariServices.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		EECF1B536BD4DFCBD6181E1EBEB70AA2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F813F3EA54E57D74F091F9FDD067AB38 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E197AD8E014598128DDD4C16B68A1EC /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				F05DBA51CD47CC03FD64930254974D77 /* CloudServiceKit.modulemap */,
-				F9BF40D73341A1D29D64E09F78A4D670 /* CloudServiceKit-dummy.m */,
-				CF9AFD652235ACFBB0455806F9E19F33 /* CloudServiceKit-Info.plist */,
-				EE0CDDB5A774C0D16415C40DC88F33EF /* CloudServiceKit-prefix.pch */,
-				50B8D9FAF5889E8FACA185FC191D9AC7 /* CloudServiceKit-umbrella.h */,
-				881F8C5693BE91B210768554AD04DFA8 /* CloudServiceKit.debug.xcconfig */,
-				5E2877C3D11A6054F0C2EB3C2C3145D8 /* CloudServiceKit.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/CloudServiceKit";
-			sourceTree = "<group>";
-		};
 		0F4A62216383786FCBF2FD99493D83BB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,16 +257,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/OAuthSwift";
-			sourceTree = "<group>";
-		};
-		2E7C29193BA02DC4DE5094647923C02B /* Pod */ = {
-			isa = PBXGroup;
-			children = (
-				A917CE18007DF395E7B58865D949EA94 /* CloudServiceKit.podspec */,
-				971C5C7D423E42F1A410E02ED2B7809A /* LICENSE */,
-				D284BA730E4489A2C63FB3D7231DD5D8 /* README.md */,
-			);
-			name = Pod;
 			sourceTree = "<group>";
 		};
 		3C7E2E1893B4CBE551E810D4E147EECF /* Pods-CloudServiceKitExample */ = {
@@ -323,6 +300,31 @@
 				CF6BA01A33268277EEE3B52B12130B5E /* Pods-CloudServiceKitExample */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		5D8EDBCD2972672845113778E900F587 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				111592ECDC0956AB4EFB6FFF88627957 /* CloudServiceKit.modulemap */,
+				0E0C289BC07002B2EE23A6BCE34D33E0 /* CloudServiceKit-dummy.m */,
+				9C4CF7C1DC3A793DC898857E11621A42 /* CloudServiceKit-Info.plist */,
+				DDCECFFB9F46917B00B91E61D955A404 /* CloudServiceKit-prefix.pch */,
+				E4C875915A441197CDF9E04AAE473F48 /* CloudServiceKit-umbrella.h */,
+				4F6B372EA01010EC980F6D744DC832B1 /* CloudServiceKit.debug.xcconfig */,
+				A90779F1B49166EEB6536ACB058F0CEC /* CloudServiceKit.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/CloudServiceKit";
+			sourceTree = "<group>";
+		};
+		6C4D8113A9738ECC90111043230D910D /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				97754C9E7D3F01DDBFEF0809FE2F5580 /* CloudServiceKit.podspec */,
+				430FA8CADDBB5CD55D3A5BCEBEDF4A98 /* LICENSE */,
+				37389E37B683625D704007D367AC3FFA /* README.md */,
+			);
+			name = Pod;
 			sourceTree = "<group>";
 		};
 		6E2E408256B2CD29D4B4D4BF851AF68B /* KeychainAccess */ = {
@@ -392,11 +394,19 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		AEC7D1F40E51806D4557B684C81F0DBF /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E76C53B3519DF97C45249461FE5AF2EC /* CloudServiceKit */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				D5C33AC3479AE735E9CC349744E2980B /* Development Pods */,
+				AEC7D1F40E51806D4557B684C81F0DBF /* Development Pods */,
 				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
 				0F4A62216383786FCBF2FD99493D83BB /* Pods */,
 				54B0FDF88A51475BB0BF87FFC75DB6A5 /* Products */,
@@ -404,36 +414,29 @@
 			);
 			sourceTree = "<group>";
 		};
-		D4696CD1D22004D2F79C20AB05CBB917 /* CloudServiceKit */ = {
+		E76C53B3519DF97C45249461FE5AF2EC /* CloudServiceKit */ = {
 			isa = PBXGroup;
 			children = (
-				C3BEE894C42D69A31EB24F0AEEC3F30E /* AliyunDriveServiceProvider.swift */,
-				F965585DAF3479D4C123E8D6A1336D01 /* BaiduPanServiceProvider.swift */,
-				509F97D54BD126A78451B27290E395BA /* BoxServiceProvider.swift */,
-				08DBF32FF1F3A0A7ED50F7BE168A71A1 /* CloudItem.swift */,
-				F8A007078F2E3A35774F7561E1DF715F /* CloudServiceConnector.swift */,
-				E80F7F7FC0E945C778B424E1B35EC84D /* CloudServiceError.swift */,
-				C412FDB1851F899AF5EB715731B87229 /* CloudServiceProvider.swift */,
-				8DD44DD33E8F3870141128C0725D8DA8 /* DropboxServiceProvider.swift */,
-				80A22736EC7168EA861D66DCE769005E /* Extensions.swift */,
-				B63138CE3C3684C8956149992B4D7BFD /* GoogleDriveServiceProvider.swift */,
-				EC97A8A1E4BB462FCAE31875E2D17FEB /* Just.swift */,
-				924E8343E266DB740C581FBCA8F18203 /* OneDriveServiceProvider.swift */,
-				D6B4B51E0F0433046F119DC5BE87356A /* PCloudServiceProvider.swift */,
-				B89ECCD4BC96046927B21CCEC399FD0D /* QuarkServiceProvider.swift */,
-				2E7C29193BA02DC4DE5094647923C02B /* Pod */,
-				0E197AD8E014598128DDD4C16B68A1EC /* Support Files */,
+				FAEC327F9C0DC5E7BBA897B07FCC8731 /* AliyunDriveServiceProvider.swift */,
+				1FF72CE8DFFE0940ADD0C5BF3444DDBA /* BaiduPanServiceProvider.swift */,
+				4D42619A8AB3DD92E12089FA04F6079F /* BoxServiceProvider.swift */,
+				B4E33C9CDFA6FFF69DB659DEA129127E /* CloudItem.swift */,
+				CAF2130957776125229EF6A80FE37186 /* CloudServiceConnector.swift */,
+				26FE5DCEB5EE74D1643BE96F8F7D7EB6 /* CloudServiceError.swift */,
+				E3DADF8970A08CCF2C61130F0CEA7992 /* CloudServiceProvider.swift */,
+				B1320D6338E166D078168B906F5BFE19 /* DropboxServiceProvider.swift */,
+				137E8A44EFD00B441FD8F4BF60EA25D3 /* Extensions.swift */,
+				8D22F1F035687EB29F4A6D0F759FFEF7 /* GoogleDriveServiceProvider.swift */,
+				089FB8D54683EA021BB2FCED72A203EA /* Just.swift */,
+				858C357FBDF7ACF5C5D4EBD949001652 /* OneDriveServiceProvider.swift */,
+				3F1442C5EDD45DBB1F09B8E376EC4911 /* OneOneFiveServiceProvider.swift */,
+				470E31BE43F704D8472CC286B46ECCA6 /* PCloudServiceProvider.swift */,
+				1666E573726032CA9D0185F9D8B8E094 /* QuarkServiceProvider.swift */,
+				6C4D8113A9738ECC90111043230D910D /* Pod */,
+				5D8EDBCD2972672845113778E900F587 /* Support Files */,
 			);
 			name = CloudServiceKit;
 			path = ../..;
-			sourceTree = "<group>";
-		};
-		D5C33AC3479AE735E9CC349744E2980B /* Development Pods */ = {
-			isa = PBXGroup;
-			children = (
-				D4696CD1D22004D2F79C20AB05CBB917 /* CloudServiceKit */,
-			);
-			name = "Development Pods";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,19 +450,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4FD78653AE13EEC3E7F3ADE65EEC5A8E /* Headers */ = {
+		951828F9A11BD48076D91B5E5F1DCE1B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE648D62B46E13A08374C09259D6A2FD /* OAuthSwift-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9F74A873B6E78F2258BE3A64A5C45559 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B34517DA8B1EBE4811779E5CF7218E94 /* CloudServiceKit-umbrella.h in Headers */,
+				3C614E33A0937DD7F6A8D6864B858480 /* CloudServiceKit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,22 +466,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D40BF3FE1C8BE68CFC28E56D744AD769 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5CB14003AAB8181F1E84950606E516D /* OAuthSwift-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		0F12343BE929DD18B8C408D8A72BE0DF /* CloudServiceKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C426D1D1EE144C1E43F0ADFA4589D5C6 /* Build configuration list for PBXNativeTarget "CloudServiceKit" */;
+			buildConfigurationList = F7ACC26C2F3EFC09772B62ED744BD6F6 /* Build configuration list for PBXNativeTarget "CloudServiceKit" */;
 			buildPhases = (
-				9F74A873B6E78F2258BE3A64A5C45559 /* Headers */,
-				B2BE62690D745AD521564D8F2C32628D /* Sources */,
-				EECF1B536BD4DFCBD6181E1EBEB70AA2 /* Frameworks */,
-				7AC3BD4EC7F18AD54B2D079F241AEBC8 /* Resources */,
+				951828F9A11BD48076D91B5E5F1DCE1B /* Headers */,
+				30E5704FF91E478760DBFCB2F11C8BC7 /* Sources */,
+				83DC49FFA44CFB560A90620078749727 /* Frameworks */,
+				AF7BBF3F534A760AB5801D2F557B5AC9 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C5C260FC37E9241C888D31F2418758E2 /* PBXTargetDependency */,
+				79594B97781F3FF3BE402469FDA6DEC9 /* PBXTargetDependency */,
 			);
 			name = CloudServiceKit;
 			productName = CloudServiceKit;
@@ -495,12 +498,12 @@
 		};
 		3C91E7D1D6000FAB10BA1FA4D7DC1553 /* OAuthSwift */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5FAB76A15968296761FF7CEAD32E37D2 /* Build configuration list for PBXNativeTarget "OAuthSwift" */;
+			buildConfigurationList = 64E4934AE276B72A5B1B2E5198E7209C /* Build configuration list for PBXNativeTarget "OAuthSwift" */;
 			buildPhases = (
-				4FD78653AE13EEC3E7F3ADE65EEC5A8E /* Headers */,
-				948679C003D7C1C70113B25787918653 /* Sources */,
-				9E88093064252B45E7D0E22C3C796511 /* Frameworks */,
-				2B4DD5DFDA89CECF66A25435277C2B28 /* Resources */,
+				D40BF3FE1C8BE68CFC28E56D744AD769 /* Headers */,
+				D7D78533E82B55B63B7C8B26C7AE6E44 /* Sources */,
+				73527C06FDB6567B0E7CE6DC9674160A /* Frameworks */,
+				51F18C5D8A0547BE66C13A24A166CFF1 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -541,9 +544,9 @@
 			buildRules = (
 			);
 			dependencies = (
-				F3A4DA6C3D302FC4E3030DF63FE18BC1 /* PBXTargetDependency */,
-				31C73FA332036F2DAFC689332F199E12 /* PBXTargetDependency */,
-				1A4FA721F13BED0448BE50A9AF6A34C1 /* PBXTargetDependency */,
+				42D591FC08961151B93E3FC05496A758 /* PBXTargetDependency */,
+				91E22CC0764CA33310F2C19506C7E1AD /* PBXTargetDependency */,
+				ABA5084B0DED78CF4C4475C7791C1466 /* PBXTargetDependency */,
 			);
 			name = "Pods-CloudServiceKitExample";
 			productName = Pods_CloudServiceKitExample;
@@ -581,7 +584,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		2B4DD5DFDA89CECF66A25435277C2B28 /* Resources */ = {
+		51F18C5D8A0547BE66C13A24A166CFF1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -595,7 +598,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7AC3BD4EC7F18AD54B2D079F241AEBC8 /* Resources */ = {
+		AF7BBF3F534A760AB5801D2F557B5AC9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -612,6 +615,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		30E5704FF91E478760DBFCB2F11C8BC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6056CF33BECAA2CA1E78F0BCF28E6865 /* AliyunDriveServiceProvider.swift in Sources */,
+				2B73899F487686369F42DC2F88229619 /* BaiduPanServiceProvider.swift in Sources */,
+				B75D22942B1167518475B1D353B286F0 /* BoxServiceProvider.swift in Sources */,
+				20D4C415F730B1CAC9DA821609F15EB8 /* CloudItem.swift in Sources */,
+				948FF0158204AFDC29C86F9F7FCD5D4D /* CloudServiceConnector.swift in Sources */,
+				7B83171063713D781C4AD9702FF3DF40 /* CloudServiceError.swift in Sources */,
+				6D7099DEB09BEC9B1163C7033AA10DF8 /* CloudServiceKit-dummy.m in Sources */,
+				4253F851E8D6DEE386D9FC9D8814EDD8 /* CloudServiceProvider.swift in Sources */,
+				B6DA156287EB074004D065AC8F69EBB4 /* DropboxServiceProvider.swift in Sources */,
+				3713647FB23579CA6B59D8A56DA9A8D8 /* Extensions.swift in Sources */,
+				117CA845ACEA5833688A2996A59E0D4B /* GoogleDriveServiceProvider.swift in Sources */,
+				D5254F51DA10B2F582D43C86947B368C /* Just.swift in Sources */,
+				7FBEBDB625E7F6583E542601DD02E732 /* OneDriveServiceProvider.swift in Sources */,
+				C2DCEF76EE655EB39BBD9D950DDFA0BA /* OneOneFiveServiceProvider.swift in Sources */,
+				E1F80B0846BBFF58534DA88C7C485333 /* PCloudServiceProvider.swift in Sources */,
+				25A1D287033414875813D1E17DA8EFD5 /* QuarkServiceProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3CA247B210AE409280F27D97CC981D9D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -629,133 +655,75 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		948679C003D7C1C70113B25787918653 /* Sources */ = {
+		D7D78533E82B55B63B7C8B26C7AE6E44 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B5EE52B18B4A1ABE5F9A6FD8940ADA3 /* ASWebAuthenticationURLHandler.swift in Sources */,
-				08DFBCDB7634B05F99D479949AD56FA1 /* Collection+OAuthSwift.swift in Sources */,
-				291E239B0731627465B89F2346EB85F2 /* Data+OAuthSwift.swift in Sources */,
-				BD2CEBF610EE5FE3D1A801C80F4F0E33 /* Dictionary+OAuthSwift.swift in Sources */,
-				4F93627D74F0F8FB0D682B397B3D669E /* ExtensionContextURLHandler.swift in Sources */,
-				E964B423F776C0AA59573BE8054F2186 /* HMAC.swift in Sources */,
-				28EDDAE2733344DA91A7B60784EFC1B5 /* Int+OAuthSwift.swift in Sources */,
-				2083AB3823C680866C1190AE6C99A4AA /* NotificationCenter+OAuthSwift.swift in Sources */,
-				5E74A0C7AAA73206C937583F31D79173 /* NSError+OAuthSwift.swift in Sources */,
-				845AE790AB02F348F8E06B0FDB189A5F /* OAuth1Swift.swift in Sources */,
-				94B34350D0BB2BA54AEA9177A2EDBB9E /* OAuth2Swift.swift in Sources */,
-				6A8EA0A32D73D1E739116186C5E73753 /* OAuthLogProtocol.swift in Sources */,
-				7BABA48E2A4D23B740A3EDCBF87B6BFF /* OAuthSwift.swift in Sources */,
-				BD30CA320912A60F705B3F2AE9994115 /* OAuthSwift-dummy.m in Sources */,
-				B8A6601D3E70FB0F94A7ECA598DB3DA3 /* OAuthSwiftClient.swift in Sources */,
-				7F4C13B09448A8FA0966CCB23E466781 /* OAuthSwiftCredential.swift in Sources */,
-				A5A2154B857D15E5A4F50A869822C4E3 /* OAuthSwiftError.swift in Sources */,
-				CACB7C6F482ADC7D22C8CDEAA6829337 /* OAuthSwiftHTTPRequest.swift in Sources */,
-				F7F68BE5191AFA720149168BBE45F343 /* OAuthSwiftMultipartData.swift in Sources */,
-				76EC75153279E9D1199B1DD4801A3EFD /* OAuthSwiftOpenURLExternally.swift in Sources */,
-				4337702064E3847DB5AE630AE3C48CFC /* OAuthSwiftResponse.swift in Sources */,
-				36669A8AE1D72372E3136E205E782102 /* OAuthSwiftURLHandlerProxy.swift in Sources */,
-				4F7394CEE4567964111B3949C227DEBA /* OAuthSwiftURLHandlerType.swift in Sources */,
-				44BD29C95A72784E83048164C7ED8649 /* OAuthWebViewController.swift in Sources */,
-				B27FC8A784081B5F4134DCD479BB61D1 /* SafariURLHandler.swift in Sources */,
-				F7A04F552388FAB02B719ED2EF8D4BCA /* SFAuthenticationURLHandler.swift in Sources */,
-				4BFC67C008EC170FE4FF91E20D6C6843 /* SHA1.swift in Sources */,
-				6199B58C853A65FCC11AA166C10C832F /* String+OAuthSwift.swift in Sources */,
-				4ADA8EB0F8C2D12BD4E90DEDC9A77655 /* UIApplication+OAuthSwift.swift in Sources */,
-				CA7A3252CD6EFF4A75DF54D7C74342D5 /* URL+OAuthSwift.swift in Sources */,
-				6977D1FB04AEDFA888C7EB0211C2B177 /* URLConvertible.swift in Sources */,
-				576574CA715479D916C8B40300B91FC7 /* Utils.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B2BE62690D745AD521564D8F2C32628D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4AFC3112A24969B8A04F4A3245BB345B /* AliyunDriveServiceProvider.swift in Sources */,
-				AF5153B8FEBFF8512270DC25F0ABC167 /* BaiduPanServiceProvider.swift in Sources */,
-				7046DF6F181D69F5BA647E4F7F44558D /* BoxServiceProvider.swift in Sources */,
-				1DAD591470F1DF979FAEA69DE6479B70 /* CloudItem.swift in Sources */,
-				D3851264448158534C358D2609830648 /* CloudServiceConnector.swift in Sources */,
-				24E713E5575AED2C6CA1DE8D92A2C5ED /* CloudServiceError.swift in Sources */,
-				5FC55599A934C3293D2850CBF7EFF40E /* CloudServiceKit-dummy.m in Sources */,
-				B1F7FDA4BC0C41C042F262D551643FB1 /* CloudServiceProvider.swift in Sources */,
-				E38916DD56F27139309E22AF0E3F633B /* DropboxServiceProvider.swift in Sources */,
-				EFCBEBCE09608F165D9009AB529F98E5 /* Extensions.swift in Sources */,
-				F569A98B5B37AFFACCDC089763A87DEA /* GoogleDriveServiceProvider.swift in Sources */,
-				B99833D1E9B2903670B471EEAD47169B /* Just.swift in Sources */,
-				271FF6770EE88B32389AED3FE457C916 /* OneDriveServiceProvider.swift in Sources */,
-				C74792AEFC6377174CAD9C89C981D289 /* PCloudServiceProvider.swift in Sources */,
-				16DBE3405508AB163CCA728E92F89E21 /* QuarkServiceProvider.swift in Sources */,
+				0CFD0BE0507FED251E6EDEE23E5B295F /* ASWebAuthenticationURLHandler.swift in Sources */,
+				B7F17D6126377B112381471B76FD9799 /* Collection+OAuthSwift.swift in Sources */,
+				794A7C7EA2A93FB18B8676D5EAE950E0 /* Data+OAuthSwift.swift in Sources */,
+				75065046C0790881A468F8C05BEF1B45 /* Dictionary+OAuthSwift.swift in Sources */,
+				BF774700B18060343D0215060E00E013 /* ExtensionContextURLHandler.swift in Sources */,
+				C257330236B597B9DD12E02DE1B3EAA6 /* HMAC.swift in Sources */,
+				F9334BA33A03E4DFDEBFFC5E91247135 /* Int+OAuthSwift.swift in Sources */,
+				362C40FA913C59ABD0075EA9AE337371 /* NotificationCenter+OAuthSwift.swift in Sources */,
+				D9A0FA3455AFF3B5C7F21BBAF6CE06C0 /* NSError+OAuthSwift.swift in Sources */,
+				FCA8BA24D528E98A64A07FE1FD97C2C6 /* OAuth1Swift.swift in Sources */,
+				955379E082B4A949D68A56EA9D610B0E /* OAuth2Swift.swift in Sources */,
+				32690E3F11AB2CBE2D32F0DF09805434 /* OAuthLogProtocol.swift in Sources */,
+				1512543C7744118F5C0792D5CD9884C5 /* OAuthSwift.swift in Sources */,
+				42062313136CA774B79018FC5B5A7E69 /* OAuthSwift-dummy.m in Sources */,
+				0915505423F982BF7E7674B37AA216D7 /* OAuthSwiftClient.swift in Sources */,
+				D322FC9771CBB24B7F8D6C7FC8DD6611 /* OAuthSwiftCredential.swift in Sources */,
+				E67E4429743B279E1783C01CEBEFD3A4 /* OAuthSwiftError.swift in Sources */,
+				63643AEC650FD3D1238026A8A66CBB97 /* OAuthSwiftHTTPRequest.swift in Sources */,
+				C0F9FB2048CA85530A260F83371FFA97 /* OAuthSwiftMultipartData.swift in Sources */,
+				1C8C7596578D82B26C5502FF76913A39 /* OAuthSwiftOpenURLExternally.swift in Sources */,
+				8C9702A522757F705F52DAF6E7CCBE9D /* OAuthSwiftResponse.swift in Sources */,
+				ECDC5CBE790CD586158F66529AFA3C8E /* OAuthSwiftURLHandlerProxy.swift in Sources */,
+				29D7FAFF4812876758AC64DD1944DAC0 /* OAuthSwiftURLHandlerType.swift in Sources */,
+				2676C1E10469C7DFA92ACF5222905C20 /* OAuthWebViewController.swift in Sources */,
+				07837AFB91B9D5E6ED67E7B6B30897A0 /* SafariURLHandler.swift in Sources */,
+				A9AB133672397A61E8154040713F7D5D /* SFAuthenticationURLHandler.swift in Sources */,
+				6D242AA2DAA425890ABB2668557E56AB /* SHA1.swift in Sources */,
+				2B13169E88FFE3197CF19E7AE98A16EA /* String+OAuthSwift.swift in Sources */,
+				BB540B9FE411D9867A8ECFFD1C3F03A9 /* UIApplication+OAuthSwift.swift in Sources */,
+				783235624849E8B2A0F14EB4CACC26CC /* URL+OAuthSwift.swift in Sources */,
+				5C5F3A26A462E16527379F6AEDDFF3E5 /* URLConvertible.swift in Sources */,
+				611FCC5F5A3934B8BFDC6DAECBAA6EC9 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		1A4FA721F13BED0448BE50A9AF6A34C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OAuthSwift;
-			target = 3C91E7D1D6000FAB10BA1FA4D7DC1553 /* OAuthSwift */;
-			targetProxy = 535A73DB27D7884EDCBADB8E535B994D /* PBXContainerItemProxy */;
-		};
-		31C73FA332036F2DAFC689332F199E12 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = KeychainAccess;
-			target = 615C831BCE925ED486B225B87E44926D /* KeychainAccess */;
-			targetProxy = 429145753A0A0A8A2E97E594487026B8 /* PBXContainerItemProxy */;
-		};
-		C5C260FC37E9241C888D31F2418758E2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OAuthSwift;
-			target = 3C91E7D1D6000FAB10BA1FA4D7DC1553 /* OAuthSwift */;
-			targetProxy = 9C4D8E9CD8DC550F149CB01A3B3EB323 /* PBXContainerItemProxy */;
-		};
-		F3A4DA6C3D302FC4E3030DF63FE18BC1 /* PBXTargetDependency */ = {
+		42D591FC08961151B93E3FC05496A758 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CloudServiceKit;
 			target = 0F12343BE929DD18B8C408D8A72BE0DF /* CloudServiceKit */;
-			targetProxy = AAA295788DB1F98DB90FFFF92B7DA8D6 /* PBXContainerItemProxy */;
+			targetProxy = 4F183E4380BA802408A75A620116173B /* PBXContainerItemProxy */;
+		};
+		79594B97781F3FF3BE402469FDA6DEC9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			target = 3C91E7D1D6000FAB10BA1FA4D7DC1553 /* OAuthSwift */;
+			targetProxy = D1AAADB3048B5D4385D0A64769D78272 /* PBXContainerItemProxy */;
+		};
+		91E22CC0764CA33310F2C19506C7E1AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KeychainAccess;
+			target = 615C831BCE925ED486B225B87E44926D /* KeychainAccess */;
+			targetProxy = F9ECFD6019EE3F4732ED9607E4BF9591 /* PBXContainerItemProxy */;
+		};
+		ABA5084B0DED78CF4C4475C7791C1466 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			target = 3C91E7D1D6000FAB10BA1FA4D7DC1553 /* OAuthSwift */;
+			targetProxy = 6A3BC031FE0311888FEEA86B21FECF75 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0114BAC2D7DFEBB8B0FCFF07873FF562 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5E2877C3D11A6054F0C2EB3C2C3145D8 /* CloudServiceKit.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/CloudServiceKit/CloudServiceKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit.modulemap";
-				PRODUCT_MODULE_NAME = CloudServiceKit;
-				PRODUCT_NAME = CloudServiceKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.5;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		0B0425AC794F7F2D9B103BDF08D1C15F /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7FF31FC6E7B3C5756F788F4306704B72 /* KeychainAccess.release.xcconfig */;
@@ -780,41 +748,6 @@
 				MODULEMAP_FILE = "Target Support Files/KeychainAccess/KeychainAccess.modulemap";
 				PRODUCT_MODULE_NAME = KeychainAccess;
 				PRODUCT_NAME = KeychainAccess;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.1;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		1176EA453F021D06F42DC630D1BA756B /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6D9E0260C12F88648C202278C1BC8E89 /* OAuthSwift.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/OAuthSwift/OAuthSwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/OAuthSwift/OAuthSwift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/OAuthSwift/OAuthSwift.modulemap";
-				PRODUCT_MODULE_NAME = OAuthSwift;
-				PRODUCT_NAME = OAuthSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -889,75 +822,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
-		7581F4C4F487CF304317C672FDE0CC0D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 881F8C5693BE91B210768554AD04DFA8 /* CloudServiceKit.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/CloudServiceKit/CloudServiceKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit.modulemap";
-				PRODUCT_MODULE_NAME = CloudServiceKit;
-				PRODUCT_NAME = CloudServiceKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.5;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		761277A0A526AB0C3F544A38B8A6FA7A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8EDBFEBBD82665749AA53FD7828BE17F /* OAuthSwift.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/OAuthSwift/OAuthSwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/OAuthSwift/OAuthSwift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/OAuthSwift/OAuthSwift.modulemap";
-				PRODUCT_MODULE_NAME = OAuthSwift;
-				PRODUCT_NAME = OAuthSwift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.1;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -1132,6 +996,146 @@
 			};
 			name = Debug;
 		};
+		9B24AE35B2051E6A5257265A97697AC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4F6B372EA01010EC980F6D744DC832B1 /* CloudServiceKit.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CloudServiceKit/CloudServiceKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit.modulemap";
+				PRODUCT_MODULE_NAME = CloudServiceKit;
+				PRODUCT_NAME = CloudServiceKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AF8425DF1CF8C4E73795A6179B9DE930 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D9E0260C12F88648C202278C1BC8E89 /* OAuthSwift.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/OAuthSwift/OAuthSwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/OAuthSwift/OAuthSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/OAuthSwift/OAuthSwift.modulemap";
+				PRODUCT_MODULE_NAME = OAuthSwift;
+				PRODUCT_NAME = OAuthSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C4C1071E26FA2DBBBCEC525BC36C7297 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8EDBFEBBD82665749AA53FD7828BE17F /* OAuthSwift.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/OAuthSwift/OAuthSwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/OAuthSwift/OAuthSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/OAuthSwift/OAuthSwift.modulemap";
+				PRODUCT_MODULE_NAME = OAuthSwift;
+				PRODUCT_NAME = OAuthSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E2DD538BA0F346DFE90A2404B64BE913 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A90779F1B49166EEB6536ACB058F0CEC /* CloudServiceKit.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/CloudServiceKit/CloudServiceKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/CloudServiceKit/CloudServiceKit.modulemap";
+				PRODUCT_MODULE_NAME = CloudServiceKit;
+				PRODUCT_NAME = CloudServiceKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.5;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1153,11 +1157,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5FAB76A15968296761FF7CEAD32E37D2 /* Build configuration list for PBXNativeTarget "OAuthSwift" */ = {
+		64E4934AE276B72A5B1B2E5198E7209C /* Build configuration list for PBXNativeTarget "OAuthSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				761277A0A526AB0C3F544A38B8A6FA7A /* Debug */,
-				1176EA453F021D06F42DC630D1BA756B /* Release */,
+				C4C1071E26FA2DBBBCEC525BC36C7297 /* Debug */,
+				AF8425DF1CF8C4E73795A6179B9DE930 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1171,11 +1175,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C426D1D1EE144C1E43F0ADFA4589D5C6 /* Build configuration list for PBXNativeTarget "CloudServiceKit" */ = {
+		F7ACC26C2F3EFC09772B62ED744BD6F6 /* Build configuration list for PBXNativeTarget "CloudServiceKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7581F4C4F487CF304317C672FDE0CC0D /* Debug */,
-				0114BAC2D7DFEBB8B0FCFF07873FF562 /* Release */,
+				9B24AE35B2051E6A5257265A97697AC3 /* Debug */,
+				E2DD538BA0F346DFE90A2404B64BE913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
