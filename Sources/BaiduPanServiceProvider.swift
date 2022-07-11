@@ -459,7 +459,7 @@ extension BaiduPanServiceProvider: CloudServiceBatching {
         var data: [String: Any] = [:]
         data["async"] = 1
         data["ondup"] = "fail"
-        data["filelist"] = items.map { $0.path }
+        data["filelist"] = items.map { ["path": $0.path] }.json
         
         post(url: url, params: params, data: data, completion: completion)
     }
@@ -479,7 +479,7 @@ extension BaiduPanServiceProvider: CloudServiceBatching {
         var data: [String: Any] = [:]
         data["async"] = 1
         data["ondup"] = "fail"
-        data["filelist"] = items.map { $0.path }
+        data["filelist"] = items.map { ["path": $0.path] }.json
         post(url: url, params: params, data: data, completion: completion)
     }
 }
