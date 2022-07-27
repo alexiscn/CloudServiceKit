@@ -1,5 +1,5 @@
 //
-//  OneOneFiveServiceProvider.swift
+//  Cloud115ServiceProvider.swift
 //  Pods
 //
 //  Created by alexis on 2022/4/29.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class OneOneFiveServiceProvider: CloudServiceProvider {
+public class Cloud115ServiceProvider: CloudServiceProvider {
     
     public var refreshAccessTokenHandler: CloudRefreshAccessTokenHandler?
     
@@ -61,7 +61,7 @@ public class OneOneFiveServiceProvider: CloudServiceProvider {
                 case .success(let result):
                     print("Response headers:\(result.headers)")
                     if let object = result.json as? [String: Any], let data = object["data"] as? [[String: Any]] {
-                        let files = data.compactMap { OneOneFiveServiceProvider.cloudItemFromJSON($0) }
+                        let files = data.compactMap { Cloud115ServiceProvider.cloudItemFromJSON($0) }
                         completion(.success(files))
                     } else {
                         completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -100,7 +100,7 @@ public class OneOneFiveServiceProvider: CloudServiceProvider {
                         if let errNo = object["errNo"] as? Int, errNo == 20130827 {
                             fetchList()
                         } else if let data = object["data"] as? [[String: Any]] {
-                            let files = data.compactMap { OneOneFiveServiceProvider.cloudItemFromJSON($0) }
+                            let files = data.compactMap { Cloud115ServiceProvider.cloudItemFromJSON($0) }
                             completion(.success(files))
                         } else {
                             completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -139,7 +139,14 @@ public class OneOneFiveServiceProvider: CloudServiceProvider {
     }
     
     public func moveItem(_ item: CloudItem, to directory: CloudItem, completion: @escaping CloudCompletionHandler) {
-        
+        let url = "https://webapi.115.com/files/move"
+        var data = [String: Any]()
+        if let pid = directory.json["cid"] as? String {
+            data["pid"] = pid
+        }
+        data["fid[0]"] = item.id
+        data["move_proid"] = Int64(Date().timeIntervalSince1970)
+        post(url: url, data: data, headers: headers, completion: completion)
     }
     
     public func removeItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
@@ -173,7 +180,7 @@ public class OneOneFiveServiceProvider: CloudServiceProvider {
             switch response.result {
             case .success(let result):
                 if let object = result.json as? [String: Any], let data = object["data"] as? [[String: Any]] {
-                    let files = data.compactMap { OneOneFiveServiceProvider.cloudItemFromJSON($0) }
+                    let files = data.compactMap { Cloud115ServiceProvider.cloudItemFromJSON($0) }
                     completion(.success(files))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -186,11 +193,11 @@ public class OneOneFiveServiceProvider: CloudServiceProvider {
     }
     
     public func uploadData(_ data: Data, filename: String, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
-        
+        completion(.init(response: nil, result: .failure(CloudServiceError.unsupported)))
     }
     
     public func uploadFile(_ fileURL: URL, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
-        
+        completion(.init(response: nil, result: .failure(CloudServiceError.unsupported)))
     }
     
     public static func cloudItemFromJSON(_ json: [String : Any]) -> CloudItem? {
@@ -211,7 +218,7 @@ public class OneOneFiveServiceProvider: CloudServiceProvider {
     
 }
 
-extension OneOneFiveServiceProvider {
+extension Cloud115ServiceProvider {
     
     public var headers: [String: String] {
         return [
@@ -224,7 +231,7 @@ extension OneOneFiveServiceProvider {
     }
 }
 
-public class OneOneFiveConnector {
+public class Cloud115Connector {
     
     public let cookie: String
     
@@ -232,8 +239,8 @@ public class OneOneFiveConnector {
         self.cookie = cookie
     }
     
-    public func login(completion: @escaping (Result<OneOneFiveServiceProvider, Error>) -> Void) {
-        let provider = OneOneFiveServiceProvider(credential: URLCredential(user: "", password: cookie, persistence: .forSession))
+    public func login(completion: @escaping (Result<Cloud115ServiceProvider, Error>) -> Void) {
+        let provider = Cloud115ServiceProvider(credential: URLCredential(user: "", password: cookie, persistence: .forSession))
         completion(.success(provider))
     }
 } 
