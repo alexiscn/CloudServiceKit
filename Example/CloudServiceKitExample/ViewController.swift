@@ -107,8 +107,6 @@ class ViewController: UIViewController {
             assert(CloudConfiguration.pCloud != nil, message)
             let pcloud = CloudConfiguration.pCloud!
             connector = PCloudConnector(appId: pcloud.appId, appSecret: pcloud.appSecret, callbackUrl: pcloud.redirectUrl)
-        case .quark:
-            connector = QuarkConnector(cookie: "<Fill_Quark_Cookie_Here>")
         }
         return connector
     }
@@ -128,8 +126,6 @@ class ViewController: UIViewController {
             provider = OneDriveServiceProvider(credential: credential)
         case .pCloud:
             provider = PCloudServiceProvider(credential: credential)
-        case .quark:
-            provider = QuarkServiceProvider(credential: credential)
         }
         return provider
     }
