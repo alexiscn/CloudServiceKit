@@ -7,6 +7,8 @@
 
 import Foundation
 import OAuthSwift
+import class UIKit.UIViewController
+import class UIKit.UIScreen
 
 public protocol CloudServiceOAuth {
     
