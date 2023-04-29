@@ -44,6 +44,9 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     /// The chunk size of resumable upload. The value is 6M.
     public let chunkSize: Int64 = 6 * 1024 * 1026
     
+    public var contentsOfDirectoryQueryTerm = ""
+    public var contentsOfDirectoryFields = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails,parents),nextPageToken"
+    
     required public init(credential: URLCredential?) {
         self.credential = credential
     }
@@ -80,8 +83,13 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         var contents: [CloudItem] = []
         func fetch(pageToken: String? = nil) {
             var params: [String: Any] = [:]
-            params["q"] = String(format: "trashed = false and '%@' in parents", directory.id)
-            params["fields"] = "files(id,kind,name,size,createdTime,modifiedTime,mimeType,md5Checksum,webContentLink,thumbnailLink,shortcutDetails,parents),nextPageToken"
+            var query = ""
+            if !contentsOfDirectoryQueryTerm.isEmpty {
+                query = contentsOfDirectoryQueryTerm + " and "
+            }
+            query += "trashed = false and '\(directory.id)' in parents"
+            params["q"] = query
+            params["fields"] = contentsOfDirectoryFields
             if let pageToken = pageToken {
                 params["pageToken"] = pageToken
             }
