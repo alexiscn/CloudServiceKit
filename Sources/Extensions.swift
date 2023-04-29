@@ -7,6 +7,8 @@
 
 import Foundation
 import CryptoKit
+import UIKit
+import AuthenticationServices
 
 // MARK: - Array
 extension Array {
@@ -56,5 +58,12 @@ extension Digest {
     
     func toBase64() -> String {
         return Data(self).base64EncodedString()
+    }
+}
+
+// MARK: - UIViewController
+extension UIViewController: ASWebAuthenticationPresentationContextProviding {
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return view?.window ?? UIApplication.shared.topWindow ?? ASPresentationAnchor()
     }
 }
