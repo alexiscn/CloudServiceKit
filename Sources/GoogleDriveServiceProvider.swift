@@ -201,12 +201,13 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
         get(url: url) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let name = json["name"] as? String {
-                    let account = CloudUser(username: name, json: json)
-                    completion(.success(account))
-                } else {
+                guard let json = result.json as? [String: Any] else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
+                    return
                 }
+                let name = json["name"] as? String ?? json["email"] as? String ?? ""
+                let account = CloudUser(username: name, json: json)
+                completion(.success(account))
             case .failure(let error):
                 completion(.failure(error))
             }
