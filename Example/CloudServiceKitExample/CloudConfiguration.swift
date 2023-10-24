@@ -18,6 +18,11 @@ struct CloudConfiguration {
 
 extension CloudConfiguration {
     
+    static var aliyun: CloudConfiguration? {
+        // fulfill your aliyundrive app info
+        return nil
+    }
+    
     static var baidu: CloudConfiguration? {
         // fulfill your baidu app info
         return nil

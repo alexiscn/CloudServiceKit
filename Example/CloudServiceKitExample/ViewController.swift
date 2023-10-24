@@ -83,6 +83,10 @@ class ViewController: UIViewController {
         let message = "Please configure app info in CloudConfiguration.swift"
         let connector: CloudServiceConnector
         switch drive {
+        case .aliyunDrive:
+            assert(CloudConfiguration.aliyun != nil, message)
+            let aliyun = CloudConfiguration.aliyun!
+            connector = AliyunDriveConnector(appId: aliyun.appId, appSecret: aliyun.appSecret, callbackUrl: aliyun.redirectUrl)
         case .baiduPan:
             assert(CloudConfiguration.baidu != nil, message)
             let baidu = CloudConfiguration.baidu!
@@ -114,6 +118,8 @@ class ViewController: UIViewController {
     private func provider(for driveType: CloudDriveType, credential: URLCredential) -> CloudServiceProvider {
         let provider: CloudServiceProvider
         switch driveType {
+        case .aliyunDrive:
+            provider = AliyunDriveServiceProvider(credential: credential)
         case .baiduPan:
             provider = BaiduPanServiceProvider(credential: credential)
         case .box:
