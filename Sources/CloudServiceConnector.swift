@@ -120,6 +120,23 @@ extension CloudServiceConnector: CloudServiceProviderDelegate {
     
 }
 
+// MARK: - AliyunDriveConnector
+public class AliyunDriveConnector: CloudServiceConnector {
+    
+    public override var authorizeUrl: String {
+        "https://open.aliyundrive.com/oauth/authorize"
+    }
+    
+    public override var accessTokenUrl: String {
+        "https://open.aliyundrive.com/oauth/access_token"
+    }
+    
+    public override var scope: String {
+        get { return "user:base,file:all:read,file:all:write" }
+        set { }
+    }
+}
+
 // MARK: - BaiduPanConnector
 public class BaiduPanConnector: CloudServiceConnector {
     
