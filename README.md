@@ -2,6 +2,7 @@
 
 Easy to integrate cloud service using Oauth2. Supported platforms:
 
+- [x] AliyunDrive
 - [x] BaiduPan
 - [x] Box
 - [x] Dropbox
@@ -43,6 +44,11 @@ You can explore `CloudServiceKit` by running example. But first you should confi
 ```swift
 extension CloudConfiguration {
     
+    static var aliyun: CloudConfiguration? {
+        // fulfill your aliyun app info
+        return nil
+    }
+
     static var baidu: CloudConfiguration? {
         // fulfill your baidu app info
         return nil

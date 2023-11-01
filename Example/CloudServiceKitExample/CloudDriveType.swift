@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum CloudDriveType: String, Codable, CaseIterable, Hashable {
+    case aliyunDrive
     case baiduPan
     case box
     case dropbox
@@ -18,6 +19,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
     
     var title: String {
         switch self {
+        case .aliyunDrive: return "Aliyun Drive"
         case .baiduPan: return "Baidu Pan"
         case .box: return "Box"
         case .dropbox: return "Dropbox"
@@ -29,6 +31,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
     
     var image: UIImage? {
         switch self {
+        case .aliyunDrive: return UIImage(named: "aliyundrive")
         case .baiduPan: return UIImage(named: "baidupan")
         case .box: return UIImage(named: "box")
         case .dropbox: return UIImage(named: "dropbox")
