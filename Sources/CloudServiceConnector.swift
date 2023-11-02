@@ -88,6 +88,43 @@ public class CloudServiceConnector: CloudServiceOAuth {
         })
     }
     
+    /// Show a modal view  to authenticate a user through a Web Service
+    ///
+    /// When the user starts the authentication session, the operating system shows a modal view telling them
+    /// which domain the app is authenticating with and asking whether to proceed. If the user proceeds with the authentication attempt,
+    /// a browser loads and displays the page, from which the user can authenticate. In iOS, the browser is a secure, embedded web view.
+    ///
+    /// When they eat food, a sloth's `energyLevel` increases by the food's `energy`.
+    ///
+    /// - Parameters:
+    ///   - viewController: A  controller that provides a window in which the system can present an authentication session to the user.
+    ///   - prefersEphemeralWebBrowserSession: A Boolean value that indicates whether the session should ask the browser for a private authentication session.
+    ///   - completion: A completion handler the session calls when it completes, or when the user cancels the session.
+    public func connectWithASWebAuthenticationSession(viewController: UIViewController,
+                                                      prefersEphemeralWebBrowserSession: Bool = false,
+                                                      completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
+        let oauth = OAuth2Swift(consumerKey: appId, consumerSecret: appSecret, authorizeUrl: authorizeUrl, accessTokenUrl: accessTokenUrl, responseType: responseType, contentType: nil)
+        oauth.allowMissingStateCheck = true
+        #if os(iOS)
+        var callbackUrlScheme = callbackUrl
+        if let range = callbackUrl.range(of: ":/") {
+            callbackUrlScheme = String(callbackUrl[..<range.lowerBound])
+        }
+        oauth.authorizeURLHandler = ASWebAuthenticationURLHandler(callbackUrlScheme: callbackUrlScheme,
+                                                                  presentationContextProvider: viewController,
+                                                                  prefersEphemeralWebBrowserSession: prefersEphemeralWebBrowserSession)
+        #endif
+        self.oauth = oauth
+        _ = oauth.authorize(withCallbackURL: URL(string: callbackUrl), scope: scope, state: state, parameters: authorizeParameters, completionHandler: { result in
+            switch result {
+            case .success(let token):
+                completion(.success(token))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+    
     public func renewToken(with refreshToken: String, completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
         let oauth = OAuth2Swift(consumerKey: appId, consumerSecret: appSecret, authorizeUrl: authorizeUrl, accessTokenUrl: accessTokenUrl, responseType: responseType, contentType: nil)
         oauth.allowMissingStateCheck = true

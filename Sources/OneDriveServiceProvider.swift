@@ -171,7 +171,7 @@ public class OneDriveServiceProvider: CloudServiceProvider {
         let url = apiURL.appendingPathComponent("me/drive/items/\(directory.id)/children")
         var json: [String: Any] = [:]
         json["name"] = folderName
-        json["folder"] = [:]
+        json["folder"] = [:] as [String: Any]
         json["@microsoft.graph.conflictBehavior"] = "rename"
         post(url: url, json: json, completion: completion)
     }
