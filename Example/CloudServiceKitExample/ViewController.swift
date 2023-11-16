@@ -172,7 +172,7 @@ class ViewController: UIViewController {
             let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
+        self.connector = connector
     }
 }
 
