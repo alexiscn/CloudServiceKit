@@ -8,8 +8,8 @@ Pod::Spec.new do |s|
   s.summary = 'CloudServiceKit'
   s.homepage = 'https://github.com/alexiscn/CloudServiceKit'
   s.author       = { 'alexiscn' => 'https://github.com/alexiscn' }
-  s.platform     = :ios
   s.ios.deployment_target = '13.0'
+  s.tvos.deployment_target = '14.0'
   s.source_files = 'Sources/*.swift'
   s.dependency 'OAuthSwift'
   s.swift_versions = ['5.1', '5.2', '5.3', '5.4', '5.5']

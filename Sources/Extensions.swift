@@ -62,8 +62,10 @@ extension Digest {
 }
 
 // MARK: - UIViewController
+#if targetEnvironment(macCatalyst) || os(iOS)
 extension UIViewController: ASWebAuthenticationPresentationContextProviding {
     public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
         return view?.window ?? UIApplication.shared.topWindow ?? ASPresentationAnchor()
     }
 }
+#endif
