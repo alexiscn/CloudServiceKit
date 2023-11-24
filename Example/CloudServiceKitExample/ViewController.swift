@@ -139,27 +139,43 @@ class ViewController: UIViewController {
     private func connect(_ account: CloudAccount) {
         let connector = connector(for: account.driveType)
         if let refreshToken = account.refreshToken, !refreshToken.isEmpty {
-            connector.renewToken(with: refreshToken) { result in
-                switch result {
-                case .success(let token):
-                    
-                    // update oauth token and refresh token of existing account
-                    account.oauthToken = token.credential.oauthToken
-                    if !token.credential.oauthRefreshToken.isEmpty {
-                        account.refreshToken = token.credential.oauthRefreshToken
+            // For BaiduPan, we only refresh access token when it expires
+            if account.driveType == .baiduPan {
+                let credential = URLCredential(user: account.username,
+                                               password: account.oauthToken,
+                                               persistence: .permanent)
+                let provider = provider(for: account.driveType, credential: credential)
+                provider.refreshAccessTokenHandler = { [weak self] callback in
+                    guard let self = self else { return }
+                    self.refreshAccessToken(with: refreshToken, connector: connector, account: account) { result in
+                        callback?(result)
                     }
-                    CloudAccountManager.shared.upsert(account)
-                    
-                    // create CloudServiceProvider with new oauth token
-                    let credential = URLCredential(user: account.username,
-                                                   password: token.credential.oauthToken,
-                                                   persistence: .permanent)
-                    let provider = self.provider(for: account.driveType, credential: credential)
-                    
-                    let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
-                    self.navigationController?.pushViewController(vc, animated: true)
-                case .failure(let error):
-                    print(error)
+                }
+                let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
+                self.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                connector.renewToken(with: refreshToken) { result in
+                    switch result {
+                    case .success(let token):
+                        
+                        // update oauth token and refresh token of existing account
+                        account.oauthToken = token.credential.oauthToken
+                        if !token.credential.oauthRefreshToken.isEmpty {
+                            account.refreshToken = token.credential.oauthRefreshToken
+                        }
+                        CloudAccountManager.shared.upsert(account)
+                        
+                        // create CloudServiceProvider with new oauth token
+                        let credential = URLCredential(user: account.username,
+                                                       password: token.credential.oauthToken,
+                                                       persistence: .permanent)
+                        let provider = self.provider(for: account.driveType, credential: credential)
+                        
+                        let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    case .failure(let error):
+                        print(error)
+                    }
                 }
             }
         } else {
@@ -173,6 +189,26 @@ class ViewController: UIViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         self.connector = connector
+    }
+    
+    private func refreshAccessToken(with refreshToken: String, connector: CloudServiceConnector, account: CloudAccount, completionHandler: @escaping (Result<URLCredential, Error>) -> Void) {
+        connector.renewToken(with: refreshToken) { result in
+            switch result {
+            case .success(let token):
+                // update oauth token and refresh token of existing account
+                account.oauthToken = token.credential.oauthToken
+                if !token.credential.oauthRefreshToken.isEmpty {
+                    account.refreshToken = token.credential.oauthRefreshToken
+                }
+                CloudAccountManager.shared.upsert(account)
+                let credential = URLCredential(user: account.username,
+                                               password: token.credential.oauthToken,
+                                               persistence: .permanent)
+                completionHandler(.success(credential))
+            case .failure(let error):
+                completionHandler(.failure(error))
+            }
+        }
     }
 }
 
