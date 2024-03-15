@@ -94,7 +94,14 @@ public class AliyunDriveServiceProvider: CloudServiceProvider {
     }
     
     public func copyItem(_ item: CloudItem, to directory: CloudItem, completion: @escaping CloudCompletionHandler) {
-        completion(.init(response: nil, result: .failure(CloudServiceError.unsupported)))
+        let url = apiURL.appendingPathComponent("/adrive/v1.0/openFile/copy")
+        var json = [String: Any]()
+        json["drive_id"] = driveId
+        json["file_id"] = item.id
+        json["to_drive_id"] = driveId
+        json["to_parent_file_id"] = directory.id
+        json["auto_rename"] = true
+        post(url: url, json: json, completion: completion)
     }
     
     /// Create a folder at a given directory.
