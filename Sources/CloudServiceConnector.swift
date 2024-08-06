@@ -51,6 +51,7 @@ public class CloudServiceConnector: CloudServiceOAuth {
     
     var oauth: OAuth2Swift?
     
+    public var customURLHandler: OAuthSwiftURLHandlerType?
     
     /// Create cloud service connector
     /// - Parameters:
@@ -75,7 +76,7 @@ public class CloudServiceConnector: CloudServiceOAuth {
         let oauth = OAuth2Swift(consumerKey: appId, consumerSecret: appSecret, authorizeUrl: authorizeUrl, accessTokenUrl: accessTokenUrl, responseType: responseType, contentType: nil)
         oauth.allowMissingStateCheck = true
         #if os(iOS)
-        oauth.authorizeURLHandler = SafariURLHandler(viewController: viewController, oauthSwift: oauth)
+        oauth.authorizeURLHandler = customURLHandler ?? SafariURLHandler(viewController: viewController, oauthSwift: oauth)
         #endif
         self.oauth = oauth
         _ = oauth.authorize(withCallbackURL: URL(string: callbackUrl), scope: scope, state: state, parameters: authorizeParameters, completionHandler: { result in

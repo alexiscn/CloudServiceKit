@@ -161,6 +161,45 @@ public class AliyunDriveServiceProvider: CloudServiceProvider {
         }
     }
     
+    public struct AliyunDriveInfo: Codable {
+        public let userId: String
+        public let name: String
+        public let avatar: String
+        public let defaultDriveId: String
+        public var resourceDriveId: String?
+        public var backupDriveId: String?
+        public init(userId: String, name: String, avatar: String, defaultDriveId: String, resourceDriveId: String? = nil, backupDriveId: String? = nil) {
+            self.userId = userId
+            self.name = name
+            self.avatar = avatar
+            self.defaultDriveId = defaultDriveId
+            self.resourceDriveId = resourceDriveId
+            self.backupDriveId = backupDriveId
+        }
+    }
+    
+    public func getDriveInfo(completion: @escaping (Result<AliyunDriveInfo, Error>) -> Void) {
+        let url = apiURL.appendingPathComponent("/adrive/v1.0/user/getDriveInfo")
+        post(url: url) { response in
+            switch response.result {
+            case .success(let result):
+                if let json = result.json as? [String: Any],
+                    let userId = json["user_id"] as? String,
+                    let name = json["name"] as? String,
+                    let avatar = json["avatar"] as? String, let defaultDriveId = json["default_drive_id"] as? String {
+                    let resourceDriveId = json["resource_drive_id"] as? String
+                    let backupDriveId = json["resource_drive_id"] as? String
+                    let info = AliyunDriveInfo(userId: userId, name: name, avatar: avatar, defaultDriveId: defaultDriveId, resourceDriveId: resourceDriveId, backupDriveId: backupDriveId)
+                    completion(.success(info))
+                } else {
+                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     /// Move file to directory.
     /// - Parameters:
     ///   - item: The item to be moved.

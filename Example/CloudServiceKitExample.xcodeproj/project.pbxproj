@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,7 @@
 		A3DE793F26F5D47F0058E54F /* CloudDriveType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE793E26F5D47F0058E54F /* CloudDriveType.swift */; };
 		A3DE794126F5DD580058E54F /* DriveBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DE794026F5DD580058E54F /* DriveBrowserViewController.swift */; };
 		A3F880F62702BCB20054D5D6 /* CloudConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F880F52702BCB20054D5D6 /* CloudConfiguration.swift */; };
+		FAB8E0212C623BEE00766CEC /* CustomOAuthWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAB8E0202C623BEE00766CEC /* CustomOAuthWebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		A3F880F52702BCB20054D5D6 /* CloudConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudConfiguration.swift; sourceTree = "<group>"; };
 		B7E64412EFC2817CB9FC2CC0 /* Pods-CloudServiceKitExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CloudServiceKitExample.release.xcconfig"; path = "Target Support Files/Pods-CloudServiceKitExample/Pods-CloudServiceKitExample.release.xcconfig"; sourceTree = "<group>"; };
 		F0D183B47B5AC5BB4D268D93 /* Pods_CloudServiceKitExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CloudServiceKitExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAB8E0202C623BEE00766CEC /* CustomOAuthWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomOAuthWebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				A3DE793E26F5D47F0058E54F /* CloudDriveType.swift */,
 				A3F880F52702BCB20054D5D6 /* CloudConfiguration.swift */,
 				A3C3F6CD270475250019A9D6 /* CloudAccountManager.swift */,
+				FAB8E0202C623BEE00766CEC /* CustomOAuthWebViewController.swift */,
 				A3DE793026F5D3CD0058E54F /* Main.storyboard */,
 				A3DE793326F5D3D10058E54F /* Assets.xcassets */,
 				A3DE793526F5D3D10058E54F /* LaunchScreen.storyboard */,
@@ -223,6 +226,7 @@
 				A3DE793F26F5D47F0058E54F /* CloudDriveType.swift in Sources */,
 				A3DE792D26F5D3CD0058E54F /* SceneDelegate.swift in Sources */,
 				A3DE794126F5DD580058E54F /* DriveBrowserViewController.swift in Sources */,
+				FAB8E0212C623BEE00766CEC /* CustomOAuthWebViewController.swift in Sources */,
 				A3C3F6CE270475250019A9D6 /* CloudAccountManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
