@@ -145,11 +145,11 @@ public class AliyunDriveServiceProvider: CloudServiceProvider {
     /// Get information about the current user's account.
     /// - Parameter completion: Completion block.
     public func getCurrentUserInfo(completion: @escaping (Result<CloudUser, Error>) -> Void) {
-        let url = "https://api.aliyundrive.com/v2/user/get"
-        post(url: url) { response in
+        let url = apiURL.appendingPathComponent("/oauth/users/info")
+        get(url: url) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let username = json["nick_name"] as? String {
+                if let json = result.json as? [String: Any], let username = json["name"] as? String {
                     let user = CloudUser(username: username, json: json)
                     completion(.success(user))
                 } else {
