@@ -233,14 +233,14 @@ public class DropboxConnector: CloudServiceConnector {
 public class GoogleDriveConnector: CloudServiceConnector {
     
     public override var authorizeUrl: String {
-        return "https://accounts.google.com/o/oauth2/auth"
+        "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent"
     }
     
     public override var accessTokenUrl: String {
-        return "https://accounts.google.com/o/oauth2/token"
+        "https://oauth2.googleapis.com/token"
     }
     
-    private var defaultScope = "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.profile"
+    private var defaultScope = "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile"
     public override var scope: String {
         get { return defaultScope }
         set { defaultScope = newValue }
