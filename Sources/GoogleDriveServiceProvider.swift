@@ -90,6 +90,7 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
             query += "trashed = false and '\(directory.id)' in parents"
             params["q"] = query
             params["fields"] = contentsOfDirectoryFields
+            params["pageSize"] = 100
             if let pageToken = pageToken {
                 params["pageToken"] = pageToken
             }

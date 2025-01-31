@@ -21,13 +21,13 @@ public protocol CloudServiceOAuth {
 /// The base connector provided by CloudService.
 /// CloudServiceKit provides a default connector for each cloud service, such as `DropboxConnector`.
 /// You can implement your own connector if you want customizations.
-public class CloudServiceConnector: CloudServiceOAuth {
+open class CloudServiceConnector: CloudServiceOAuth {
     
     /// subclass must provide authorizeUrl
-    public var authorizeUrl: String { return "" }
+    open var authorizeUrl: String { return "" }
     
     /// subclass must provide accessTokenUrl
-    public var accessTokenUrl: String { return "" }
+    open var accessTokenUrl: String { return "" }
     
     /// subclass can provide more custom parameters
     public var authorizeParameters: OAuthSwift.Parameters { return [:] }
