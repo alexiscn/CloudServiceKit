@@ -240,7 +240,7 @@ public class GoogleDriveConnector: CloudServiceConnector {
         "https://oauth2.googleapis.com/token"
     }
     
-    private var defaultScope = "https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/userinfo.profile"
+    private var defaultScope = "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile"
     public override var scope: String {
         get { return defaultScope }
         set { defaultScope = newValue }
