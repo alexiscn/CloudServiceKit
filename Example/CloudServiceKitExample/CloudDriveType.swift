@@ -17,6 +17,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
     case oneDrive
     case pCloud
     case drive115
+    case drive123
     
     var title: String {
         switch self {
@@ -28,6 +29,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
         case .oneDrive: return "OneDrive"
         case .pCloud: return "pCloud"
         case .drive115: return "115"
+        case .drive123: return "123Pan"
         }
     }
     
@@ -41,6 +43,7 @@ enum CloudDriveType: String, Codable, CaseIterable, Hashable {
         case .oneDrive: return UIImage(named: "onedrive")
         case .pCloud: return UIImage(named: "pcloud")
         case .drive115: return UIImage(named: "115")
+        case .drive123: return UIImage(named: "123")
         }
     }
 }

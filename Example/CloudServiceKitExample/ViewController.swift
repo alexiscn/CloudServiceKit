@@ -157,6 +157,10 @@ class ViewController: UIViewController {
             assert(CloudConfiguration.drive115 != nil, message)
             let drive115 = CloudConfiguration.drive115!
             connector = Drive115Connector(appId: drive115.appId, appSecret: drive115.appSecret, callbackUrl: drive115.redirectUrl)
+        case .drive123:
+            assert(CloudConfiguration.drive123 != nil, message)
+            let drive123 = CloudConfiguration.drive123!
+            connector = Drive123Connector(appId: drive123.appId, appSecret: drive123.appSecret, callbackUrl: drive123.redirectUrl)
         }
         return connector
     }
@@ -180,6 +184,8 @@ class ViewController: UIViewController {
             provider = PCloudServiceProvider(credential: credential)
         case .drive115:
             provider = Drive115ServiceProvider(credential: credential)
+        case .drive123:
+            provider = Drive123ServiceProvider(credential: credential)
         }
         return provider
     }

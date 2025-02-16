@@ -444,3 +444,24 @@ extension Drive115Connector {
         return challengeBase64Encoded
     }
 }
+
+// MARK: - Drive123Connector
+
+public class Drive123Connector: CloudServiceConnector {
+    
+    public override var authorizeUrl: String {
+        "https://www.123pan.com/auth"
+    }
+    
+    public override var accessTokenUrl: String {
+        "https://open-api.123pan.com/api/v1/oauth2/access_token"
+    }
+    
+    private var defaultScope = "user:base,file:all:read,file:all:write"
+    /// The scope to access OneDrive service. The default value is `offline_access User.Read Files.ReadWrite.All`.
+    public override var scope: String {
+        get { return defaultScope }
+        set { defaultScope = newValue }
+    }
+}
+

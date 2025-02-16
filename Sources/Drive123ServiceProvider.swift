@@ -1,5 +1,5 @@
 //
-//  Drive115ServiceProvider.swift
+//  Drive123ServiceProvider.swift
 //
 //
 //  Created by alexiscn on 2025/2/16.
@@ -8,55 +8,74 @@
 import Foundation
 import CryptoKit
 
-/// Drive115ServiceProvider
-/// https://www.yuque.com/115yun/open/gv0l5007pczskivz
-public class Drive115ServiceProvider: CloudServiceProvider {
+/// Drive123ServiceProvider
+/// https://123yunpan.yuque.com/org-wiki-123yunpan-muaork/cr6ced
+public class Drive123ServiceProvider: CloudServiceProvider {
     
     public var delegate: CloudServiceProviderDelegate?
     
     public var refreshAccessTokenHandler: CloudRefreshAccessTokenHandler?
     
-    public var name: String { return "115" }
+    public var name: String { return "123Pan" }
     
     public var credential: URLCredential?
     
     public var rootItem: CloudItem { return CloudItem(id: "0", name: name, path: "/") }
     
-    public var apiURL = URL(string: "https://proapi.115.com")!
+    /// Upload chunsize which is 10M.
+    public let chunkSize: Int64 = 10 * 1024 * 1024
+    
+    public var apiURL = URL(string: "https://open-api.123pan.com")!
+    
+    private var headers: [String: String] {
+        return ["Platform": "open_platform"]
+    }
     
     public required init(credential: URLCredential?) {
         self.credential = credential
     }
     
     public func attributesOfItem(_ item: CloudItem, completion: @escaping (Result<CloudItem, Error>) -> Void) {
-        completion(.failure(CloudServiceError.unsupported))
+        let url = apiURL.appendingPathComponent("/api/v1/file/detail")
+        var params = [String: Any]()
+        params["fileID"] = item.id
+        get(url: url, params: params, headers: headers) { response in
+            switch response.result {
+            case .success(let result):
+                if let object = result.json as? [String: Any], let file = Self.cloudItemFromJSON(object) {
+                    completion(.success(file))
+                } else {
+                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     public func contentsOfDirectory(_ directory: CloudItem, completion: @escaping (Result<[CloudItem], Error>) -> Void) {
         
         var items: [CloudItem] = []
         
-        func loadList(offset: Int?) {
-            var params: [String: Any] = [:]
-            params["limit"] = 100
-            params["asc"] = "1"
-            params["cid"] = directory.id
-            params["show_dir"] = 1
-            if let offset = offset {
-                params["offset"] = offset
+        func loadList(lastFileId: Int?) {
+            var json: [String: Any] = [:]
+            json["limit"] = 100
+            json["parentFileId"] = directory.id
+            if let lastFileId = lastFileId {
+                json["lastFileId"] = lastFileId
             }
-            let url = apiURL.appendingPathComponent("/open/ufile/files")
-            get(url: url, params: params) { response in
+            let url = apiURL.appendingPathComponent("/api/v2/file/list")
+            get(url: url, params: json, headers: headers) { response in
                 switch response.result {
                 case .success(let result):
-                    if let object = result.json as? [String: Any],
-                       let list = object["data"] as? [[String: Any]] {
+                    if let object = result.json as? [String: Any], let data = object["data"] as? [String: Any],
+                       let list = data["fileList"] as? [[String: Any]] {
                         let files = list.compactMap { Self.cloudItemFromJSON($0) }
                         files.forEach { $0.fixPath(with: directory) }
                         items.append(contentsOf: files)
                         
-                        if let offset = object["offset"] as? Int, offset > 0 {
-                            loadList(offset: offset)
+                        if let lastFileId = object["lastFileId"] as? Int {
+                            loadList(lastFileId: lastFileId)
                         } else {
                             completion(.success(items))
                         }
@@ -69,7 +88,7 @@ public class Drive115ServiceProvider: CloudServiceProvider {
             }
         }
         
-        loadList(offset: nil)
+        loadList(lastFileId: nil)
     }
     
     public func copyItem(_ item: CloudItem, to directory: CloudItem, completion: @escaping CloudCompletionHandler) {
@@ -82,11 +101,11 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - directory: The target directory.
     ///   - completion: Completion block.
     public func createFolder(_ folderName: String, at directory: CloudItem, completion: @escaping CloudCompletionHandler) {
-        let url = apiURL.appendingPathComponent("/open/folder/add")
+        let url = apiURL.appendingPathComponent("/upload/v1/file/mkdir")
         var json: [String: Any] = [:]
-        json["pid"] = directory.id
-        json["file_name"] = folderName
-        post(url: url, json: json, completion: completion)
+        json["parentID"] = directory.id
+        json["name"] = folderName
+        post(url: url, json: json, headers: headers, completion: completion)
     }
     
     public func createFolder(_ folderName: String, at directory: CloudItem) async throws {
@@ -105,14 +124,13 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     /// Get the space usage information for the current user's account.
     /// - Parameter completion: Completion block.
     public func getCloudSpaceInformation(completion: @escaping (Result<CloudSpaceInformation, Error>) -> Void) {
-        let url = apiURL.appendingPathComponent("/open/user/info")
-        post(url: url) { response in
+        let url = apiURL.appendingPathComponent("/api/v1/user/info")
+        get(url: url, headers: headers) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let data = json["data"] as? [String: Any],
-                   let info = data["rt_space_info"] as? [String: Any],
-                   let totalSizeObject = info["all_total"] as? [String: String], let totalSizeStr = totalSizeObject["size"], let totalSize = Int64(totalSizeStr),
-                   let usedSizeObject = info["all_use"] as? [String: String], let usedSizeStr = usedSizeObject["suze"], let usedSize = Int64(usedSizeStr) {
+                if let json = result.json as? [String: Any],
+                   let totalSize = json["spacePermanent"] as? Int64,
+                   let usedSize = json["spaceUsed"] as? Int64 {
                     let cloudInfo = CloudSpaceInformation(totalSpace: totalSize, availableSpace: totalSize - usedSize, json: json)
                     completion(.success(cloudInfo))
                 } else {
@@ -127,11 +145,11 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     /// Get information about the current user's account.
     /// - Parameter completion: Completion block.
     public func getCurrentUserInfo(completion: @escaping (Result<CloudUser, Error>) -> Void) {
-        let url = apiURL.appendingPathComponent("/open/user/info")
-        post(url: url) { response in
+        let url = apiURL.appendingPathComponent("/api/v1/user/info")
+        get(url: url, headers: headers) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let username = json["nick_name"] as? String {
+                if let json = result.json as? [String: Any], let username = json["nickname"] as? String {
                     let user = CloudUser(username: username, json: json)
                     completion(.success(user))
                 } else {
@@ -148,9 +166,7 @@ public class Drive115ServiceProvider: CloudServiceProvider {
             getDownloadUrl(of: item) { result in
                 switch result {
                 case .success(let url):
-                    var request = URLRequest(url: url)
-                    request.setValue("CloudServiceKit", forHTTPHeaderField: "User-Agent")
-                    continuation.resume(returning: request)
+                    continuation.resume(returning: URLRequest(url: url))
                 case .failure(let error):
                     continuation.resume(throwing: error)
                 }
@@ -163,9 +179,7 @@ public class Drive115ServiceProvider: CloudServiceProvider {
             getDownloadUrl(of: item, parameters: [:]) { result in
                 switch result {
                 case .success(let url):
-                    var request = URLRequest(url: url)
-                    request.setValue("CloudServiceKit", forHTTPHeaderField: "User-Agent")
-                    continuation.resume(returning: request)
+                    continuation.resume(returning: URLRequest(url: url))
                 case .failure(let error):
                     continuation.resume(throwing: error)
                 }
@@ -179,11 +193,11 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - directory: The target directory.
     ///   - completion: Completion block.
     public func moveItem(_ item: CloudItem, to directory: CloudItem, completion: @escaping CloudCompletionHandler) {
-        let url = apiURL.appendingPathComponent("/open/ufile/move")
+        let url = apiURL.appendingPathComponent("/api/v1/file/move")
         var json = [String: Any]()
-        json["file_ids"] = item.id
-        json["to_cid"] = directory.id
-        post(url: url, json: json, completion: completion)
+        json["fileIDs"] = [item.id]
+        json["toParentFileID"] = directory.id
+        post(url: url, json: json, headers: headers, completion: completion)
     }
     
     /// Remove file/folder.
@@ -191,17 +205,17 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - item: The item to be removed.
     ///   - completion: Completion block.
     public func removeItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
-        let url = apiURL.appendingPathComponent("/open/ufile/delete")
-        var json = [String: Any]()
-        json["file_ids"] = item.id
-        post(url: url, json: json, completion: completion)
-    }
-    
-    public func trashItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("/api/v1/file/trash")
         var json = [String: Any]()
         json["fileIDs"] = [item.id]
-        post(url: url, json: json, completion: completion)
+        post(url: url, json: json, headers: headers, completion: completion)
+    }
+    
+    public func trashItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
+        let url = apiURL.appendingPathComponent("/api/v1/file/delete")
+        var json = [String: Any]()
+        json["fileIDs"] = [item.id]
+        post(url: url, json: json, headers: headers, completion: completion)
     }
     
     /// Rename file/folder item.
@@ -210,11 +224,11 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - newName: The new name.
     ///   - completion: Completion block.
     public func renameItem(_ item: CloudItem, newName: String, completion: @escaping CloudCompletionHandler) {
-        let url = apiURL.appendingPathComponent("/adrive/v1.0/openFile/update")
+        let url = apiURL.appendingPathComponent("/api/v1/file/name")
         var json: [String: Any] = [:]
-        json["file_id"] = item.id
-        json["name"] = newName
-        post(url: url, json: json, completion: completion)
+        json["fileId"] = item.id
+        json["fileName"] = newName
+        put(url: url, json: json, headers: headers, completion: completion)
     }
     
     /// Search files by keyword.
@@ -222,14 +236,14 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - keyword: The keyword.
     ///   - completion: Completion block.
     public func searchFiles(keyword: String, completion: @escaping (Result<[CloudItem], Error>) -> Void) {
-        let url = apiURL.appendingPathComponent("/open/ufile/search")
-        var params: [String: Any] = [:]
-        params["limit"] = 100
-        params["offset"] = 0
-        params["search_value"] = keyword
-        params["pick_code"] = "0"
+        let url = apiURL.appendingPathComponent("/api/v2/file/list")
+        var json: [String: Any] = [:]
+        json["limit"] = 100
+        json["parentFileId"] = 0
+        json["searchData"] = keyword
+        json["searchMode"] = 1
         
-        get(url: url, params: params) { response in
+        get(url: url, params: json, headers: headers) { response in
             switch response.result {
             case .success(let result):
                 if let object = result.json as? [String: Any], let list = object["items"] as? [[String: Any]] {
@@ -245,12 +259,7 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     }
     
     public func thumbnailRequest(item: CloudItem) async throws -> URLRequest {
-        if let thumb = item.json["thumb"] as? String, let url = URL(string: thumb) {
-            var request = URLRequest(url: url)
-            return request
-        } else {
-            throw CloudServiceError.unsupported
-        }
+        throw CloudServiceError.unsupported
     }
     
     public func uploadData(_ data: Data, filename: String, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
@@ -262,27 +271,21 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     }
     
     public func getDownloadUrl(of item: CloudItem, parameters: [String: Any] = [:], completion: @escaping (Result<URL, Error>) -> Void) {
-        let url = apiURL.appendingPathComponent("/open/ufile/downurl")
+        let url = apiURL.appendingPathComponent("/api/v1/file/download_info")
         var data: [String: Any] = [:]
         
-        if let pickCode = item.json["pc"] as? String {
-            data["pick_code"] = pickCode
-        }
+        data["fileId"] = item.id
         
         if !parameters.isEmpty {
             for (key, value) in parameters {
                 data[key] = value
             }
         }
-        post(url: url, data: data, headers: ["User-Agent": "CloudServiceKit"]) { response in
+        get(url: url, params: data, headers: headers) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any],
-                    let dataObject = json["data"] as? [String: Any],
-                    let object = dataObject[item.id] as? [String: Any],
-                   let urlObject = object["url"] as? [String: Any],
-                   let urlString = urlObject["url"] as? String, let url = URL(string: urlString) {
-                    // request download url must contains User-Agent: CloudServiceKit
+                if let json = result.json as? [String: Any], let data = json["data"] as? [String: Any],
+                   let urlString = data["downloadUrl"] as? String, let url = URL(string: urlString) {
                     completion(.success(url))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
@@ -295,14 +298,17 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     
 }
 
-extension Drive115ServiceProvider {
+extension Drive123ServiceProvider {
     public static func cloudItemFromJSON(_ json: [String : Any]) -> CloudItem? {
-        guard let fileId = json["fid"] as? String, let filename = json["fn"] as? String else {
+        guard let fileId = json["fileId"] as? Int, let filename = json["filename"] as? String else {
             return nil
         }
-        let isFolder = (json["fc"] as? String) == "0"
-        let item = CloudItem(id: fileId, name: filename, path: filename, isDirectory: isFolder, json: json)
-        item.size = Int64((json["fs"] as? String) ?? "-1") ?? -1
+        if json["trashed"] as? Int == 1 {
+            return nil
+        }
+        let isFolder = (json["type"] as? Int) == 1
+        let item = CloudItem(id: String(fileId), name: filename, path: filename, isDirectory: isFolder, json: json)
+        item.size = (json["size"] as? Int64) ?? -1
         return item
     }
 }

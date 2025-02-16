@@ -51,4 +51,8 @@ extension CloudConfiguration {
     static var drive115: CloudConfiguration? {
         return nil
     }
+    
+    static var drive123: CloudConfiguration? {
+        return nil
+    }
 }
