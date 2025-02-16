@@ -47,4 +47,8 @@ extension CloudConfiguration {
     static var pCloud: CloudConfiguration? {
         return nil
     }
+    
+    static var drive115: CloudConfiguration? {
+        return nil
+    }
 }

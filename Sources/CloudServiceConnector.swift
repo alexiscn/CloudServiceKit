@@ -9,6 +9,7 @@ import Foundation
 import OAuthSwift
 import class UIKit.UIViewController
 import class UIKit.UIScreen
+import CryptoKit
 
 public protocol CloudServiceOAuth {
     
@@ -280,5 +281,165 @@ public class PCloudConnector: CloudServiceConnector {
     public override func renewToken(with refreshToken: String, completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
         // pCloud OAuth does not respond with a refresh token, so renewToken is unsupported.
         completion(.failure(CloudServiceError.unsupported))
+    }
+}
+
+// MARK: - Drive115Connector
+public class Drive115Connector: CloudServiceConnector {
+    
+    public override var authorizeUrl: String {
+        return ""
+    }
+    
+    public override var accessTokenUrl: String {
+        return ""
+    }
+    
+    public override func renewToken(with refreshToken: String, completion: @escaping (Result<OAuthSwift.TokenSuccess, Error>) -> Void) {
+        // pCloud OAuth does not respond with a refresh token, so renewToken is unsupported.
+        completion(.failure(CloudServiceError.unsupported))
+    }
+    
+    public struct QRCode {
+        public let uid: String
+        public let qrcode: String
+        public let sign: String
+        public let time: Int64
+    }
+    
+    public var codeVerifier: String?
+    
+    public var headers: [String: String] {
+        ["Content-Type": "application/x-www-form-urlencoded"]
+    }
+    
+    public func fetchAuthQRCode() async throws -> QRCode {
+        try await withCheckedThrowingContinuation { continuation in
+            let codeVerifier = generateCodeVerifier(count: 32)
+            self.codeVerifier = codeVerifier
+            let codeChallenge = codeChallenge(fromVerifier: codeVerifier)
+            
+            let url = "https://qrcodeapi.115.com/open/authDeviceCode"
+            var data = [String: Any]()
+            data["client_id"] = appId
+            data["code_challenge"] = codeChallenge
+            data["code_challenge_method"] = "sha256"
+            
+            Just.post(url, data: data, headers: headers, asyncCompletionHandler: { result in
+                DispatchQueue.main.async {
+                    if let error = result.error {
+                        continuation.resume(throwing: error)
+                    } else if let object = result.json as? [String: Any],
+                              let dataObject = object["data"] as? [String: Any],
+                              let uid = dataObject["uid"] as? String,
+                              let qrcode = dataObject["qrcode"] as? String,
+                              let time = dataObject["time"] as? Int64,
+                              let sign = dataObject["sign"] as? String {
+                        continuation.resume(returning: QRCode(uid: uid, qrcode: qrcode, sign: sign, time: time))
+                    } else {
+                        continuation.resume(throwing: CloudServiceError.responseDecodeError(result))
+                    }
+                }
+            })
+        }
+    }
+    
+    public struct AuthStatus {
+        public let status: Int
+        public let msg: String?
+    }
+    
+    public func refreshAuthStatus(uid: String, time: Int64, sign: String) async throws -> AuthStatus {
+        try await withCheckedThrowingContinuation { continuation in
+            let url = "https://qrcodeapi.115.com/get/status/"
+            
+            var params = [String: Any]()
+            params["uid"] = uid
+            params["time"] = time
+            params["sign"] = sign
+            
+            Just.get(url, params: params, headers: headers, asyncCompletionHandler:  { result in
+                DispatchQueue.main.async {
+                    if let error = result.error {
+                        continuation.resume(throwing: error)
+                    } else if let object = result.json as? [String: Any],
+                                let dataObject = object["data"] as? [String: Any], let status = dataObject["status"] as? Int {
+                        let msg = dataObject["msg"] as? String
+                        continuation.resume(returning: AuthStatus(status: status, msg: msg))
+                    } else {
+                        continuation.resume(throwing: CloudServiceError.responseDecodeError(result))
+                    }
+                }
+            })
+        }
+    }
+    
+    public struct AccessTokenPayload {
+        public let accessToken: String
+        public let refreshToken: String
+        public let expiresIn: Int
+    }
+    
+    public func getAccessToken(uid: String, codeVerifier: String) async throws -> AccessTokenPayload {
+        try await withCheckedThrowingContinuation { continuation in
+            let url = "https://qrcodeapi.115.com/open/deviceCodeToToken"
+            var data = [String: Any]()
+            data["uid"] = uid
+            data["code_verifier"] = codeVerifier
+            Just.post(url, data: data, headers: headers, asyncCompletionHandler:  { result in
+                DispatchQueue.main.async {
+                    if let error = result.error {
+                        continuation.resume(throwing: error)
+                    } else if let object = result.json as? [String: Any],
+                                let dataObject = object["data"] as? [String: Any],
+                              let accessToken = dataObject["access_token"] as? String,
+                              let refreshToken = dataObject["refresh_token"] as? String,
+                              let expires = dataObject["expires_in"] as? Int {
+                        let payload = AccessTokenPayload(accessToken: accessToken, refreshToken: refreshToken, expiresIn: expires)
+                        continuation.resume(returning: payload)
+                    } else {
+                        continuation.resume(throwing: CloudServiceError.responseDecodeError(result))
+                    }
+                }
+            })
+        }
+    }
+    
+    public func refreshAccessToken(refreshToken: String) async throws -> AccessTokenPayload {
+        try await withCheckedThrowingContinuation { continuation in
+            let url = "https://qrcodeapi.115.com/open/refreshToken"
+            var data = [String: Any]()
+            data["refresh_token"] = refreshToken
+            Just.post(url, data: data, headers: headers, asyncCompletionHandler:  { result in
+                DispatchQueue.main.async {
+                    if let error = result.error {
+                        continuation.resume(throwing: error)
+                    } else if let object = result.json as? [String: Any],
+                                let dataObject = object["data"] as? [String: Any],
+                              let accessToken = dataObject["access_token"] as? String,
+                              let refreshToken = dataObject["refresh_token"] as? String,
+                              let expires = dataObject["expires_in"] as? Int {
+                        continuation.resume(returning: AccessTokenPayload(accessToken: accessToken, refreshToken: refreshToken, expiresIn: expires))
+                    } else {
+                        continuation.resume(throwing: CloudServiceError.responseDecodeError(result))
+                    }
+                }
+            })
+        }
+    }
+}
+
+extension Drive115Connector {
+    private func generateCodeVerifier(count: Int) -> String {
+        var octets = [UInt8](repeating: 0, count: count)
+        let status = SecRandomCopyBytes(kSecRandomDefault, octets.count, &octets)
+        return Data(bytes: octets, count: octets.count).base64EncodedString()
+    }
+    
+    private func codeChallenge(fromVerifier verifier: String) -> String {
+        let verifierData = verifier.data(using: .ascii)!
+        let challengeHashed = SHA256.hash(data: verifierData)
+        let challengeBase64Encoded = Data(challengeHashed).base64EncodedString()
+        return challengeBase64Encoded
     }
 }

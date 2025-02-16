@@ -1,5 +1,5 @@
 PODS:
-  - CloudServiceKit (1.0.3):
+  - CloudServiceKit (1.0.4):
     - OAuthSwift
   - KeychainAccess (4.2.2)
   - OAuthSwift (2.2.0)
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CloudServiceKit: 17f6482fc60fa234027a5179b2611b7e7eaea8db
+  CloudServiceKit: db8ffba351c3eedd4d1aa8113fe57df0eb57dc06
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   OAuthSwift: 75efbb5bd9a4b2b71a37bd7e986bf3f55ddd54c6
 
 PODFILE CHECKSUM: 30a7282a03c1f32091b73a72f70366e1a474b86e
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.16.2

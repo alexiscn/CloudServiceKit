@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'CloudServiceKit'
-  s.version      = '1.0.3'
+  s.version      = '1.0.4'
   s.license = 'MIT'
   s.requires_arc = true
   s.source = {:git => "https://github.com/alexiscn/CloudServiceKit.git", :tag => "#{s.version}"}

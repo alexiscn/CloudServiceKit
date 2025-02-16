@@ -47,33 +47,49 @@ class ViewController: UIViewController {
 
     private func connect(_ drive: CloudDriveType) {
         let connector = connector(for: drive)
-        connector.connect(viewController: self) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let token):
-                
-                // fetch current user info to save account
-                let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
-                let provider = self.provider(for: drive, credential: credential)
-                provider.getCurrentUserInfo { [weak self] userResult in
-                    guard let self = self else { return }
-                    switch userResult {
-                    case .success(let user):
-                        let account = CloudAccount(type: drive,
-                                                   username: user.username,
-                                                   oauthToken: token.credential.oauthToken)
-                        account.refreshToken = token.credential.oauthRefreshToken
-                        CloudAccountManager.shared.upsert(account)
-                        
-                        self.applyInitialSnapshot()
-                    case .failure(let error):
-                        print(error)
-                    }
+        if drive == .drive115 {
+            let vc = Drive115QRCodeViewController(connector: connector as! Drive115Connector)
+            vc.completionHandler = { (accessToken: Drive115Connector.AccessTokenPayload) in
+                self.dismiss(animated: true) {
+                    let credential = URLCredential(user: "user", password: accessToken.accessToken, persistence: .permanent)
+                    let provider = self.provider(for: drive, credential: credential)
                     let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
-            case .failure(let error):
-                print(error)
+            }
+            vc.cancellationHandler = {
+                self.dismiss(animated: true)
+            }
+            present(vc, animated: true)
+            
+        } else {
+            connector.connect(viewController: self) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let token):
+                    // fetch current user info to save account
+                    let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
+                    let provider = self.provider(for: drive, credential: credential)
+                    provider.getCurrentUserInfo { [weak self] userResult in
+                        guard let self = self else { return }
+                        switch userResult {
+                        case .success(let user):
+                            let account = CloudAccount(type: drive,
+                                                       username: user.username,
+                                                       oauthToken: token.credential.oauthToken)
+                            account.refreshToken = token.credential.oauthRefreshToken
+                            CloudAccountManager.shared.upsert(account)
+                            
+                            self.applyInitialSnapshot()
+                        case .failure(let error):
+                            print(error)
+                        }
+                        let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
         self.connector = connector
@@ -111,6 +127,10 @@ class ViewController: UIViewController {
             assert(CloudConfiguration.pCloud != nil, message)
             let pcloud = CloudConfiguration.pCloud!
             connector = PCloudConnector(appId: pcloud.appId, appSecret: pcloud.appSecret, callbackUrl: pcloud.redirectUrl)
+        case .drive115:
+            assert(CloudConfiguration.drive115 != nil, message)
+            let drive115 = CloudConfiguration.drive115!
+            connector = Drive115Connector(appId: drive115.appId, appSecret: drive115.appSecret, callbackUrl: drive115.redirectUrl)
         }
         return connector
     }
@@ -132,6 +152,8 @@ class ViewController: UIViewController {
             provider = OneDriveServiceProvider(credential: credential)
         case .pCloud:
             provider = PCloudServiceProvider(credential: credential)
+        case .drive115:
+            provider = Drive115ServiceProvider(credential: credential)
         }
         return provider
     }
