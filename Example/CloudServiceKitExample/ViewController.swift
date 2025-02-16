@@ -47,6 +47,7 @@ class ViewController: UIViewController {
 
     private func connect(_ drive: CloudDriveType) {
         let connector = connector(for: drive)
+
         if drive == .drive115 {
             let vc = Drive115QRCodeViewController(connector: connector as! Drive115Connector)
             vc.completionHandler = { (accessToken: Drive115Connector.AccessTokenPayload) in
@@ -57,35 +58,59 @@ class ViewController: UIViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
-            vc.cancellationHandler = {
-                self.dismiss(animated: true)
-            }
-            present(vc, animated: true)
-            
         } else {
             connector.connect(viewController: self) { [weak self] result in
                 guard let self = self else { return }
                 switch result {
                 case .success(let token):
+                    
                     // fetch current user info to save account
                     let credential = URLCredential(user: "user", password: token.credential.oauthToken, persistence: .permanent)
                     let provider = self.provider(for: drive, credential: credential)
-                    provider.getCurrentUserInfo { [weak self] userResult in
-                        guard let self = self else { return }
-                        switch userResult {
-                        case .success(let user):
-                            let account = CloudAccount(type: drive,
-                                                       username: user.username,
-                                                       oauthToken: token.credential.oauthToken)
-                            account.refreshToken = token.credential.oauthRefreshToken
-                            CloudAccountManager.shared.upsert(account)
-                            
-                            self.applyInitialSnapshot()
-                        case .failure(let error):
-                            print(error)
+                    if let aliyun = provider as? AliyunDriveServiceProvider {
+                        aliyun.getDriveInfo(completion: { driveInfoResult in
+                            switch driveInfoResult {
+                            case .success(let info):
+                                aliyun.driveId = info.defaultDriveId
+                                provider.getCurrentUserInfo { [weak self] userResult in
+                                    guard let self = self else { return }
+                                    switch userResult {
+                                    case .success(let user):
+                                        let account = CloudAccount(type: drive,
+                                                                   username: user.username,
+                                                                   oauthToken: token.credential.oauthToken)
+                                        account.refreshToken = token.credential.oauthRefreshToken
+                                        CloudAccountManager.shared.upsert(account)
+                                        
+                                        self.applyInitialSnapshot()
+                                    case .failure(let error):
+                                        print(error)
+                                    }
+                                    let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
+                                    self.navigationController?.pushViewController(vc, animated: true)
+                                }
+                            case .failure(let error):
+                                print(error)
+                            }
+                        })
+                    } else {
+                        provider.getCurrentUserInfo { [weak self] userResult in
+                            guard let self = self else { return }
+                            switch userResult {
+                            case .success(let user):
+                                let account = CloudAccount(type: drive,
+                                                           username: user.username,
+                                                           oauthToken: token.credential.oauthToken)
+                                account.refreshToken = token.credential.oauthRefreshToken
+                                CloudAccountManager.shared.upsert(account)
+                                
+                                self.applyInitialSnapshot()
+                            case .failure(let error):
+                                print(error)
+                            }
+                            let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
+                            self.navigationController?.pushViewController(vc, animated: true)
                         }
-                        let vc = DriveBrowserViewController(provider: provider, directory: provider.rootItem)
-                        self.navigationController?.pushViewController(vc, animated: true)
                     }
                 case .failure(let error):
                     print(error)
@@ -103,6 +128,7 @@ class ViewController: UIViewController {
             assert(CloudConfiguration.aliyun != nil, message)
             let aliyun = CloudConfiguration.aliyun!
             connector = AliyunDriveConnector(appId: aliyun.appId, appSecret: aliyun.appSecret, callbackUrl: aliyun.redirectUrl)
+            connector.customURLHandler = CustomOAuthWebViewController(callbackUrl: aliyun.redirectUrl)
         case .baiduPan:
             assert(CloudConfiguration.baidu != nil, message)
             let baidu = CloudConfiguration.baidu!

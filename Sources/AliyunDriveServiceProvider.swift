@@ -94,7 +94,14 @@ public class AliyunDriveServiceProvider: CloudServiceProvider {
     }
     
     public func copyItem(_ item: CloudItem, to directory: CloudItem, completion: @escaping CloudCompletionHandler) {
-        completion(.init(response: nil, result: .failure(CloudServiceError.unsupported)))
+        let url = apiURL.appendingPathComponent("/adrive/v1.0/openFile/copy")
+        var json = [String: Any]()
+        json["drive_id"] = driveId
+        json["file_id"] = item.id
+        json["to_drive_id"] = driveId
+        json["to_parent_file_id"] = directory.id
+        json["auto_rename"] = true
+        post(url: url, json: json, completion: completion)
     }
     
     /// Create a folder at a given directory.
@@ -138,13 +145,52 @@ public class AliyunDriveServiceProvider: CloudServiceProvider {
     /// Get information about the current user's account.
     /// - Parameter completion: Completion block.
     public func getCurrentUserInfo(completion: @escaping (Result<CloudUser, Error>) -> Void) {
-        let url = "https://api.aliyundrive.com/v2/user/get"
+        let url = apiURL.appendingPathComponent("/oauth/users/info")
+        get(url: url) { response in
+            switch response.result {
+            case .success(let result):
+                if let json = result.json as? [String: Any], let username = json["name"] as? String {
+                    let user = CloudUser(username: username, json: json)
+                    completion(.success(user))
+                } else {
+                    completion(.failure(CloudServiceError.responseDecodeError(result)))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    public struct AliyunDriveInfo: Codable {
+        public let userId: String
+        public let name: String
+        public let avatar: String
+        public let defaultDriveId: String
+        public var resourceDriveId: String?
+        public var backupDriveId: String?
+        public init(userId: String, name: String, avatar: String, defaultDriveId: String, resourceDriveId: String? = nil, backupDriveId: String? = nil) {
+            self.userId = userId
+            self.name = name
+            self.avatar = avatar
+            self.defaultDriveId = defaultDriveId
+            self.resourceDriveId = resourceDriveId
+            self.backupDriveId = backupDriveId
+        }
+    }
+    
+    public func getDriveInfo(completion: @escaping (Result<AliyunDriveInfo, Error>) -> Void) {
+        let url = apiURL.appendingPathComponent("/adrive/v1.0/user/getDriveInfo")
         post(url: url) { response in
             switch response.result {
             case .success(let result):
-                if let json = result.json as? [String: Any], let username = json["nick_name"] as? String {
-                    let user = CloudUser(username: username, json: json)
-                    completion(.success(user))
+                if let json = result.json as? [String: Any],
+                    let userId = json["user_id"] as? String,
+                    let name = json["name"] as? String,
+                    let avatar = json["avatar"] as? String, let defaultDriveId = json["default_drive_id"] as? String {
+                    let resourceDriveId = json["resource_drive_id"] as? String
+                    let backupDriveId = json["resource_drive_id"] as? String
+                    let info = AliyunDriveInfo(userId: userId, name: name, avatar: avatar, defaultDriveId: defaultDriveId, resourceDriveId: resourceDriveId, backupDriveId: backupDriveId)
+                    completion(.success(info))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
                 }
