@@ -29,7 +29,7 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     }
     
     public func attributesOfItem(_ item: CloudItem, completion: @escaping (Result<CloudItem, Error>) -> Void) {
-        completion(.failure(CloudServiceError.unsupported))
+        completion(.success(item))
     }
     
     public func contentsOfDirectory(_ directory: CloudItem, completion: @escaping (Result<[CloudItem], Error>) -> Void) {
@@ -83,10 +83,10 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - completion: Completion block.
     public func createFolder(_ folderName: String, at directory: CloudItem, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("/open/folder/add")
-        var json: [String: Any] = [:]
-        json["pid"] = directory.id
-        json["file_name"] = folderName
-        post(url: url, json: json, completion: completion)
+        var data: [String: Any] = [:]
+        data["pid"] = directory.id
+        data["file_name"] = folderName
+        post(url: url, data: data, completion: completion)
     }
     
     public func createFolder(_ folderName: String, at directory: CloudItem) async throws {
@@ -180,10 +180,10 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - completion: Completion block.
     public func moveItem(_ item: CloudItem, to directory: CloudItem, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("/open/ufile/move")
-        var json = [String: Any]()
-        json["file_ids"] = item.id
-        json["to_cid"] = directory.id
-        post(url: url, json: json, completion: completion)
+        var data = [String: Any]()
+        data["file_ids"] = item.id
+        data["to_cid"] = directory.id
+        post(url: url, data: data, completion: completion)
     }
     
     /// Remove file/folder.
@@ -192,16 +192,16 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - completion: Completion block.
     public func removeItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("/open/ufile/delete")
-        var json = [String: Any]()
-        json["file_ids"] = item.id
-        post(url: url, json: json, completion: completion)
+        var data = [String: Any]()
+        data["file_ids"] = item.id
+        post(url: url, data: data, completion: completion)
     }
     
     public func trashItem(_ item: CloudItem, completion: @escaping CloudCompletionHandler) {
         let url = apiURL.appendingPathComponent("/api/v1/file/trash")
-        var json = [String: Any]()
-        json["fileIDs"] = [item.id]
-        post(url: url, json: json, completion: completion)
+        var data = [String: Any]()
+        data["fileIDs"] = [item.id]
+        post(url: url, data: data, completion: completion)
     }
     
     /// Rename file/folder item.
@@ -210,11 +210,11 @@ public class Drive115ServiceProvider: CloudServiceProvider {
     ///   - newName: The new name.
     ///   - completion: Completion block.
     public func renameItem(_ item: CloudItem, newName: String, completion: @escaping CloudCompletionHandler) {
-        let url = apiURL.appendingPathComponent("/adrive/v1.0/openFile/update")
-        var json: [String: Any] = [:]
-        json["file_id"] = item.id
-        json["name"] = newName
-        post(url: url, json: json, completion: completion)
+        let url = apiURL.appendingPathComponent("/open/ufile/update")
+        var data: [String: Any] = [:]
+        data["file_id"] = item.id
+        data["name"] = newName
+        post(url: url, data: data, completion: completion)
     }
     
     /// Search files by keyword.
