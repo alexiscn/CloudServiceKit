@@ -320,7 +320,7 @@ public class Drive115Connector: CloudServiceConnector {
             self.codeVerifier = codeVerifier
             let codeChallenge = codeChallenge(fromVerifier: codeVerifier)
             
-            let url = "https://qrcodeapi.115.com/open/authDeviceCode"
+            let url = "https://passportapi.115.com/open/authDeviceCode"
             var data = [String: Any]()
             data["client_id"] = appId
             data["code_challenge"] = codeChallenge
@@ -383,7 +383,7 @@ public class Drive115Connector: CloudServiceConnector {
     
     public func getAccessToken(uid: String, codeVerifier: String) async throws -> AccessTokenPayload {
         try await withCheckedThrowingContinuation { continuation in
-            let url = "https://qrcodeapi.115.com/open/deviceCodeToToken"
+            let url = "https://passportapi.115.com/open/deviceCodeToToken"
             var data = [String: Any]()
             data["uid"] = uid
             data["code_verifier"] = codeVerifier
@@ -408,7 +408,7 @@ public class Drive115Connector: CloudServiceConnector {
     
     public func refreshAccessToken(refreshToken: String) async throws -> AccessTokenPayload {
         try await withCheckedThrowingContinuation { continuation in
-            let url = "https://qrcodeapi.115.com/open/refreshToken"
+            let url = "https://passportapi.115.com/open/refreshToken"
             var data = [String: Any]()
             data["refresh_token"] = refreshToken
             Just.post(url, data: data, headers: headers, asyncCompletionHandler:  { result in
