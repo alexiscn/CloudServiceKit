@@ -9,6 +9,8 @@ Easy to integrate cloud service using Oauth2. Supported platforms:
 - [x] Google Drive
 - [x] OneDrive
 - [x] pCloud
+- [x] [115](https://www.yuque.com/115yun/open)
+- [x] [123](https://123yunpan.yuque.com/org-wiki-123yunpan-muaork/cr6ced)
 
 ## Requirements
 
