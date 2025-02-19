@@ -267,6 +267,8 @@ public class Drive115ServiceProvider: CloudServiceProvider {
         
         if let pickCode = item.json["pc"] as? String {
             data["pick_code"] = pickCode
+        } else if let pickCode = item.json["pick_code"] as? String {
+            data["pick_code"] = pickCode
         }
         
         if !parameters.isEmpty {
