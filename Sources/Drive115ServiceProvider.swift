@@ -232,8 +232,24 @@ public class Drive115ServiceProvider: CloudServiceProvider {
         get(url: url, params: params) { response in
             switch response.result {
             case .success(let result):
-                if let object = result.json as? [String: Any], let list = object["items"] as? [[String: Any]] {
-                    let items = list.compactMap { Self.cloudItemFromJSON($0) }
+                if let object = result.json as? [String: Any], let list = object["data"] as? [Any] {
+                    var items = [CloudItem]()
+                    for obj in list {
+                        if let json = obj as? [String: Any],
+                            let fileId = json["file_id"] as? String,
+                           let filename = json["file_name"] as? String {
+                            let isDirectory = (json["file_category"] as? String) == "0"
+                            let item = CloudItem(id: fileId, name: filename, path: filename, isDirectory: isDirectory, json: json)
+                            item.size = Int64(json["file_size"] as? String ?? "-1") ?? -1
+                            if let uploadTime = json["user_ptime"] as? String, let timestamp = TimeInterval(uploadTime) {
+                                item.creationDate = Date(timeIntervalSince1970: timestamp)
+                            }
+                            if let updateTime = json["user_utime"] as? String, let timestamp = TimeInterval(updateTime) {
+                                item.modificationDate = Date(timeIntervalSince1970: timestamp)
+                            }
+                            items.append(item)
+                        }
+                    }
                     completion(.success(items))
                 } else {
                     completion(.failure(CloudServiceError.responseDecodeError(result)))
