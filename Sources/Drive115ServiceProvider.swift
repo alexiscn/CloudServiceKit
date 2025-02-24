@@ -321,6 +321,12 @@ extension Drive115ServiceProvider {
         let isFolder = (json["fc"] as? String) == "0"
         let item = CloudItem(id: fileId, name: filename, path: filename, isDirectory: isFolder, json: json)
         item.size = Int64((json["fs"] as? String) ?? "-1") ?? -1
+        if let uploadTime = json["uppt"] as? Int64 {
+            item.creationDate = Date(timeIntervalSince1970: TimeInterval(uploadTime))
+        }
+        if let updateTime = json["upt"] as? Int64 {
+            item.modificationDate = Date(timeIntervalSince1970: TimeInterval(updateTime))
+        }
         return item
     }
 }
