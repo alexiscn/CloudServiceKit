@@ -17,7 +17,7 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
     public var delegate: CloudServiceProviderDelegate?
     
     /// The name of service provider.
-    public var name: String { return "GoogleDrive" }
+    public var name: String { return "Google Drive" }
     
     /// If not empty, file operation do to target shared drive
     public var sharedDrive: SharedDrive? = nil
@@ -90,6 +90,7 @@ public class GoogleDriveServiceProvider: CloudServiceProvider {
             query += "trashed = false and '\(directory.id)' in parents"
             params["q"] = query
             params["fields"] = contentsOfDirectoryFields
+            params["pageSize"] = 100
             if let pageToken = pageToken {
                 params["pageToken"] = pageToken
             }

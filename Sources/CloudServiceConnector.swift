@@ -22,13 +22,13 @@ public protocol CloudServiceOAuth {
 /// The base connector provided by CloudService.
 /// CloudServiceKit provides a default connector for each cloud service, such as `DropboxConnector`.
 /// You can implement your own connector if you want customizations.
-public class CloudServiceConnector: CloudServiceOAuth {
+open class CloudServiceConnector: CloudServiceOAuth {
     
     /// subclass must provide authorizeUrl
-    public var authorizeUrl: String { return "" }
+    open var authorizeUrl: String { return "" }
     
     /// subclass must provide accessTokenUrl
-    public var accessTokenUrl: String { return "" }
+    open var accessTokenUrl: String { return "" }
     
     /// subclass can provide more custom parameters
     public var authorizeParameters: OAuthSwift.Parameters { return [:] }
@@ -234,14 +234,14 @@ public class DropboxConnector: CloudServiceConnector {
 public class GoogleDriveConnector: CloudServiceConnector {
     
     public override var authorizeUrl: String {
-        return "https://accounts.google.com/o/oauth2/auth"
+        "https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent"
     }
     
     public override var accessTokenUrl: String {
-        return "https://accounts.google.com/o/oauth2/token"
+        "https://oauth2.googleapis.com/token"
     }
     
-    private var defaultScope = "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/userinfo.profile"
+    private var defaultScope = "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile"
     public override var scope: String {
         get { return defaultScope }
         set { defaultScope = newValue }
