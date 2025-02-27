@@ -311,4 +311,14 @@ extension Drive123ServiceProvider {
         item.size = (json["size"] as? Int64) ?? -1
         return item
     }
+    
+    public func shouldProcessResponse(_ response: HTTPResult, completion: @escaping CloudCompletionHandler) -> Bool {
+        guard let json = response.json as? [String: Any] else { return false }
+        if let code = json["code"] as? Int, code != 0 {
+            let msg = json["message"] as? String ?? "Unknown error"
+            completion(.init(response: response, result: .failure(CloudServiceError.serviceError(-1, msg))))
+            return true
+        }
+        return false
+    }
 }
