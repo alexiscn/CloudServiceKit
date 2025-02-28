@@ -36,6 +36,8 @@ public class Drive115ServiceProvider: CloudServiceProvider {
         
         var items: [CloudItem] = []
         
+        var index = 0
+        
         func loadList(offset: Int?) {
             var params: [String: Any] = [:]
             params["limit"] = 100
@@ -55,8 +57,11 @@ public class Drive115ServiceProvider: CloudServiceProvider {
                         files.forEach { $0.fixPath(with: directory) }
                         items.append(contentsOf: files)
                         
-                        if let offset = object["offset"] as? Int, offset > 0 {
-                            loadList(offset: offset)
+                        let count = object["count"] as? Int ?? 0
+                        index += list.count
+                        
+                        if index < count {
+                            loadList(offset: index)
                         } else {
                             completion(.success(items))
                         }
