@@ -74,7 +74,7 @@ public class Drive123ServiceProvider: CloudServiceProvider {
                         files.forEach { $0.fixPath(with: directory) }
                         items.append(contentsOf: files)
                         
-                        if let lastFileId = object["lastFileId"] as? Int {
+                        if let lastFileId = data["lastFileId"] as? Int, lastFileId > 0 {
                             loadList(lastFileId: lastFileId)
                         } else {
                             completion(.success(items))
