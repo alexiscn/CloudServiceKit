@@ -31,6 +31,13 @@ public class Drive123ServiceProvider: CloudServiceProvider {
         return ["Platform": "open_platform"]
     }
     
+    fileprivate static var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        formatter.locale = Locale(identifier: "zh-CN")
+        return formatter
+    }()
+    
     public required init(credential: URLCredential?) {
         self.credential = credential
     }
@@ -309,6 +316,12 @@ extension Drive123ServiceProvider {
         let isFolder = (json["type"] as? Int) == 1
         let item = CloudItem(id: String(fileId), name: filename, path: filename, isDirectory: isFolder, json: json)
         item.size = (json["size"] as? Int64) ?? -1
+        if let createdAt = json["createAt"] as? String, let creationDate = Self.dateFormatter.date(from: createdAt) {
+            item.creationDate = creationDate
+        }
+        if let updatedAt = json["updateAt"] as? String, let updateDate = Self.dateFormatter.date(from: updatedAt) {
+            item.modificationDate = updateDate
+        }
         return item
     }
     
@@ -321,4 +334,13 @@ extension Drive123ServiceProvider {
         }
         return false
     }
+    
+    public func isUnauthorizedResponse(_ response: HTTPResult) -> Bool {
+        guard let json = response.json as? [String: Any] else { return false }
+        if let code = json["code"] as? Int {
+            return code == 401
+        }
+        return false
+    }
+
 }
