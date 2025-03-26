@@ -396,7 +396,7 @@ public class PCloudServiceProvider: CloudServiceProvider {
         
         let file = HTTPFile.url(fileURL, nil)
         let reportProgress = Progress(totalUnitCount: length)
-        post(url: url, files: ["file": file], progressHandler: { progress in
+        post(url: url, data: data, files: ["file": file], progressHandler: { progress in
             reportProgress.completedUnitCount = Int64(Float(length) * progress.percent)
             progressHandler(reportProgress)
         }, completion: completion)
