@@ -259,7 +259,10 @@ extension CloudServiceProvider {
                  completion: @escaping CloudCompletionHandler) {
         
         var httpheaders = headers
-        httpheaders["Authorization"] = "Bearer \(credential?.password ?? "")"
+        
+        if !httpheaders.keys.contains("Authorization") {
+            httpheaders["Authorization"] = "Bearer \(credential?.password ?? "")"
+        }
         
         Just.request(method, url: url, params: params, data: data, json: json,
                      headers: httpheaders, files: files, requestBody: requestBody, asyncProgressHandler: { progress in
