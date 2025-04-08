@@ -334,4 +334,22 @@ extension Drive115ServiceProvider {
         }
         return item
     }
+    
+    public func shouldProcessResponse(_ response: HTTPResult, completion: @escaping CloudCompletionHandler) -> Bool {
+        guard let json = response.json as? [String: Any] else { return false }
+        if let state = json["state"] as? Bool, state == false {
+            let msg = json["message"] as? String ?? "Unknown error"
+            completion(.init(response: response, result: .failure(CloudServiceError.serviceError(-1, msg))))
+            return true
+        }
+        return false
+    }
+    
+    public func isUnauthorizedResponse(_ response: HTTPResult) -> Bool {
+        guard let json = response.json as? [String: Any] else { return false }
+        if let code = json["code"] as? Int, code == 40140125 {
+            return true
+        }
+        return false
+    }
 }
