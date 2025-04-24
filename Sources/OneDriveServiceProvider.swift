@@ -54,7 +54,7 @@ public class OneDriveServiceProvider: CloudServiceProvider {
     }
     
     /// The name of service provider.
-    public var name: String { return "OneDrive" }
+    public var name: String { return "One Drive" }
     
     /// The root folder of OneDrove service. You can use this property to list root items.
     public var rootItem: CloudItem { return CloudItem(id: "root", name: name, path: "root:") }
