@@ -270,11 +270,42 @@ public class Drive123ServiceProvider: CloudServiceProvider {
     }
     
     public func uploadData(_ data: Data, filename: String, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
-        
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString).appendingPathExtension(URL(fileURLWithPath: filename).pathExtension)
+        do {
+            try data.write(to: tempURL, options: .atomic)
+            uploadFile(tempURL, to: directory, progressHandler: progressHandler) { response in
+                try? FileManager.default.removeItem(at: tempURL)
+                completion(response)
+            }
+        } catch {
+            try? FileManager.default.removeItem(at: tempURL)
+            completion(.init(response: nil, result: .failure(error)))
+        }
     }
     
     public func uploadFile(_ fileURL: URL, to directory: CloudItem, progressHandler: @escaping ((Progress) -> Void), completion: @escaping CloudCompletionHandler) {
-        
+        do {
+            let bufferSize = 5 * 1024 * 1024
+            let fileHandle = try FileHandle(forReadingFrom: fileURL)
+            var md5 = Insecure.MD5()
+            var loop = true
+            while loop {
+                autoreleasepool {
+                    let data = fileHandle.readData(ofLength: bufferSize)
+                    if data.count > 0 {
+                        md5.update(data: data)
+                    } else {
+                        loop = false
+                    }
+                }
+            }
+            let md5Hash = md5.finalize().toHexString()
+            let attributes = try FileManager.default.attributesOfItem(atPath: fileURL.path)
+            let fileSize = (attributes[.size] as? Int64) ?? 0
+            createFile(fileURL: fileURL, filename: fileURL.lastPathComponent, fileSize: fileSize, fileMD5: md5Hash, directory: directory, completion: completion)
+        } catch {
+            completion(.init(response: nil, result: .failure(error)))
+        }
     }
     
     public func getDownloadUrl(of item: CloudItem, parameters: [String: Any] = [:], completion: @escaping (Result<URL, Error>) -> Void) {
@@ -299,6 +330,147 @@ public class Drive123ServiceProvider: CloudServiceProvider {
                 }
             case .failure(let error):
                 completion(.failure(error))
+            }
+        }
+    }
+    
+}
+
+// MARK: - Upload
+extension Drive123ServiceProvider {
+        
+    private func createFile(fileURL: URL, filename: String, fileSize: Int64, fileMD5: String, directory: CloudItem, completion: @escaping CloudCompletionHandler) {
+        let url = apiURL.appendingPathComponent("/upload/v2/file/create")
+        var json = [String: Any]()
+        json["parentFileID"] = directory.id
+        json["filename"] = filename
+        json["etag"] = fileMD5
+        json["size"] = fileSize
+        json["duplicate"] = 1
+        
+        post(url: url, json: json, headers: headers) { response in
+            switch response.result {
+            case .success(let result):
+                if let object = result.json as? [String: Any], let data = object["data"] as? [String: Any] {
+                    if let fileID = data["fileID"] as? Int, fileID > 0, let reuse = data["reuse"] as? Bool, reuse == true {
+                        completion(.init(response: result, result: .success(result)))
+                    } else if let preuploadID = data["preuploadID"] as? String, let sliceSize = data["sliceSize"] as? Int64,
+                                let servers = data["servers"] as? [String], let server = servers.first, let serverURL = URL(string: server) {
+                        self.startUpload(fileURL: fileURL, preuploadID: preuploadID, fileSize: fileSize, sliceSize: sliceSize, uploadServerURL: serverURL, completion: completion)
+                    } else {
+                        completion(.init(response: result, result: .failure(CloudServiceError.responseDecodeError(result))))
+                    }
+                } else {
+                    completion(.init(response: nil, result: .failure(CloudServiceError.responseDecodeError(result))))
+                }
+            case .failure(let error):
+                completion(.init(response: nil, result: .failure(error)))
+            }
+        }
+    }
+    
+    private func startUpload(fileURL: URL, preuploadID: String, fileSize: Int64, sliceSize: Int64, uploadServerURL: URL, completion: @escaping CloudCompletionHandler) {
+        Task { @MainActor in
+            do {
+                let fileHandle = try FileHandle(forReadingFrom: fileURL)
+                let partCount = Int((fileSize + sliceSize - 1) / sliceSize)
+                
+                var uploadedParts = [Bool]()
+                try await withThrowingTaskGroup(of: Bool.self) { group in
+                    for partNumber in 1...partCount {
+                        if Task.isCancelled { break }
+                        group.addTask {
+                            let offset = (Int(partNumber) - 1) * Int(sliceSize)
+                            let size = min(sliceSize, fileSize - Int64(offset))
+                            try fileHandle.seek(toOffset: UInt64(offset))
+                            let data = autoreleasepool {
+                                fileHandle.readData(ofLength: Int(size))
+                            }
+                            
+                            let part = try await self.uploadData(data, to: uploadServerURL, preuploadID: preuploadID, sliceNo: partNumber)
+                            return part
+                        }
+                    }
+                    
+                    for try await part in group {
+                        uploadedParts.append(part)
+                    }
+                }
+                
+                try? fileHandle.close()
+                
+                let completeResult = try await self.completeUpload(preuploadID: preuploadID)
+                if completeResult {
+                    completion(.init(response: nil, result: .success(HTTPResult(data: nil, response: nil, error: nil, task: nil))))
+                }
+            } catch {
+                completion(.init(response: nil, result: .failure(error)))
+            }
+        }
+    }
+        
+    private func uploadData(_ data: Data, to url: URL, preuploadID: String, sliceNo: Int) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            let uploadUrl = url.appendingPathComponent("/upload/v2/file/slice")
+            var md5 = Insecure.MD5()
+            md5.update(data: data)
+            let sliceMD5 = md5.finalize().toHexString()
+            
+            var formData = [String: Any]()
+            formData["preuploadID"] = preuploadID
+            formData["sliceNo"] = sliceNo
+            formData["sliceMD5"] = sliceMD5
+            let file = HTTPFile.data("slice", data, nil)
+            
+            post(url: uploadUrl, data: formData, headers: headers, files: ["slice": file], completion: { result in
+                switch result.result {
+                case .success(_):
+                    continuation.resume(returning: true)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            })
+        }
+    }
+    
+    private func completeUpload(preuploadID: String) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            let url = apiURL.appendingPathComponent("/upload/v1/file/upload_complete")
+            var json: [String: Any] = [:]
+            json["preuploadID"] = preuploadID
+            post(url: url, json: json, headers: headers) { response in
+                switch response.result {
+                case .success(let result):
+                    if let json = result.json as? [String: Any], let data = json["data"] as? [String: Any] {
+                        let completed = data["completed"] as? Bool ?? false
+                        continuation.resume(returning: completed)
+                    } else {
+                        continuation.resume(throwing: CloudServiceError.responseDecodeError(result))
+                    }
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    private func checkAsyncUploadResult(preuploadID: String) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            let url = apiURL.appendingPathComponent("/upload/v1/file/upload_async_result")
+            var json: [String: Any] = [:]
+            json["preuploadID"] = preuploadID
+            post(url: url, json: json, headers: headers) { response in
+                switch response.result {
+                case .success(let result):
+                    if let json = result.json as? [String: Any], let data = json["data"] as? [String: Any] {
+                        let completed = data["completed"] as? Bool ?? false
+                        continuation.resume(returning: completed)
+                    } else {
+                        continuation.resume(throwing: CloudServiceError.responseDecodeError(result))
+                    }
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
             }
         }
     }
